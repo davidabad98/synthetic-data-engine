@@ -1,0 +1,66 @@
+{
+  "description": "Life Insurance synthetic data template",
+  "fields": {
+    "PolicyNumber": {
+      "datatype": "string",
+      "pattern": "LI-####",
+      "description": "Unique identifier for the policy"
+    },
+    "FullName": {
+      "datatype": "string",
+      "description": "Customer's full name"
+    },
+    "DateOfBirth": {
+      "datatype": "date",
+      "format": "YYYY-MM-DD",
+      "description": "Customer's date of birth"
+    },
+    "BeneficiaryName": {
+      "datatype": "string",
+      "description": "Name of the beneficiary"
+    },
+    "BeneficiaryEmail": {
+      "datatype": "string",
+      "format": "email",
+      "description": "Email address of the beneficiary"
+    },
+    "CoverageAmount": {
+      "datatype": "number",
+      "description": "Coverage amount for the policy"
+    },
+    "PolicyType": {
+      "datatype": "string",
+      "description": "Type of policy (e.g., term, whole life)"
+    },
+    "StartDate": {
+      "datatype": "date",
+      "format": "YYYY-MM-DD",
+      "description": "Policy start date"
+    },
+    "EndDate": {
+      "datatype": "date",
+      "format": "YYYY-MM-DD",
+      "description": "Policy end date (if applicable, null for lifetime policies)"
+    },
+    "PremiumAmount": {
+      "datatype": "number",
+      "description": "Monthly or annual premium amount"
+    },
+    "Address": {
+      "datatype": "string",
+      "description": "Primary address"
+    },
+    "City": {
+      "datatype": "string",
+      "description": "City"
+    },
+    "State": {
+      "datatype": "string",
+      "description": "State or Province"
+    },
+    "ZipCode": {
+      "datatype": "string",
+      "description": "Postal or ZIP code"
+    }
+  }
+}
