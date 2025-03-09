@@ -1,0 +1,137 @@
+{
+    "description": "Dental Insurance synthetic data template. Dental insurance provides coverage for various dental care procedures such as cleanings, x-rays, exams, orthodontics, and dental repairs like crowns and dentures. It is offered as part of Personal Health Insurance (PHI) plans with varying coverage levels (Basic, Standard, Enhanced).",
+    "fields": {
+        "PolicyID": {
+            "datatype": "string",
+            "pattern": "DI-[0-9]{6}",
+            "description": "Unique identifier for the dental insurance policy (e.g., DI-123456)."
+        },
+        "PolicyHolderName": {
+            "datatype": "string",
+            "description": "Full name of the individual covered under the dental insurance policy."
+        },
+        "CoveragePlan": {
+            "datatype": "string",
+            "enum": [
+                "PHI Basic",
+                "PHI Standard",
+                "PHI Enhanced"
+            ],
+            "description": "The type of Personal Health Insurance (PHI) plan selected by the policyholder (Basic, Standard, or Enhanced)."
+        },
+        "PolicyStartDate": {
+            "datatype": "date",
+            "format": "YYYY-MM-DD",
+            "description": "The start date of the dental insurance policy."
+        },
+        "PolicyEndDate": {
+            "datatype": "date",
+            "format": "YYYY-MM-DD",
+            "description": "The end date or expiration date of the dental insurance policy."
+        },
+        "PremiumAmount": {
+            "datatype": "number",
+            "description": "Monthly or annual premium amount paid for the dental insurance coverage."
+        },
+        "PaymentFrequency": {
+            "datatype": "string",
+            "enum": [
+                "Monthly",
+                "Annually"
+            ],
+            "description": "Frequency at which the dental insurance premium is paid (Monthly or Annually)."
+        },
+        "DentalProceduresCovered": {
+            "datatype": "array",
+            "items": {
+                "procedure": {
+                    "datatype": "string",
+                    "enum": [
+                        "Teeth Cleaning",
+                        "Dental X-rays",
+                        "Dental Exams",
+                        "Orthodontics (Braces)",
+                        "Bridges",
+                        "Dentures",
+                        "Crowns"
+                    ],
+                    "description": "List of dental procedures covered under the policy."
+                }
+            },
+            "description": "List of dental procedures covered by the policyholder's dental insurance plan."
+        },
+        "OrthodonticsCoverage": {
+            "datatype": "boolean",
+            "description": "Indicates if the dental insurance policy includes coverage for orthodontics (braces for adults and children)."
+        },
+        "AnnualCoverageLimit": {
+            "datatype": "number",
+            "description": "Annual limit on coverage amount for dental procedures."
+        },
+        "ClaimAmountPaid": {
+            "datatype": "number",
+            "description": "Amount paid out for dental insurance claims made during the policy year."
+        },
+        "ClaimStatus": {
+            "datatype": "string",
+            "enum": [
+                "Approved",
+                "Pending",
+                "Denied"
+            ],
+            "description": "Current status of a dental insurance claim (Approved, Pending, or Denied)."
+        },
+        "DependentsCovered": {
+            "datatype": "array",
+            "items": {
+                "name": {
+                    "datatype": "string",
+                    "description": "Full name of the dependent covered under the dental insurance policy."
+                },
+                "relationship": {
+                    "datatype": "string",
+                    "description": "Relationship of the dependent to the policyholder (e.g., spouse, child)."
+                }
+            },
+            "description": "List of dependents covered by the dental insurance policy."
+        },
+        "PolicyHolderAge": {
+            "datatype": "integer",
+            "description": "Age of the policyholder."
+        },
+        "IsCDCPEligible": {
+            "datatype": "boolean",
+            "description": "Indicates if the policyholder is eligible for the Canadian Dental Care Plan (CDCP)."
+        },
+        "PHIPlanComparison": {
+            "datatype": "object",
+            "properties": {
+                "BasicPlanCoverage": {
+                    "datatype": "boolean",
+                    "description": "Indicates if the Basic PHI plan includes dental coverage."
+                },
+                "StandardPlanCoverage": {
+                    "datatype": "boolean",
+                    "description": "Indicates if the Standard PHI plan includes dental coverage."
+                },
+                "EnhancedPlanCoverage": {
+                    "datatype": "boolean",
+                    "description": "Indicates if the Enhanced PHI plan includes dental coverage."
+                }
+            },
+            "description": "Details comparing the different levels of PHI coverage for dental procedures."
+        },
+        "PolicyRenewal": {
+            "datatype": "boolean",
+            "description": "Indicates whether the dental insurance policy is eligible for renewal at the end of the term."
+        },
+        "RenewalTermLength": {
+            "datatype": "number",
+            "description": "Length of the renewal term if the policy is renewed (in years)."
+        },
+        "PolicyHolderTaxMinimization": {
+            "datatype": "boolean",
+            "description": "Indicates if the policyholder can use the insurance to minimize tax liabilities related to health care expenses."
+        }
+    }
+}

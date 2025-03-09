@@ -1,0 +1,71 @@
+{
+    "description": "Tax-Free Savings Account (TFSA) synthetic data template. A TFSA is a registered investment account designed to help Canadians save money with tax-free growth and withdrawals. This template includes account details, contribution limits, investment types, withdrawal policies, and eligibility requirements.",
+    "fields": {
+        "TFSA_ID": {
+            "datatype": "string",
+            "pattern": "TFSA-[0-9]{6}",
+            "description": "Unique identifier for the TFSA account (e.g., TFSA-123456)."
+        },
+        "AccountHolderName": {
+            "datatype": "string",
+            "description": "Full name of the TFSA account holder."
+        },
+        "AccountHolderDOB": {
+            "datatype": "date",
+            "format": "YYYY-MM-DD",
+            "description": "Date of birth of the account holder."
+        },
+        "SocialInsuranceNumber": {
+            "datatype": "string",
+            "pattern": "[0-9]{9}",
+            "description": "Social Insurance Number (SIN) of the account holder."
+        },
+        "ContributionLimit": {
+            "datatype": "number",
+            "min": 0,
+            "max": 7000,
+            "description": "Annual TFSA contribution limit for 2025 (e.g., $7,000)."
+        },
+        "CurrentContribution": {
+            "datatype": "number",
+            "min": 0,
+            "description": "Amount contributed in the current year."
+        },
+        "AvailableContributionRoom": {
+            "datatype": "number",
+            "description": "Remaining contribution room available to the account holder."
+        },
+        "TotalBalance": {
+            "datatype": "number",
+            "description": "Current total balance of the TFSA account."
+        },
+        "AccountCreationDate": {
+            "datatype": "date",
+            "format": "YYYY-MM-DD",
+            "description": "Date when the TFSA account was established."
+        },
+        "InvestmentTypes": {
+            "datatype": "array",
+            "items": {
+                "datatype": "string",
+                "enum": [
+                    "Mutual Funds",
+                    "Insurance GICs",
+                    "Segregated Funds",
+                    "ETFs",
+                    "Stocks",
+                    "Bonds"
+                ]
+            },
+            "description": "List of investment types held within the TFSA."
+        },
+        "WithdrawalPolicy": {
+            "datatype": "string",
+            "description": "Information on the TFSA withdrawal policy. Withdrawals are tax-free and may be subject to investment-specific restrictions."
+        },
+        "ResidencyRequirement": {
+            "datatype": "string",
+            "description": "Eligibility details: typically 'Canadian resident, aged 18 or older with a Social Insurance Number (SIN)'."
+        }
+    }
+}

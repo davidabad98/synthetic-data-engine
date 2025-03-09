@@ -1,0 +1,105 @@
+{
+    "description": "Disability insurance synthetic data template. Disability insurance helps protect an individual’s income in case they are unable to work due to a medical illness, mental health issue, or injury. There are various types of disability insurance, including individual and group plans, and short-term and long-term disability plans.",
+    "fields": {
+        "PolicyID": {
+            "datatype": "string",
+            "pattern": "DI-[0-9]{6}",
+            "description": "Unique identifier for the disability insurance policy (e.g., DI-123456)."
+        },
+        "PolicyHolderName": {
+            "datatype": "string",
+            "description": "Full name of the policyholder."
+        },
+        "PolicyHolderDOB": {
+            "datatype": "date",
+            "format": "YYYY-MM-DD",
+            "description": "Date of birth of the policyholder."
+        },
+        "PolicyStartDate": {
+            "datatype": "date",
+            "format": "YYYY-MM-DD",
+            "description": "Date when the disability insurance policy was activated."
+        },
+        "PolicyType": {
+            "datatype": "string",
+            "enum": [
+                "Individual",
+                "Group",
+                "Government"
+            ],
+            "description": "Type of disability insurance policy (Individual, Group, or Government)."
+        },
+        "CoverageType": {
+            "datatype": "string",
+            "enum": [
+                "Short-Term Disability",
+                "Long-Term Disability"
+            ],
+            "description": "Type of coverage the policyholder is enrolled in (Short-Term Disability or Long-Term Disability)."
+        },
+        "IncomeReplacementPercentage": {
+            "datatype": "number",
+            "min": 60,
+            "max": 90,
+            "description": "Percentage of income replaced by the disability insurance policy, typically between 60% to 90%."
+        },
+        "BenefitAmount": {
+            "datatype": "number",
+            "description": "Amount of disability benefits paid to the policyholder."
+        },
+        "BenefitStartDate": {
+            "datatype": "date",
+            "format": "YYYY-MM-DD",
+            "description": "Date when the disability benefits begin after the qualifying event (e.g., injury, illness)."
+        },
+        "BenefitEndDate": {
+            "datatype": "date",
+            "format": "YYYY-MM-DD",
+            "description": "Date when the disability benefits end, either due to recovery or the end of the benefit period."
+        },
+        "MedicalCondition": {
+            "datatype": "string",
+            "description": "Description of the medical condition that led to the disability claim (e.g., Major Depression, Injury, Cancer)."
+        },
+        "ClaimStatus": {
+            "datatype": "string",
+            "enum": [
+                "Approved",
+                "Pending",
+                "Denied"
+            ],
+            "description": "Current status of the disability claim (Approved, Pending, or Denied)."
+        },
+        "ClaimAmountPaid": {
+            "datatype": "number",
+            "description": "Total amount paid out for the disability claim."
+        },
+        "WaitingPeriod": {
+            "datatype": "number",
+            "min": 1,
+            "max": 365,
+            "description": "Number of days before the disability benefits start, known as the waiting period."
+        },
+        "TaxStatus": {
+            "datatype": "string",
+            "enum": [
+                "Taxable",
+                "Tax-Free"
+            ],
+            "description": "Tax status of the disability benefits (Taxable or Tax-Free)."
+        },
+        "DisabilityDuration": {
+            "datatype": "number",
+            "min": 1,
+            "description": "Duration of the disability period (in months)."
+        },
+        "RehabilitationSupport": {
+            "datatype": "boolean",
+            "description": "Indicates whether rehabilitation support is provided as part of the policy."
+        },
+        "CoverageLimit": {
+            "datatype": "number",
+            "description": "Maximum coverage limit for the disability benefits."
+        }
+    }
+}

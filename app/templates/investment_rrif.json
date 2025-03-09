@@ -1,0 +1,109 @@
+{
+    "description": "Registered Retirement Income Fund (RRIF) synthetic data template. A RRIF is a tax-deferred investment account in Canada that provides income during retirement. This template includes fields for account details, account holder information, transferred funds, withdrawals, taxation, and investment types.",
+    "fields": {
+        "RRIF_ID": {
+            "datatype": "string",
+            "pattern": "RRIF-[0-9]{6}",
+            "description": "Unique identifier for the RRIF account."
+        },
+        "AccountHolderName": {
+            "datatype": "string",
+            "description": "Full name of the RRIF account holder."
+        },
+        "AccountHolderDOB": {
+            "datatype": "date",
+            "format": "YYYY-MM-DD",
+            "description": "Date of birth of the RRIF account holder."
+        },
+        "RRIFCreationDate": {
+            "datatype": "date",
+            "format": "YYYY-MM-DD",
+            "description": "Date when the RRIF account was opened."
+        },
+        "FundingSource": {
+            "datatype": "array",
+            "items": {
+                "datatype": "string",
+                "enum": [
+                    "RRSP",
+                    "Another RRIF",
+                    "Unlocked Pension Plan Funds",
+                    "Spouse's RRSP (due to death, separation, or divorce)",
+                    "Employer’s Deferred Profit-Sharing Plan (DPSP)",
+                    "Spouse’s Employer DPSP (due to death, separation, or divorce)"
+                ]
+            },
+            "description": "List of sources from which funds were transferred to open the RRIF."
+        },
+        "TotalBalance": {
+            "datatype": "number",
+            "description": "Current total balance of the RRIF account."
+        },
+        "AnnualMinimumWithdrawal": {
+            "datatype": "number",
+            "description": "Required minimum withdrawal amount for the year."
+        },
+        "Withdrawals": {
+            "datatype": "array",
+            "items": {
+                "datatype": "object",
+                "properties": {
+                    "WithdrawalDate": {
+                        "datatype": "date",
+                        "format": "YYYY-MM-DD",
+                        "description": "Date of the withdrawal transaction."
+                    },
+                    "WithdrawalAmount": {
+                        "datatype": "number",
+                        "min": 0,
+                        "description": "Amount withdrawn from the RRIF."
+                    },
+                    "WithholdingTaxApplied": {
+                        "datatype": "boolean",
+                        "description": "Indicates if withholding tax was applied to the withdrawal (only applicable for withdrawals above the minimum amount)."
+                    }
+                }
+            },
+            "description": "List of withdrawals made from the RRIF."
+        },
+        "TaxOnWithdrawals": {
+            "datatype": "number",
+            "description": "Total tax paid on withdrawals from the RRIF."
+        },
+        "InvestmentTypes": {
+            "datatype": "array",
+            "items": {
+                "datatype": "string",
+                "enum": ["Mutual Funds", "GICs", "ETFs", "Stocks", "Bonds", "Segregated Funds"]
+            },
+            "description": "List of investment types held within the RRIF."
+        },
+        "CanConvertToRRSP": {
+            "datatype": "boolean",
+            "description": "Indicates if the RRIF funds can be converted back to an RRSP (only applicable if the account holder is under 71)."
+        },
+        "MultipleRRIFs": {
+            "datatype": "boolean",
+            "description": "Indicates if the account holder owns multiple RRIF accounts."
+        },
+        "BeneficiaryOnDeath": {
+            "datatype": "object",
+            "properties": {
+                "BeneficiaryName": {
+                    "datatype": "string",
+                    "description": "Full name of the designated beneficiary upon account holder’s death."
+                },
+                "BeneficiaryRelationship": {
+                    "datatype": "string",
+                    "enum": ["Spouse", "Common-law Partner", "Child", "Other"],
+                    "description": "Relationship of the beneficiary to the RRIF account holder."
+                },
+                "RolloverEligibility": {
+                    "datatype": "boolean",
+                    "description": "Indicates if the beneficiary is eligible for a tax-free rollover of the RRIF funds."
+                }
+            },
+            "description": "Details of the beneficiary designated to receive RRIF funds upon the account holder’s death."
+        }
+    }
+}

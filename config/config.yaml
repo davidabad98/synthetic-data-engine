@@ -1,0 +1,2 @@
+# this command was executed for the lightweight spaCy model: 
+# python -m spacy download en_core_web_sm

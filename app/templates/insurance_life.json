@@ -1,0 +1,153 @@
+{
+  "description": "Synthetic data template for life insurance policies, including details about the life insurance contract, beneficiary information, and different types of life insurance policies such as term life and permanent life insurance.",
+  "fields": {
+      "PolicyID": {
+          "datatype": "string",
+          "pattern": "LIFE-[0-9]{6}",
+          "description": "Unique identifier for the life insurance policy (e.g., LIFE-123456)."
+      },
+      "PolicyHolderName": {
+          "datatype": "string",
+          "description": "Full name of the policyholder."
+      },
+      "PolicyHolderDOB": {
+          "datatype": "date",
+          "format": "YYYY-MM-DD",
+          "description": "Date of birth of the policyholder."
+      },
+      "PolicyStartDate": {
+          "datatype": "date",
+          "format": "YYYY-MM-DD",
+          "description": "Date when the life insurance policy was initiated."
+      },
+      "PolicyEndDate": {
+          "datatype": "date",
+          "format": "YYYY-MM-DD",
+          "description": "End date of the life insurance policy, applicable for term life insurance (N/A for permanent life)."
+      },
+      "PolicyType": {
+          "datatype": "string",
+          "enum": [
+              "Term Life",
+              "Whole Life",
+              "Participating Life",
+              "Universal Life"
+          ],
+          "description": "The type of life insurance policy chosen by the policyholder."
+      },
+      "CoverageAmount": {
+          "datatype": "number",
+          "description": "The amount of coverage provided by the life insurance policy."
+      },
+      "PremiumAmount": {
+          "datatype": "number",
+          "description": "The premium amount paid by the policyholder on a regular basis (e.g., monthly, annually)."
+      },
+      "PremiumPaymentFrequency": {
+          "datatype": "string",
+          "enum": [
+              "Monthly",
+              "Quarterly",
+              "Annually"
+          ],
+          "description": "The frequency at which premiums are paid."
+      },
+      "PolicyRenewalOption": {
+          "datatype": "boolean",
+          "description": "Indicates whether the policyholder has the option to renew the policy after the term expires (only applicable for Term Life)."
+      },
+      "CashValueOption": {
+          "datatype": "boolean",
+          "description": "Indicates whether the policy offers a cash value option (primarily for Permanent Life)."
+      },
+      "CashValueAmount": {
+          "datatype": "number",
+          "description": "The amount accumulated in the cash value account (only applicable for Permanent Life)."
+      },
+      "DeathBenefit": {
+          "datatype": "number",
+          "description": "The amount that will be paid to the beneficiaries upon the policyholder's death."
+      },
+      "Beneficiaries": {
+          "datatype": "array",
+          "items": {
+              "datatype": "string",
+              "description": "Names of the beneficiaries who will receive the death benefit."
+          },
+          "description": "List of beneficiaries entitled to the death benefit."
+      },
+      "PolicyHolderHealthStatus": {
+          "datatype": "string",
+          "enum": [
+              "Healthy",
+              "Pre-existing Conditions",
+              "Critical Illness"
+          ],
+          "description": "Health status of the policyholder at the time of policy issuance."
+      },
+      "Riders": {
+          "datatype": "array",
+          "items": {
+              "datatype": "string",
+              "enum": [
+                  "Accidental Death",
+                  "Critical Illness",
+                  "Disability",
+                  "Waiver of Premium"
+              ]
+          },
+          "description": "Optional riders added to the policy to provide additional coverage or benefits."
+      },
+      "RenewalPremiumIncrease": {
+          "datatype": "number",
+          "description": "The percentage increase in premiums upon renewal (only applicable for Term Life)."
+      },
+      "UnderwritingClass": {
+          "datatype": "string",
+          "enum": [
+              "Standard",
+              "Preferred",
+              "Substandard"
+          ],
+          "description": "Underwriting class of the policyholder, based on their health and risk profile."
+      },
+      "PolicyStatus": {
+          "datatype": "string",
+          "enum": [
+              "Active",
+              "Lapsed",
+              "Claimed",
+              "Terminated"
+          ],
+          "description": "The current status of the life insurance policy."
+      },
+      "PolicyHolderOccupation": {
+          "datatype": "string",
+          "description": "Occupation of the policyholder, which may affect the policy's premiums or underwriting."
+      },
+      "PolicyHolderSmokerStatus": {
+          "datatype": "string",
+          "enum": [
+              "Non-Smoker",
+              "Smoker"
+          ],
+          "description": "Whether the policyholder is a smoker or non-smoker, which may impact premiums."
+      },
+      "PolicyLoanOutstandingAmount": {
+          "datatype": "number",
+          "description": "The outstanding loan amount against the policy, if applicable (for policies with cash value)."
+      },
+      "PolicyLoanInterestRate": {
+          "datatype": "number",
+          "description": "The interest rate applied to any loans taken against the policy's cash value."
+      },
+      "TaxPreferredGrowth": {
+          "datatype": "boolean",
+          "description": "Indicates if the policy has tax-preferred growth on the accumulated cash value (relevant for Permanent Life)."
+      },
+      "AutomaticPremiumLoan": {
+          "datatype": "boolean",
+          "description": "Indicates if the policy has an automatic premium loan feature to pay premiums from the policy’s cash value."
+      }
+  }
+}

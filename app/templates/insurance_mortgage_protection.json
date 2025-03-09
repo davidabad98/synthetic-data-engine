@@ -1,0 +1,121 @@
+{
+    "description": "Mortgage protection insurance synthetic data template. Mortgage protection insurance is a life insurance policy that ensures your family or beneficiaries receive a tax-free death benefit to cover mortgage payments, debts, or other living expenses in the event of your death. The coverage lasts for a set term, typically through term life insurance.",
+    "fields": {
+        "PolicyID": {
+            "datatype": "string",
+            "pattern": "MP-[0-9]{6}",
+            "description": "Unique identifier for the mortgage protection insurance policy (e.g., MP-123456)."
+        },
+        "PolicyHolderName": {
+            "datatype": "string",
+            "description": "Full name of the policyholder."
+        },
+        "PolicyHolderDOB": {
+            "datatype": "date",
+            "format": "YYYY-MM-DD",
+            "description": "Date of birth of the policyholder."
+        },
+        "PolicyStartDate": {
+            "datatype": "date",
+            "format": "YYYY-MM-DD",
+            "description": "Date when the mortgage protection insurance policy became effective."
+        },
+        "PolicyEndDate": {
+            "datatype": "date",
+            "format": "YYYY-MM-DD",
+            "description": "Date when the mortgage protection insurance policy expires."
+        },
+        "CoverageAmount": {
+            "datatype": "number",
+            "description": "Amount of life insurance coverage provided to the policyholder's beneficiaries in the event of death."
+        },
+        "PolicyType": {
+            "datatype": "string",
+            "enum": [
+                "Term Life Insurance"
+            ],
+            "description": "Type of life insurance used for mortgage protection (typically term life insurance)."
+        },
+        "TermLength": {
+            "datatype": "number",
+            "description": "Length of the term life insurance coverage, usually set in years (e.g., 10, 15, 20, or 30 years)."
+        },
+        "PremiumAmount": {
+            "datatype": "number",
+            "description": "Monthly or annual premium paid for the mortgage protection insurance."
+        },
+        "PaymentFrequency": {
+            "datatype": "string",
+            "enum": [
+                "Monthly",
+                "Annually"
+            ],
+            "description": "Frequency at which the premium is paid (Monthly or Annually)."
+        },
+        "BeneficiaryName": {
+            "datatype": "string",
+            "description": "Full name of the beneficiary who will receive the death benefit."
+        },
+        "BeneficiaryRelationship": {
+            "datatype": "string",
+            "description": "Relationship of the beneficiary to the policyholder (e.g., spouse, child, etc.)."
+        },
+        "BeneficiaryContact": {
+            "datatype": "string",
+            "pattern": "^[0-9]{10}$",
+            "description": "Contact number of the beneficiary."
+        },
+        "MortgageAmountCovered": {
+            "datatype": "number",
+            "description": "The amount of mortgage debt covered by the insurance in case of the policyholder's death."
+        },
+        "MortgageLenderName": {
+            "datatype": "string",
+            "description": "Name of the bank or mortgage lender associated with the policyholder's mortgage."
+        },
+        "ClaimStatus": {
+            "datatype": "string",
+            "enum": [
+                "Approved",
+                "Pending",
+                "Denied"
+            ],
+            "description": "Current status of the mortgage protection insurance claim (Approved, Pending, or Denied)."
+        },
+        "ClaimAmountPaid": {
+            "datatype": "number",
+            "description": "Amount paid out for claims made under the mortgage protection insurance policy."
+        },
+        "PolicyRenewal": {
+            "datatype": "boolean",
+            "description": "Indicates whether the policy is eligible for renewal at the end of the term."
+        },
+        "RenewalTermLength": {
+            "datatype": "number",
+            "description": "Length of the renewal term if the policy is renewed (in years)."
+        },
+        "DeathBenefitUsage": {
+            "datatype": "string",
+            "enum": [
+                "Mortgage Payments",
+                "Debts",
+                "Childcare",
+                "Living Expenses",
+                "Other"
+            ],
+            "description": "Primary use of the death benefit by the beneficiary (e.g., mortgage payments, debts, childcare, etc.)."
+        },
+        "PolicyHolderHealthStatus": {
+            "datatype": "string",
+            "enum": [
+                "Healthy",
+                "Pre-Existing Condition"
+            ],
+            "description": "The health status of the policyholder at the time of policy issuance (Healthy or Pre-Existing Condition)."
+        },
+        "Exclusions": {
+            "datatype": "string",
+            "description": "List of exclusions in the policy, such as certain conditions that may not be covered."
+        }
+    }
+}

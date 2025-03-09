@@ -1,0 +1,122 @@
+{
+    "description": "Registered Education Savings Plan (RESP) synthetic data template. An RESP is a tax-deferred account in Canada designed to help save for a child’s post-secondary education. This template includes fields for plan details, account holder and beneficiary information, contribution limits, government grants, and eligible education expenses.",
+    "fields": {
+        "RESP_ID": {
+            "datatype": "string",
+            "pattern": "RESP-[0-9]{6}",
+            "description": "Unique identifier for the RESP account."
+        },
+        "PlanType": {
+            "datatype": "string",
+            "enum": ["Individual", "Family"],
+            "description": "Type of RESP account: Individual or Family."
+        },
+        "AccountHolderName": {
+            "datatype": "string",
+            "description": "Full name of the RESP account holder."
+        },
+        "AccountHolderDOB": {
+            "datatype": "date",
+            "format": "YYYY-MM-DD",
+            "description": "Date of birth of the RESP account holder."
+        },
+        "Beneficiaries": {
+            "datatype": "array",
+            "items": {
+                "datatype": "object",
+                "properties": {
+                    "BeneficiaryName": {
+                        "datatype": "string",
+                        "description": "Full name of the beneficiary."
+                    },
+                    "BeneficiaryDOB": {
+                        "datatype": "date",
+                        "format": "YYYY-MM-DD",
+                        "description": "Date of birth of the beneficiary."
+                    },
+                    "RelationshipToHolder": {
+                        "datatype": "string",
+                        "enum": ["Child", "Grandchild", "Adopted Child", "Stepchild", "Other"],
+                        "description": "Relationship of the beneficiary to the RESP account holder."
+                    }
+                }
+            },
+            "description": "List of beneficiaries associated with the RESP."
+        },
+        "TotalContribution": {
+            "datatype": "number",
+            "min": 0,
+            "max": 50000,
+            "description": "Total contributions made to the RESP, with a lifetime limit of $50,000 per beneficiary."
+        },
+        "AnnualContribution": {
+            "datatype": "number",
+            "min": 0,
+            "description": "Current year's contribution amount."
+        },
+        "CESGReceived": {
+            "datatype": "number",
+            "min": 0,
+            "max": 7200,
+            "description": "Total Canada Education Savings Grant (CESG) received, with a lifetime maximum of $7,200 per beneficiary."
+        },
+        "CLBReceived": {
+            "datatype": "number",
+            "min": 0,
+            "description": "Total Canada Learning Bond (CLB) received."
+        },
+        "ProvincialGrants": {
+            "datatype": "object",
+            "properties": {
+                "BCTESG": {
+                    "datatype": "number",
+                    "min": 0,
+                    "max": 1200,
+                    "description": "B.C. Training and Education Savings Grant (BCTESG), up to $1,200."
+                },
+                "QESI": {
+                    "datatype": "number",
+                    "min": 0,
+                    "max": 3600,
+                    "description": "Québec Education Savings Incentive (QESI), with a lifetime maximum of $3,600."
+                }
+            },
+            "description": "Provincial grants received under the RESP."
+        },
+        "InvestmentTypes": {
+            "datatype": "array",
+            "items": {
+                "datatype": "string",
+                "enum": ["Mutual Funds", "GICs", "ETFs", "Stocks", "Bonds", "Segregated Funds"]
+            },
+            "description": "List of investment types held within the RESP."
+        },
+        "AccountCreationDate": {
+            "datatype": "date",
+            "format": "YYYY-MM-DD",
+            "description": "Date when the RESP account was established."
+        },
+        "EligibleExpenses": {
+            "datatype": "array",
+            "items": {
+                "datatype": "string",
+                "enum": ["Tuition", "Books", "Technology", "Apprenticeship Fees", "Trade School Costs", "Room & Board", "Transportation"]
+            },
+            "description": "List of eligible education expenses covered by RESP withdrawals."
+        },
+        "TotalBalance": {
+            "datatype": "number",
+            "description": "Current total balance of the RESP account."
+        },
+        "WithdrawnAmount": {
+            "datatype": "number",
+            "min": 0,
+            "description": "Total amount withdrawn from the RESP for educational expenses."
+        },
+        "WithdrawnBy": {
+            "datatype": "string",
+            "enum": ["Beneficiary", "Account Holder"],
+            "description": "Who withdrew the funds: the beneficiary or the account holder."
+        }
+    }
+}

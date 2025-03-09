@@ -1,0 +1,104 @@
+{
+    "description": "Locked-In Retirement Account (LIRA) synthetic data template. A LIRA is a Canadian registered account designed to hold and invest pension assets from former employers. Investment income within the LIRA is tax-deferred until withdrawal. This template includes account details, investment options, locked-in rules, withdrawal policies, and eligibility requirements.",
+    "fields": {
+        "LIRA_ID": {
+            "datatype": "string",
+            "pattern": "LIRA-[0-9]{6}",
+            "description": "Unique identifier for the LIRA account (e.g., LIRA-654321)."
+        },
+        "AccountHolderName": {
+            "datatype": "string",
+            "description": "Full name of the LIRA account holder."
+        },
+        "AccountHolderDOB": {
+            "datatype": "date",
+            "format": "YYYY-MM-DD",
+            "description": "Date of birth of the account holder."
+        },
+        "SocialInsuranceNumber": {
+            "datatype": "string",
+            "pattern": "[0-9]{9}",
+            "description": "Social Insurance Number (SIN) of the account holder."
+        },
+        "EmployerName": {
+            "datatype": "string",
+            "description": "Name of the former employer who contributed to the pension."
+        },
+        "PensionPlanType": {
+            "datatype": "string",
+            "enum": [
+                "Defined Benefit Pension Plan",
+                "Defined Contribution Pension Plan"
+            ],
+            "description": "Type of pension plan transferred into the LIRA."
+        },
+        "LIRAOpeningDate": {
+            "datatype": "date",
+            "format": "YYYY-MM-DD",
+            "description": "Date when the LIRA account was established."
+        },
+        "TotalBalance": {
+            "datatype": "number",
+            "description": "Current total balance of the LIRA account."
+        },
+        "InvestmentTypes": {
+            "datatype": "array",
+            "items": {
+                "datatype": "string",
+                "enum": [
+                    "Mutual Funds",
+                    "Insurance GICs",
+                    "Segregated Funds",
+                    "ETFs",
+                    "Stocks",
+                    "Bonds",
+                    "Annuities"
+                ]
+            },
+            "description": "List of investment types held within the LIRA."
+        },
+        "LockedInStatus": {
+            "datatype": "boolean",
+            "description": "Indicates whether the funds in the LIRA are locked-in and cannot be accessed until retirement age."
+        },
+        "MinimumWithdrawalAge": {
+            "datatype": "number",
+            "description": "Minimum age at which the account holder can start making withdrawals, typically 55 or older, depending on pension legislation."
+        },
+        "WithdrawalOptions": {
+            "datatype": "array",
+            "items": {
+                "datatype": "string",
+                "enum": [
+                    "Transfer to a Life Income Fund (LIF)",
+                    "Transfer to a Locked-In Retirement Income Fund (LRIF)",
+                    "Transfer to a Prescribed Retirement Income Fund (PRIF)",
+                    "Purchase a life annuity"
+                ]
+            },
+            "description": "Available withdrawal options once the minimum age is reached."
+        },
+        "UnlockingOptions": {
+            "datatype": "array",
+            "items": {
+                "datatype": "string",
+                "enum": [
+                    "Up to 50% unlocked at age 55",
+                    "Financial hardship exemption",
+                    "Non-residency withdrawal",
+                    "Reduced life expectancy withdrawal",
+                    "Small balance exemption"
+                ]
+            },
+            "description": "Special exceptions that allow for early withdrawal of LIRA funds."
+        },
+        "SpousalConsentRequired": {
+            "datatype": "boolean",
+            "description": "Indicates whether spousal or common-law partner consent is required for certain withdrawals."
+        },
+        "TaxDeferredStatus": {
+            "datatype": "boolean",
+            "description": "Indicates whether the investment income within the LIRA is tax-deferred until withdrawal."
+        }
+    }
+}

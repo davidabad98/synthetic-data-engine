@@ -1,0 +1,170 @@
+{
+    "description": "Synthetic data template for personal health insurance policies in Canada, including details about health coverage, plan types (Basic, Standard, Enhanced), covered expenses, and eligibility.",
+    "fields": {
+        "PolicyID": {
+            "datatype": "string",
+            "pattern": "PHI-[0-9]{6}",
+            "description": "Unique identifier for the personal health insurance policy (e.g., PHI-123456)."
+        },
+        "PolicyHolderName": {
+            "datatype": "string",
+            "description": "Full name of the policyholder."
+        },
+        "PolicyHolderDOB": {
+            "datatype": "date",
+            "format": "YYYY-MM-DD",
+            "description": "Date of birth of the policyholder."
+        },
+        "PolicyStartDate": {
+            "datatype": "date",
+            "format": "YYYY-MM-DD",
+            "description": "Start date of the personal health insurance policy."
+        },
+        "PolicyEndDate": {
+            "datatype": "date",
+            "format": "YYYY-MM-DD",
+            "description": "End date of the personal health insurance policy (if applicable)."
+        },
+        "PolicyType": {
+            "datatype": "string",
+            "enum": [
+                "Basic",
+                "Standard",
+                "Enhanced"
+            ],
+            "description": "The type of personal health insurance policy chosen by the policyholder."
+        },
+        "CoverageLimit": {
+            "datatype": "number",
+            "description": "The maximum amount covered per year for the policyholder’s health expenses."
+        },
+        "DeductibleAmount": {
+            "datatype": "number",
+            "description": "The deductible amount that the policyholder must pay before the insurance coverage begins."
+        },
+        "CoinsurancePercentage": {
+            "datatype": "number",
+            "description": "The percentage of the medical expenses the policyholder must pay after the deductible is met."
+        },
+        "PrescriptionDrugCoverage": {
+            "datatype": "boolean",
+            "description": "Indicates whether prescription drug coverage is included in the plan."
+        },
+        "DentalCareCoverage": {
+            "datatype": "boolean",
+            "description": "Indicates whether dental care coverage (e.g., teeth cleanings, braces, crowns) is included in the plan."
+        },
+        "VisionCareCoverage": {
+            "datatype": "boolean",
+            "description": "Indicates whether vision care coverage (e.g., eye exams, glasses) is included in the plan."
+        },
+        "EmergencyTravelCoverage": {
+            "datatype": "boolean",
+            "description": "Indicates whether emergency travel medical services coverage is included (for out-of-country medical expenses)."
+        },
+        "PhysiotherapyCoverage": {
+            "datatype": "boolean",
+            "description": "Indicates whether physiotherapy coverage for injury recovery is included in the plan."
+        },
+        "MedicalEquipmentCoverage": {
+            "datatype": "boolean",
+            "description": "Indicates whether medical equipment (e.g., mobility aids) coverage is included in the plan."
+        },
+        "PolicyHolderEmploymentStatus": {
+            "datatype": "string",
+            "enum": [
+                "Employed",
+                "Self-Employed",
+                "Retired",
+                "Unemployed"
+            ],
+            "description": "Employment status of the policyholder, which may affect their eligibility or need for personal health insurance."
+        },
+        "EmployerCoverageTopUp": {
+            "datatype": "boolean",
+            "description": "Indicates whether the policyholder is using this personal health insurance to top up their employer’s workplace plan."
+        },
+        "PolicyHolderRetirementStatus": {
+            "datatype": "boolean",
+            "description": "Indicates whether the policyholder is retired or nearing retirement."
+        },
+        "Exclusions": {
+            "datatype": "array",
+            "items": {
+                "datatype": "string",
+                "description": "List of exclusions that are not covered under the policy."
+            },
+            "description": "Exclusions under the personal health insurance policy (e.g., cosmetic procedures, pre-existing conditions)."
+        },
+        "HealthServicesIncluded": {
+            "datatype": "array",
+            "items": {
+                "datatype": "string",
+                "enum": [
+                    "Prescription Drugs",
+                    "Dental Care",
+                    "Vision Care",
+                    "Emergency Travel",
+                    "Physiotherapy",
+                    "Medical Equipment"
+                ]
+            },
+            "description": "List of health services that are covered under the personal health insurance policy."
+        },
+        "FamilyCoverageOption": {
+            "datatype": "boolean",
+            "description": "Indicates whether the policyholder has opted for family coverage under the policy."
+        },
+        "FamilyMembersCovered": {
+            "datatype": "array",
+            "items": {
+                "datatype": "string",
+                "description": "Names of family members covered under the policy, if applicable."
+            },
+            "description": "List of family members covered under the personal health insurance policy."
+        },
+        "PolicyStatus": {
+            "datatype": "string",
+            "enum": [
+                "Active",
+                "Lapsed",
+                "Cancelled",
+                "Claimed"
+            ],
+            "description": "Current status of the personal health insurance policy."
+        },
+        "PolicyHolderOccupation": {
+            "datatype": "string",
+            "description": "Occupation of the policyholder, which may impact the insurance premium or coverage options."
+        },
+        "PreExistingConditionsCovered": {
+            "datatype": "boolean",
+            "description": "Indicates whether pre-existing medical conditions are covered under the policy."
+        },
+        "AdditionalRiders": {
+            "datatype": "array",
+            "items": {
+                "datatype": "string",
+                "enum": [
+                    "Critical Illness",
+                    "Accidental Death",
+                    "Hospital Cash Benefit"
+                ]
+            },
+            "description": "Optional riders added to the policy to provide additional coverage."
+        },
+        "PolicyPremiumAmount": {
+            "datatype": "number",
+            "description": "The monthly or annual premium amount the policyholder pays for the health insurance."
+        },
+        "PolicyPremiumFrequency": {
+            "datatype": "string",
+            "enum": [
+                "Monthly",
+                "Quarterly",
+                "Annually"
+            ],
+            "description": "The frequency at which premiums are paid for the personal health insurance."
+        }
+    }
+}
