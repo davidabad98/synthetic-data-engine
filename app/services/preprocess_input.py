@@ -1,195 +1,113 @@
-# app/services/preprocessing.py
+# app/services/preprocess_input.py
 
-import csv
-import io
 import json
 import os
-import xml.etree.ElementTree as ET
-from typing import Any, Tuple, Union
 
 from app.models.request import GenerateRequest
-
-# Predefined field mapping for normalization
-FIELD_MAPPINGS = {
-    "FullName": ["FirstName", "LastName", "Name", "FullName"],
-    "CustomerEmail": ["Email", "EmailAddr", "ContactEmail", "CustomerEmail"],
-    "Address": ["Address", "Addr", "Street"],
-    "City": ["City", "Town"],
-    "State": ["State", "Province"],
-    "ZipCode": ["Zip", "PostalCode", "ZipCode"],
-    "BeneficiaryName": ["Beneficiary", "BeneficiaryName", "RecipientName"],
-    "BeneficiaryEmail": ["BeneficiaryEmail", "RecipientEmail"],
-    "CoverageAmount": ["Coverage", "CoverageAmount", "InsuredAmount"],
-    "PolicyType": ["PolicyType", "Type", "PlanType"],
-    "StartDate": ["StartDate", "EffectiveDate"],
-    "EndDate": ["EndDate", "ExpiryDate"],
-    "PremiumAmount": ["Premium", "PremiumAmount", "PaymentAmount"],
-}
-
-
-def auto_detect_format(input_text: str) -> Tuple[Any, str]:
-    """
-    Auto-detects the format of the input text.
-    Returns a tuple (parsed_data, format_type) where format_type can be 'json', 'xml', 'csv', or 'text'.
-    """
-    # Attempt to parse as JSON
-    try:
-        data = json.loads(input_text)
-        return data, "json"
-    except json.JSONDecodeError:
-        pass
-
-    # Attempt to parse as XML
-    try:
-        root = ET.fromstring(input_text)
-        # Convert XML to dict (simple conversion)
-        data = {child.tag: child.text for child in root}
-        return data, "xml"
-    except ET.ParseError:
-        pass
-
-    # Attempt to parse as CSV
-    try:
-        csv_reader = csv.DictReader(io.StringIO(input_text))
-        data = list(csv_reader)
-        if data:
-            return data, "csv"
-    except Exception:
-        pass
-
-    # Fallback: assume plain text (natural language)
-    return input_text, "text"
-
-
-def get_standard_field(field_name: str) -> str:
-    """
-    Returns the standardized field name based on the mapping dictionary.
-    If no mapping is found, returns the original field name.
-    """
-    for standard, synonyms in FIELD_MAPPINGS.items():
-        if field_name in synonyms:
-            return standard
-    return field_name
-
-
-def normalize_columns(data: Union[dict, list]) -> Union[dict, list]:
-    """
-    Normalizes column names in the parsed data.
-    Handles both dictionary (single record) and list (e.g., CSV rows) formats.
-    """
-    if isinstance(data, dict):
-        normalized = {}
-        for key, value in data.items():
-            normalized[get_standard_field(key)] = value
-        return normalized
-    elif isinstance(data, list):
-        normalized_list = []
-        for row in data:
-            normalized_row = {}
-            for key, value in row.items():
-                normalized_row[get_standard_field(key)] = value
-            normalized_list.append(normalized_row)
-        return normalized_list
-    else:
-        return data
-
-
-def enhance_user_intent(text: str) -> dict:
-    """
-    Simulates the extraction of a structured schema from natural language input using an LLM.
-    Replace this simulation with an actual call to an LLM (e.g., via AWS Bedrock) when ready.
-    """
-    simulated_schema = {
-        "fields": ["FullName", "CustomerEmail", "PhoneNumber"],
-        "constraints": {
-            "FullName": {"type": "string"},
-            "CustomerEmail": {"type": "string", "format": "email"},
-            "PhoneNumber": {"type": "string"},
-        },
-        "output_format": "CSV",
-    }
-    return simulated_schema
-
-
-def load_base_template() -> dict:
-    template_path = os.path.join(
-        os.path.dirname(__file__), "..", "templates", "life_insurance_template.json"
-    )
-    with open(template_path, "r") as f:
-        base_template = json.load(f)
-    return base_template
-
-
-def merge_with_template(parsed_schema: Union[dict, list], base_template: dict) -> dict:
-    merged_template = base_template.copy()
-    base_fields = merged_template.get("fields", {})
-
-    # If parsed_schema is a dict (single record)
-    if isinstance(parsed_schema, dict):
-        for key, value in parsed_schema.items():
-            standard_key = get_standard_field(key)
-            if standard_key not in base_fields:
-                inferred_type = (
-                    "number" if isinstance(value, (int, float)) else "string"
-                )
-                base_fields[standard_key] = {
-                    "datatype": inferred_type,
-                    "description": "User provided field",
-                }
-    # If parsed_schema is a list (e.g., multiple rows from CSV)
-    elif isinstance(parsed_schema, list) and len(parsed_schema) > 0:
-        for row in parsed_schema:
-            for key, value in row.items():
-                standard_key = get_standard_field(key)
-                if standard_key not in base_fields:
-                    inferred_type = (
-                        "number" if isinstance(value, (int, float)) else "string"
-                    )
-                    base_fields[standard_key] = {
-                        "datatype": inferred_type,
-                        "description": "User provided field",
-                    }
-    merged_template["fields"] = base_fields
-    return merged_template
+from app.services.fuzzy_matching import select_template_rule_based
+from app.services.llm_service import LLMService
+from app.services.sentence_embeddings import SentenceEmbeddingMatcher
+from app.utils.template_loader import load_template
 
 
 def preprocess_input(request: GenerateRequest) -> str:
     """
-    Processes the user input (request) to build a dynamic prompt.
-    Steps:
-      1. Auto-detect input format.
-      2. Normalize column names if applicable.
-      3. Enhance user intent using simulated LLM extraction when input is plain text.
-    Finally, it constructs the final prompt string.
+    Preprocesses the user input to select the best matching template and then builds
+    and sends a final prompt to the LLM for synthetic data generation.
+
+    Workflow:
+      1. Try rule-based template selection.
+      2. If not found, try sentence embedding based matching.
+      3. If a template is found, load the JSON schema.
+      4. Build the final prompt including:
+         - User's original input.
+         - A static instruction message.
+         - The selected JSON schema (pretty printed).
+      5. Send the prompt to the LLM API and return the generated synthetic data.
     """
-    input_text = request.prompt
-    parsed_data, format_type = auto_detect_format(input_text)
-
-    if format_type == "text":
-        # For plain language input, simulate an LLM extracting a schema.
-        user_schema = enhance_user_intent(parsed_data)
+    user_input = request.prompt
+    # Step 1: Rule-Based Template Selection
+    template_name = select_template_rule_based(user_input)
+    if template_name != "NOT FOUND":
+        selected_template_name = template_name
     else:
-        # For structured input, normalize column names.
-        user_schema = normalize_columns(parsed_data)
+        # Step 2: Embedding-Based Template Selection
+        matcher = SentenceEmbeddingMatcher()
+        template_name_from_embeddings = matcher.match_template(user_input)
+        if template_name_from_embeddings != "NOT FOUND":
+            selected_template_name = template_name_from_embeddings
+        else:
+            # No template found by either method
+            selected_template_name = "NOT FOUND"
 
-    base_template = load_base_template()
-    merged_schema = merge_with_template(user_schema, base_template)
+    # If no template was found, return early or handle accordingly.
+    if selected_template_name == "NOT FOUND":
+        print("No matching template found for the input.")
+        return "NOT FOUND"
 
-    # Construct the final prompt string.
-    final_prompt = (
-        f"Schema: {merged_schema}. "
-        f"Generate {request.volume} records in {request.input_format} format."
+    # Step 3: Load the selected JSON template (schema)
+    selected_template = load_template(selected_template_name)
+    if not selected_template:
+        print("Template file could not be loaded.")
+        return "NOT FOUND"
+
+    # Step 4: Build the final prompt with best practices in prompt engineering.
+    static_instruction = (
+        "Using the following schema, achieve what the user has requested."
     )
-    return final_prompt
+
+    final_prompt = (
+        f"User Request: {user_input}\n\n"
+        f"{static_instruction}\n\n"
+        f"Schema:\n{json.dumps(selected_template, indent=2)}\n\n"
+        "Ensure that any specific field modifications (if mentioned by the user) are considered."
+    )
+
+    # Step 5: Send the final prompt to the LLM API
+    synthetic_data = LLMService.call_llm_api(final_prompt)
+    return synthetic_data
 
 
 # For debugging, you can test these functions independently.
 if __name__ == "__main__":
     # Example inputs:
-    json_input = '{"FirstName": "John", "EmailAddr": "john@example.com"}'
-    xml_input = "<root><FirstName>John</FirstName><EmailAddr>john@example.com</EmailAddr></root>"
-    csv_input = "FirstName,EmailAddr\nJohn,john@example.com"
-    plain_text_input = "Please generate customer records with first name, email address, and phone number."
+    test_requests = [
+        "Generate synthetic data for a tax free saving account",
+        "I need data for a health insurance policy",
+        "Produce synthetic records for dental insurances",
+        "Mock data for TFSA",
+        "Data generation for retirement savings",
+        "Create data for a claim submission process",
+        "Synthetic data for business owner insurance",
+        "Generate records for critical illness coverage",
+        "Mock data for disability insurance",
+        "Data generation for life insurance policies",
+        "Produce synthetic data for long-term care insurance",
+        "Create mock records for mortgage protection",
+        "Synthetic data for personal health insurance",
+        "Generate data for travel insurance policies",
+        "Mock data for a first home savings account",
+        "Data generation for life income fund",
+        "Produce synthetic records for locked-in retirement accounts",
+        "Create data for registered education savings plans",
+        "Synthetic data for registered retirement income funds",
+        "Generate mock data for registered retirement savings plans",
+        "Data generation for tax-free savings accounts",
+        "I need synthetic data for a critical illness plan",
+        "Produce mock records for a dental plan",
+        "Create data for a disability coverage policy",
+        "Generate synthetic data for a life protection plan",
+        "Mock data for elder care insurance",
+        "Data generation for home loan protection",
+        "Synthetic data for individual health plans",
+        "Produce records for trip protection insurance",
+        "Create mock data for a first-time home buyer savings account",
+        "Generate data for a retirement income fund",
+        "Synthetic data for a pension income fund",
+        "Mock data for a child education fund",
+        "Data generation for a pension fund",
+        "Produce synthetic records for a tax-free investment account",
+    ]
 
     class DummyRequest:
         def __init__(self, prompt, input_format, volume):
@@ -198,6 +116,6 @@ if __name__ == "__main__":
             self.volume = volume
 
     # Testing each scenario:
-    for inp in [json_input, xml_input, csv_input, plain_text_input]:
-        dummy_request = DummyRequest(prompt=inp, input_format="CSV", volume=1000)
+    for req in test_requests:
+        dummy_request = DummyRequest(prompt=req, input_format="CSV", volume=1000)
         print("Final Prompt:", preprocess_input(dummy_request))

@@ -21,8 +21,7 @@ async def generate_data(request: GenerateRequest):
         final_prompt = preprocess_input(request)
         # For the prototype, we simulate an LLM response.
         synthetic_data = {
-            "final_prompt": final_prompt,
-            "dummy_data": "This is a simulation of synthetic records.",
+            "llm_response": final_prompt,
         }
 
         return GenerateResponse(
