@@ -213,7 +213,7 @@ def remove_filler_phrases(text: str) -> str:
     return text
 
 
-def select_template_rule_based(user_request: str, threshold: float = 70.0) -> str:
+def select_template_rule_based(user_request: str, threshold: float = 85.0) -> str:
     """
     Select the appropriate template based on fuzzy matching of the normalized user request
     against a set of predefined category descriptions.

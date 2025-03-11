@@ -1,67 +1,69 @@
 {
-    "ClaimID": {
-      "datatype": "string",
-      "pattern": "CL-[0-9]{6}",
-      "description": "Unique identifier for the claim submission (e.g., CL-123456)."
-    },
-    "PolicyID": {
-      "datatype": "string",
-      "pattern": "([DI|LI|CI|DA|DC|LC])-[0-9]{6}",
-      "description": "Policy ID associated with the claim. It follows a specific pattern depending on the claim type (e.g., DI-123456 for dental insurance)."
-    },
-    "ClaimType": {
-      "datatype": "string",
-      "enum": [
-        "Health Claim",
-        "Dental Claim",
-        "Life Insurance Claim",
-        "Critical Illness Insurance Claim",
-        "Disability Insurance Claim",
-        "Accidental Death Insurance Claim",
-        "Long-Term Care Insurance Claim"
-      ],
-      "description": "Type of insurance claim being submitted."
-    },
-    "ClaimAmountRequested": {
-      "datatype": "number",
-      "description": "The amount of money being claimed by the policyholder."
-    },
-    "ClaimDate": {
-      "datatype": "date",
-      "format": "YYYY-MM-DD",
-      "description": "The date when the claim was submitted."
-    },
-    "ClaimStatus": {
-      "datatype": "string",
-      "enum": [
-        "Submitted",
-        "Under Review",
-        "Approved",
-        "Denied"
-      ],
-      "description": "Current status of the claim."
-    },
-    "PolicyHolderName": {
-      "datatype": "string",
-      "description": "Full name of the policyholder submitting the claim."
-    },
-    "ClaimDetails": {
-      "datatype": "string",
-      "description": "A brief description of the reason for the claim."
-    },
-    "SupportingDocuments": {
-      "datatype": "array",
-      "items": {
-        "documentType": {
-          "datatype": "string",
-          "description": "Type of supporting document (e.g., medical report, invoice, police report)."
+    "description": "This template captures details of an insurance claim submission, linking it to a specific policy and categorizing it by claim type. It includes key details such as the claim amount, submission date, status, policyholder information, and a description of the claim. Additionally, it allows for the attachment of supporting documents, ensuring a comprehensive record for processing and review.",
+    "fields": {
+        "ClaimID": {
+            "datatype": "string",
+            "pattern": "CL-[0-9]{6}",
+            "description": "Unique identifier for the claim submission (e.g., CL-123456)."
         },
-        "documentURL": {
-          "datatype": "string",
-          "description": "URL or file path to the uploaded supporting document."
+        "PolicyID": {
+            "datatype": "string",
+            "pattern": "([DI|LI|CI|DA|DC|LC])-[0-9]{6}",
+            "description": "Policy ID associated with the claim. It follows a specific pattern depending on the claim type (e.g., DI-123456 for dental insurance)."
+        },
+        "ClaimType": {
+            "datatype": "string",
+            "enum": [
+                "Health Claim",
+                "Dental Claim",
+                "Life Insurance Claim",
+                "Critical Illness Insurance Claim",
+                "Disability Insurance Claim",
+                "Accidental Death Insurance Claim",
+                "Long-Term Care Insurance Claim"
+            ],
+            "description": "Type of insurance claim being submitted."
+        },
+        "ClaimAmountRequested": {
+            "datatype": "number",
+            "description": "The amount of money being claimed by the policyholder."
+        },
+        "ClaimDate": {
+            "datatype": "date",
+            "format": "YYYY-MM-DD",
+            "description": "The date when the claim was submitted."
+        },
+        "ClaimStatus": {
+            "datatype": "string",
+            "enum": [
+                "Submitted",
+                "Under Review",
+                "Approved",
+                "Denied"
+            ],
+            "description": "Current status of the claim."
+        },
+        "PolicyHolderName": {
+            "datatype": "string",
+            "description": "Full name of the policyholder submitting the claim."
+        },
+        "ClaimDetails": {
+            "datatype": "string",
+            "description": "A brief description of the reason for the claim."
+        },
+        "SupportingDocuments": {
+            "datatype": "array",
+            "items": {
+                "documentType": {
+                    "datatype": "string",
+                    "description": "Type of supporting document (e.g., medical report, invoice, police report)."
+                },
+                "documentURL": {
+                    "datatype": "string",
+                    "description": "URL or file path to the uploaded supporting document."
+                }
+            },
+            "description": "List of documents submitted along with the claim."
         }
-      },
-      "description": "List of documents submitted along with the claim."
     }
-  }
-  
+}

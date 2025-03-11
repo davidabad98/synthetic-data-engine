@@ -3,7 +3,7 @@
 from fastapi import APIRouter, HTTPException, status
 
 from app.models.request import GenerateRequest, GenerateResponse
-from app.services.preprocessing import preprocess_input
+from app.services.preprocess_input import preprocess_input
 
 router = APIRouter()
 

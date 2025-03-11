@@ -3,3 +3,5 @@ uvicorn
 pydantic
 spacy
 rapidfuzz
+faiss-gpu
+tf-keras

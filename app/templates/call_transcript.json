@@ -1,0 +1,63 @@
+{
+    "description": "This template captures details of customer service call transcripts between a customer and a call center agent. It includes key metadata such as caller and agent names, reason for the call, sentiment, product discussed, and the outcome. This data can be useful for analyzing customer satisfaction, identifying service trends, and improving agent performance.",
+    "fields": {
+      "CallID": {
+        "datatype": "string",
+        "pattern": "CALL-[0-9]{6}",
+        "description": "Unique identifier for the call record (e.g., CALL-123456)."
+      },
+      "CallerName": {
+        "datatype": "string",
+        "description": "Full name of the customer making the call."
+      },
+      "AgentName": {
+        "datatype": "string",
+        "description": "Full name of the call center agent handling the call."
+      },
+      "ReasonForCall": {
+        "datatype": "string",
+        "enum": [
+          "How-to Question",
+          "Angry Follow-up",
+          "Why Claim Hasnt Been Paid"
+        ],
+        "description": "Primary reason why the customer contacted the call center."
+      },
+      "Product": {
+        "datatype": "string",
+        "enum": [
+          "Dental Insurance",
+          "Medical Insurance",
+          "Investment",
+          "Life Insurance"
+        ],
+        "description": "The insurance or financial product related to the call."
+      },
+      "Sentiment": {
+        "datatype": "string",
+        "enum": [
+          "Angry",
+          "Frustrated",
+          "Happy"
+        ],
+        "description": "Customer's sentiment during the call."
+      },
+      "Outcome": {
+        "datatype": "string",
+        "enum": [
+          "Frustrated",
+          "Happy",
+          "Satisfied"
+        ],
+        "description": "Outcome of the call from the customer's perspective."
+      },
+      "AgentUpsellAttempt": {
+        "datatype": "boolean",
+        "description": "Indicates if the agent attempted to upsell an additional product."
+      },
+      "CallTranscript": {
+        "datatype": "string",
+        "description": "A brief transcript or summary of key points discussed during the call."
+      }
+    }
+  }
