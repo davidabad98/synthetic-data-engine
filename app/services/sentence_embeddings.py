@@ -6,18 +6,53 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 
 TEMPLATES_DIR = os.path.join(os.path.dirname(__file__), "..", "templates")
+INDEX_PATH = os.path.join(
+    os.path.dirname(__file__), "..", "data/faiss", "persisted_index.index"
+)
+METADATA_PATH = os.path.join(
+    os.path.dirname(__file__), "..", "data/faiss", "metadata.json"
+)
 
 
 class SentenceEmbeddingMatcher:
-    def __init__(self, templates_dir=TEMPLATES_DIR):
+    def __init__(
+        self,
+        templates_dir=TEMPLATES_DIR,
+        index_path=INDEX_PATH,
+        metadata_path=METADATA_PATH,
+    ):
         self.templates_dir = templates_dir
+        self.index_path = index_path
+        self.metadata_path = metadata_path
 
         # Load embedding model
         self.model = SentenceTransformer("all-MiniLM-L6-v2")
         self.index = None
         self.templates = []
         self.filenames = []
-        self._load_templates()
+
+        # Initialize by loading a persisted index if available; otherwise build it.
+        self._init_index()
+
+    def _init_index(self):
+        """Checks for persisted index and metadata. Loads them if available; otherwise, build and save."""
+        if os.path.exists(self.index_path) and os.path.exists(self.metadata_path):
+            # Load persisted FAISS index
+            self.index = faiss.read_index(self.index_path)
+            # Load associated metadata
+            with open(self.metadata_path, "r", encoding="utf-8") as f:
+                metadata = json.load(f)
+                self.filenames = metadata.get("filenames", [])
+                self.templates = metadata.get("templates", [])
+        else:
+            # Build the index since persisted data doesn't exist
+            self._load_templates()
+            # Persist the FAISS index
+            if self.index is not None:
+                faiss.write_index(self.index, self.index_path)
+            # Save metadata (template filenames and content)
+            with open(self.metadata_path, "w", encoding="utf-8") as f:
+                json.dump({"filenames": self.filenames, "templates": self.templates}, f)
 
     def _load_templates(self):
         """Loads JSON templates, extracts descriptions, and builds FAISS index."""
@@ -46,10 +81,16 @@ class SentenceEmbeddingMatcher:
             self.index.add(np.array(embeddings))
 
     def match_template(self, user_request, threshold=0.40):
-        """Finds the best matching template and returns the filename, or 'NOT FOUND' if none match."""
+        """
+        Finds the best matching template based on the user request.
+        Computes the embedding for the user input, queries the persisted index,
+        and returns the filename if the similarity score meets the threshold;
+        otherwise, returns "NOT FOUND".
+        """
         if not self.index or not self.templates:
             return "NOT FOUND"
 
+        # Encode user request
         user_embedding = self.model.encode([user_request])
         distances, I = self.index.search(np.array(user_embedding), 1)  # Get top match
 

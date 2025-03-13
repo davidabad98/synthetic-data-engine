@@ -4,4 +4,4 @@ pydantic
 spacy
 rapidfuzz
 faiss-gpu
-tf-keras
+tf-keras --no-deps

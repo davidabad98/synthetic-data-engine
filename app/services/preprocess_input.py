@@ -52,15 +52,21 @@ def preprocess_input(request: GenerateRequest) -> str:
         return "NOT FOUND"
 
     # Step 4: Build the final prompt with best practices in prompt engineering.
-    static_instruction = (
-        "Using the following schema, achieve what the user has requested."
-    )
+    static_instruction = "You are a synthetic data generator. Respond to the user request ONLY with valid JSON matching the schema:\n\n"
 
     final_prompt = (
-        f"User Request: {user_input}\n\n"
+        f"[INST]\n\n"
+        f"<<SYS>>\n\n"
         f"{static_instruction}\n\n"
         f"Schema:\n{json.dumps(selected_template, indent=2)}\n\n"
-        "Ensure that any specific field modifications (if mentioned by the user) are considered."
+        f"User Request: {user_input}\n\n"
+        f"- No explanations"
+        f"- No additional text"
+        f"- No markdown formatting"
+        f"- Never use markdown code blocks"
+        f"Ensure that any specific field modifications (if mentioned by the user) are considered."
+        f"Generate 5 synthetic examples. Output pure JSON only:"
+        f"[/INST]\n\n"
     )
 
     # Step 5: Send the final prompt to the LLM API

@@ -8,7 +8,7 @@ from config.config import LLM_BEDROCK_MODEL_ID, LLM_LOCAL_URL, SERVER_MODE
 
 class LLMService:
     @staticmethod
-    def call_llm_api(prompt, max_tokens=1000, temperature=0.7, top_p=0.9):
+    def call_llm_api(prompt, max_tokens=3000, temperature=0.5, top_p=0.9):
         """
         Calls the appropriate LLM API based on SERVER_MODE.
         """
