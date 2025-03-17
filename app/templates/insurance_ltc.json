@@ -1,7 +1,7 @@
 {
     "template_name": "insurance_ltc",
     "description": "Synthetic data template for long-term care insurance policies, including details about the type of care, coverage options, benefits, and eligibility for various stages of life.",
-    "insurance_ltc": [
+    "mappings": [
         "long term care insurance",
         "ltc insurance",
         "long term care coverage",

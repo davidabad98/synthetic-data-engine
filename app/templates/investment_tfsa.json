@@ -1,5 +1,5 @@
 {
-    "template_name": "investment_tfsajson",
+    "template_name": "investment_tfsa",
     "description": "Tax-Free Savings Account (TFSA) synthetic data template. A TFSA is a registered investment account designed to help Canadians save money with tax-free growth and withdrawals. This template includes account details, contribution limits, investment types, withdrawal policies, and eligibility requirements.",
     "mappings": [
         "tax free savings account",
