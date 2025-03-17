@@ -4,13 +4,13 @@ from io import StringIO
 import pandas as pd
 import re
 import requests
-
+from config import config #TITAN_PROFILE_NAME_RIZVAN, REGION_NAME, GROQ_API_KEY, GROQ_URL
 class requestModel:
     def __init__(self):
-        self.titan_profile_name = 'rizvan'
-        self.region_name = 'us-east-1'
-        self.GROQ_API_KEY = "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"
-        self.groq_url = "https://api.groq.com/openai/v1/chat/completions"
+        self.titan_profile_name = config.TITAN_PROFILE_NAME_RIZVAN
+        self.region_name = config.REGION_NAME
+        self.GROQ_API_KEY = config.GROQ_API_KEY
+        self.groq_url = config.GROQ_URL
 
     def send_request_titan(self,prompt):
         # Initialize AWS Session with IAM Identity Center (SSO) profile

@@ -1,10 +1,14 @@
-from epic import EPICPromptGenerator
-from request_model import *
+from app.services.epic import EPICPromptGenerator
+from app.services.request_model import *
+import os
+
 
 def main(model_used):
     n_samples=3 
     generated_rows=10
-    file_path = "CustomerClaimsDataset.csv"  # Replace with your dataset file
+    # Define the path to the CSV file
+    file_path = os.path.join('app', 'data', 'sample_data', 'CustomerClaimsDataset.csv')
+    #file_path = "./data/sample_data/CustomerClaimsDataset.csv"  # Replace with your dataset file
     # Calling the EPICPromptGenerator class
     epic_generator = EPICPromptGenerator(file_path,n_samples, generated_rows)
     # Generating an epic prompt
@@ -20,4 +24,4 @@ def main(model_used):
         raise ValueError("Invalid model_used argument. Please specify either 'titan' or 'groq'.")
     
 if __name__ == "__main__":
-    main(model_used='titan')  # Change to 'groq' to use the Groq API
+    main(model_used='groq')  # Change to 'groq' to use the Groq API
