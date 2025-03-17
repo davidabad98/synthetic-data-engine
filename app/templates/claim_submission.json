@@ -1,5 +1,12 @@
 {
+    "template_name": "claim_submission",
     "description": "This template captures details of an insurance claim submission, linking it to a specific policy and categorizing it by claim type. It includes key details such as the claim amount, submission date, status, policyholder information, and a description of the claim. Additionally, it allows for the attachment of supporting documents, ensuring a comprehensive record for processing and review.",
+    "mappings": [
+        "claim submission",
+        "insurance claim",
+        "claim process",
+        "file a claim",
+    ],
     "fields": {
         "ClaimID": {
             "datatype": "string",

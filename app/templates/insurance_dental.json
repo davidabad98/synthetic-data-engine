@@ -1,5 +1,12 @@
 {
+    "template_name": "insurance_dental",
     "description": "Dental Insurance synthetic data template. Dental insurance provides coverage for various dental care procedures such as cleanings, x-rays, exams, orthodontics, and dental repairs like crowns and dentures. It is offered as part of Personal Health Insurance (PHI) plans with varying coverage levels (Basic, Standard, Enhanced).",
+    "mappings": [
+        "dental insurance",
+        "dental coverage",
+        "dental plan",
+        "oral health insurance",
+    ],
     "fields": {
         "PolicyID": {
             "datatype": "string",

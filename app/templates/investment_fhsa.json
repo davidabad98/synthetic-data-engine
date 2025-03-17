@@ -1,5 +1,12 @@
 {
+    "template_name": "investment_fhsajson",
     "description": "First Home Savings Account (FHSA) synthetic data template. The FHSA is a registered investment account that allows Canadian residents to contribute up to $40,000 (with an annual contribution limit of $8,000) to buy their first home in Canada. Contributions are tax-deductible, and qualifying withdrawals are tax-free.",
+    "mappings": [
+        "first home savings account",
+        "fhsa",
+        "home savings plan",
+        "first time home buyer savings",
+    ],
     "fields": {
         "FHSA_ID": {
             "datatype": "string",

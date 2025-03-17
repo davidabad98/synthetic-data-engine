@@ -1,5 +1,12 @@
 {
+    "template_name": "investment_rrif",
     "description": "Registered Retirement Income Fund (RRIF) synthetic data template. A RRIF is a tax-deferred investment account in Canada that provides income during retirement. This template includes fields for account details, account holder information, transferred funds, withdrawals, taxation, and investment types.",
+    "mappings": [
+        "registered retirement income fund",
+        "rrif",
+        "retirement income plan",
+        "pension fund",
+    ],
     "fields": {
         "RRIF_ID": {
             "datatype": "string",

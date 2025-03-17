@@ -1,5 +1,12 @@
 {
+    "template_name": "insurance_mortgage_protection",
     "description": "Mortgage protection insurance synthetic data template. Mortgage protection insurance is a life insurance policy that ensures your family or beneficiaries receive a tax-free death benefit to cover mortgage payments, debts, or other living expenses in the event of your death. The coverage lasts for a set term, typically through term life insurance.",
+    "mappings": [
+        "mortgage protection insurance",
+        "mortgage insurance",
+        "home loan protection",
+        "mortgage safety net",
+    ],
     "fields": {
         "PolicyID": {
             "datatype": "string",

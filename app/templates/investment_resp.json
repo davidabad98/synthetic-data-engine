@@ -1,5 +1,12 @@
 {
+    "template_name": "investment_resp",
     "description": "Registered Education Savings Plan (RESP) synthetic data template. An RESP is a tax-deferred account in Canada designed to help save for a child’s post-secondary education. This template includes fields for plan details, account holder and beneficiary information, contribution limits, government grants, and eligible education expenses.",
+    "mappings": [
+        "registered education savings plan",
+        "resp",
+        "education savings",
+        "child education fund",
+    ],
     "fields": {
         "RESP_ID": {
             "datatype": "string",

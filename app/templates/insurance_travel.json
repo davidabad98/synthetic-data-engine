@@ -1,5 +1,12 @@
 {
+    "template_name": "insurance_travel",
     "description": "Travel insurance synthetic data template. Travel insurance helps protect travelers from unexpected medical expenses and other emergencies while traveling outside their home province or country. Coverage includes emergency medical care, trip interruption, flight delay assistance, and optional coverage for sports and activities.",
+    "mappings": [
+        "travel insurance",
+        "travel coverage",
+        "trip protection",
+        "travel safety plan",
+    ],
     "fields": {
         "PolicyID": {
             "datatype": "string",

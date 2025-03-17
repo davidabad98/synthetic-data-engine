@@ -1,5 +1,14 @@
 {
+    "template_name": "call_transcript",
     "description": "This template captures details of customer service call transcripts between a customer and a call center agent. It includes key metadata such as caller and agent names, reason for the call, sentiment, product discussed, and the outcome. This data can be useful for analyzing customer satisfaction, identifying service trends, and improving agent performance.",
+    "mappings": [
+        "call transcript",
+        "call recording",
+        "transcript",
+        "recording",
+        "call",
+        "recording transcript",
+    ],
     "fields": {
       "CallID": {
         "datatype": "string",

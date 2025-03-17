@@ -1,5 +1,12 @@
 {
+    "template_name": "insurance_business_owner",
     "description": "Business Owner Insurance synthetic data template. Business owner insurance provides coverage for business owners, their family, partners, and employees. It helps protect the business in the event of losing key personnel, provides health or life insurance for employees, and includes provisions for buy-sell agreements, estate planning, and minimizing tax liabilities during retirement or asset transfer.",
+    "mappings": [
+        "business owner insurance",
+        "business insurance",
+        "commercial insurance",
+        "business protection",
+    ],
     "fields": {
         "PolicyID": {
             "datatype": "string",

@@ -1,5 +1,12 @@
 {
+    "template_name": "investment_lif",
     "description": "Life Income Fund (LIF) synthetic data template. A LIF is a type of Registered Retirement Income Fund (RRIF) that provides income from locked-in pension assets during retirement. LIFs have specific withdrawal rules based on federal or provincial pension laws, and they provide tax-deferred savings with flexible investment options. Survivor's benefits are available for spouses or beneficiaries upon death.",
+    "mappings": [
+        "life income fund",
+        "lif",
+        "retirement income fund",
+        "pension income fund",
+    ],
     "fields": {
         "LIF_ID": {
             "datatype": "string",

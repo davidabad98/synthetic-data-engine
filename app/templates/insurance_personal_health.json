@@ -1,5 +1,13 @@
 {
+    "template_name": "insurance_personal_health",
     "description": "Synthetic data template for personal health insurance policies in Canada, including details about health coverage, plan types (Basic, Standard, Enhanced), covered expenses, and eligibility.",
+    "mappings": [
+        "personal health insurance",
+        "health insurance",
+        "health coverage",
+        "individual health plan",
+        "private health insurance",
+    ],
     "fields": {
         "PolicyID": {
             "datatype": "string",

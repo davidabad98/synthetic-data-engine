@@ -1,5 +1,12 @@
 {
+    "template_name": "insurance_life",
     "description": "Synthetic data template for life insurance policies, including details about the life insurance contract, beneficiary information, and different types of life insurance policies such as term life and permanent life insurance.",
+    "mappings": [
+        "life insurance",
+        "life coverage",
+        "life protection",
+        "term life insurance",
+    ],
     "fields": {
         "PolicyID": {
             "datatype": "string",

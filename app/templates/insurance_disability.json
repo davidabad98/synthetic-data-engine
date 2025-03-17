@@ -1,5 +1,12 @@
 {
+    "template_name": "insurance_disability",
     "description": "Disability insurance synthetic data template. Disability insurance helps protect an individual’s income in case they are unable to work due to a medical illness, mental health issue, or injury. There are various types of disability insurance, including individual and group plans, and short-term and long-term disability plans.",
+    "insurance_disability": [
+        "disability insurance",
+        "disability coverage",
+        "income protection",
+        "disability plan",
+    ],
     "fields": {
         "PolicyID": {
             "datatype": "string",

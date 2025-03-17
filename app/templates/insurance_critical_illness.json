@@ -1,5 +1,13 @@
 {
+    "template_name": "insurance_critical_illness",
     "description": "Synthetic data template for critical illness insurance policies, including details about covered illnesses, payout amounts, eligibility, and coverage options.",
+    "mappings": [
+        "critical illness",
+        "critical illness insurance",
+        "serious illness coverage",
+        "critical illness plan",
+        "illness protection",
+    ],
     "fields": {
         "PolicyID": {
             "datatype": "string",
