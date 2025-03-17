@@ -7,7 +7,7 @@
         "transcript",
         "recording",
         "call",
-        "recording transcript",
+        "recording transcript"
     ],
     "fields": {
       "CallID": {

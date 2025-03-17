@@ -7,7 +7,7 @@ from app.models.request import GenerateRequest
 from app.services.fuzzy_matching import select_template_rule_based
 from app.services.llm_service import LLMService
 from app.services.sentence_embeddings import SentenceEmbeddingMatcher
-from app.utils.template_loader import load_template
+from app.utils.template_loader import load_single_template
 
 
 def preprocess_input(request: GenerateRequest) -> str:
@@ -46,7 +46,7 @@ def preprocess_input(request: GenerateRequest) -> str:
         return "NOT FOUND"
 
     # Step 3: Load the selected JSON template (schema)
-    selected_template = load_template(selected_template_name)
+    selected_template = load_single_template(selected_template_name)
     if not selected_template:
         print("Template file could not be loaded.")
         return "NOT FOUND"

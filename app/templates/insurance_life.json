@@ -5,7 +5,7 @@
         "life insurance",
         "life coverage",
         "life protection",
-        "term life insurance",
+        "term life insurance"
     ],
     "fields": {
         "PolicyID": {

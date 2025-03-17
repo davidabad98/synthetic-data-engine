@@ -1,11 +1,17 @@
 # app/services/template_selector.py
 
+import os
+
 import spacy
 from rapidfuzz import fuzz, process
 from spacy.lang.en.stop_words import STOP_WORDS
 
+from app.utils.template_loader import load_template_mappings
+
 # Load spaCy model (using a lightweight model)
 nlp = spacy.load("en_core_web_sm")
+
+TEMPLATES_DIR = os.path.join(os.path.dirname(__file__), "..", "templates")
 
 # List of domain-specific filler phrases to remove
 FILLER_PHRASES = [
@@ -48,8 +54,9 @@ FILLER_PHRASES = [
 
 
 # Mapping of canonical template keys to descriptive category strings.
-# This mapping can be updated regularly with domain-specific synonyms.
-TEMPLATE_CANDIDATES = {}
+# The mapping can be updated regularly with domain-specific synonyms in the templates.
+# Load templates dynamically
+TEMPLATE_CANDIDATES = load_template_mappings()
 
 
 def normalize_text(text: str) -> str:

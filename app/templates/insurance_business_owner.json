@@ -5,7 +5,7 @@
         "business owner insurance",
         "business insurance",
         "commercial insurance",
-        "business protection",
+        "business protection"
     ],
     "fields": {
         "PolicyID": {
