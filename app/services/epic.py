@@ -2,7 +2,9 @@ import pandas as pd
 import random
 import string
 import re
+import boto3
 from collections import defaultdict
+from io import StringIO
 class EPICPromptGenerator:
     def __init__(self, file_path, n_samples=5,generated_rows = 5, file_type='csv'):
         self.file_path = file_path
@@ -16,11 +18,42 @@ class EPICPromptGenerator:
         self.df, self.categorical_mappings, self.continuous_stats = self.process_data()
 
     def load_dataset(self):
+        """ Load dataset either from local file or S3 """
+        if self.file_path.startswith('s3://'):
+            # Reading from S3
+            return self.load_from_s3()
+        else:
+            # Reading from local file
+            return self.load_from_local()
+        
+    def load_from_local(self):
         try:
             df = pd.read_csv(self.file_path, parse_dates=True)
         except FileNotFoundError:
             raise FileNotFoundError(f"Dataset file '{self.file_path}' not found. Please check the path.")
         return df
+    
+    def load_from_s3(self):
+        """ Load data from S3 """
+        # Extract bucket and object path from the s3 file path
+        s3 = boto3.client('s3')
+        bucket_name, object_key = self.extract_bucket_and_key(self.file_path)
+
+        try:
+            # Get the object from S3
+            response = s3.get_object(Bucket=bucket_name, Key=object_key)
+            # Read the CSV file from the S3 response
+            df = pd.read_csv(StringIO(response['Body'].read().decode('utf-8')), parse_dates=True)
+        except Exception as e:
+            raise FileNotFoundError(f"Failed to load file from S3. Error: {e}")
+        
+        return df
+
+    def extract_bucket_and_key(self, s3_uri):
+        """ Extract bucket name and file key from s3 URI """
+        s3_uri = s3_uri.replace("s3://", "")
+        bucket_name, object_key = s3_uri.split("/", 1)
+        return bucket_name, object_key
 
     def clean_text(self, text):
         """ Remove special characters like commas and semicolons from text """
