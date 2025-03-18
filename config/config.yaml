@@ -1,9 +1,0 @@
-# this command was executed for the lightweight spaCy model: 
-# python -m spacy download en_core_web_sm
-#uvicorn app.main:app --reload
-
-
-#running inside WSl2
-# Run this in WSL2 to get Windows host IP:
-
-#cat /etc/resolv.conf | grep nameserver | awk '{print $2}'
