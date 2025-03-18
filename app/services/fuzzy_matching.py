@@ -7,51 +7,10 @@ from rapidfuzz import fuzz, process
 from spacy.lang.en.stop_words import STOP_WORDS
 
 from app.utils.template_loader import load_template_mappings
+from config.config import FILLER_PHRASES
 
 # Load spaCy model (using a lightweight model)
 nlp = spacy.load("en_core_web_sm")
-
-TEMPLATES_DIR = os.path.join(os.path.dirname(__file__), "..", "templates")
-
-# List of domain-specific filler phrases to remove
-FILLER_PHRASES = [
-    "synthetic data",
-    "synth data",
-    "mock data",
-    "test data",
-    "dummy data",
-    "simulated data",
-    "fabricated data",
-    "artificial data",
-    "generated data",
-    "sample data",
-    "synthetic records",
-    "mock records",
-    "test records",
-    "dummy records",
-    "simulated records",
-    "fabricated records",
-    "artificial records",
-    "generated records",
-    "fake data",
-    "fake records",
-    "data for testing",
-    "data for simulation",
-    "data for mockup",
-    "data for example",
-    "synthetic information",
-    "mock information",
-    "test information",
-    "dummy information",
-    "simulated information",
-    "fabricated information",
-    "artificial information",
-    "generated information",
-    "policy",
-    "data",
-    "records",
-]
-
 
 # Mapping of canonical template keys to descriptive category strings.
 # The mapping can be updated regularly with domain-specific synonyms in the templates.
