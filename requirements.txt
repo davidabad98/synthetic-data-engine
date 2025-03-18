@@ -1,7 +1,9 @@
-fastapi
-uvicorn
-pydantic
-spacy
-rapidfuzz
-faiss-gpu
-tf-keras --no-deps
+pandas
+random
+string
+re
+boto3
+collections
+io
+json
+import requests

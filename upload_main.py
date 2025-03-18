@@ -18,9 +18,9 @@ def main(model_used):
     sm = requestModel()
     # Sending a request to the model based on the model_used argument
     if model_used == 'titan':
-        sm.send_request_titan(epic_prompt)
+        df = sm.send_request_titan(epic_prompt)
     elif model_used == 'groq':
-        sm.send_request_groq(epic_prompt)
+        df = sm.send_request_groq(epic_prompt)
     else:
         raise ValueError("Invalid model_used argument. Please specify either 'titan' or 'groq'.")
     
