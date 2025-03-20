@@ -1,6 +1,12 @@
 import json
 import os
 from upload_main import main  # Import the main function from main.py
+import logging
+
+# Set up basic logging
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+
 
 def lambda_handler(event, context):
     """
@@ -19,17 +25,24 @@ def lambda_handler(event, context):
             }
 
         # Call the main function with the model_used parameter
-        main(model_used=model_used)
+        destination_uri = main(model_used=model_used)
 
         # Return a success response
         return {
             'statusCode': 200,
-            'body': json.dumps({'message': f"Successfully triggered {model_used} model!"})
+            'body': json.dumps({'message': f"Output data {destination_uri}"})
         }
 
     except Exception as e:
+        error_message = str(e)
+        # Log the error details
+        error_message = str(e)
+        logger.error(f"Error occurred: {error_message}")
+        logger.error("Event data: %s", json.dumps(event))  # Log the event that triggered the error
+
+        print(f"Error occurred: {error_message}")
         # Handle errors gracefully
         return {
             'statusCode': 500,
-            'body': json.dumps({'error': str(e)})
+            'body': json.dumps({'error': error_message})
         }

@@ -4,17 +4,17 @@ from io import StringIO
 import pandas as pd
 import re
 import requests
-from config import config #TITAN_PROFILE_NAME_RIZVAN, REGION_NAME, GROQ_API_KEY, GROQ_URL
+import config #TITAN_PROFILE_NAME_RIZVAN, REGION_NAME, GROQ_API_KEY, GROQ_URL
 class requestModel:
     def __init__(self):
-        self.titan_profile_name = config.TITAN_PROFILE_NAME_RIZVAN
+        #self.titan_profile_name = config.TITAN_PROFILE_NAME_RIZVAN
         self.region_name = config.REGION_NAME
         self.GROQ_API_KEY = config.GROQ_API_KEY
         self.groq_url = config.GROQ_URL
 
     def send_request_titan(self,prompt):
         # Initialize AWS Session with IAM Identity Center (SSO) profile
-        session = boto3.Session(profile_name=self.titan_profile_name)
+        session = boto3.Session()
         
         # Create Bedrock client
         bedrock_client = session.client("bedrock-runtime", region_name=self.region_name)

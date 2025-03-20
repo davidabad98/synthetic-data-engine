@@ -15,3 +15,8 @@ TITAN_PROFILE_NAME_RIZVAN = 'rizvan'
 REGION_NAME = 'us-east-1'
 GROQ_API_KEY = "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"
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
+
+# S3 buckets info
+S3_INPUT_FILEPATH = 's3://genaiinput-dataset/CustomerClaimsDataset.csv'
+S3_OUTPUT_BUCKET = 'genaioutput-dataset'
+S3_OUTPUT_FOLDER = 'output/'

@@ -6,4 +6,4 @@ boto3
 collections
 io
 json
-import requests
+requests
