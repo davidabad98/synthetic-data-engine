@@ -6,12 +6,9 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 
 TEMPLATES_DIR = os.path.join(os.path.dirname(__file__), "..", "templates")
-INDEX_PATH = os.path.join(
-    os.path.dirname(__file__), "..", "data/faiss", "persisted_index.index"
-)
-METADATA_PATH = os.path.join(
-    os.path.dirname(__file__), "..", "data/faiss", "metadata.json"
-)
+FAISS_PATH = os.path.join(os.path.dirname(__file__), "..", "data/faiss")
+INDEX_PATH = os.path.join(FAISS_PATH, "persisted_index.index")
+METADATA_PATH = os.path.join(FAISS_PATH, "metadata.json")
 
 
 class SentenceEmbeddingMatcher:
@@ -47,6 +44,10 @@ class SentenceEmbeddingMatcher:
         else:
             # Build the index since persisted data doesn't exist
             self._load_templates()
+
+            # Creates dir if it doesn't exist
+            os.makedirs(FAISS_PATH, exist_ok=True)
+
             # Persist the FAISS index
             if self.index is not None:
                 faiss.write_index(self.index, self.index_path)
