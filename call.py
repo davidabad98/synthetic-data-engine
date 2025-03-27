@@ -1,10 +1,10 @@
 import requests
 
 # Define the URL
-url = "https://dm2jdu1o77.execute-api.us-east-1.amazonaws.com/prod/synthetic_data"
+url = "https://h2go7v00tc.execute-api.us-east-1.amazonaws.com/prod/synthetic-data"
 
 # Set up the query parameter
-params = {"model_used": "titan"}
+params = {"model_used": "groq"}
 
 # Send the GET request
 response = requests.get(url, params=params)

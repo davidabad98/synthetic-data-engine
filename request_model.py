@@ -65,7 +65,7 @@ class requestModel:
         }
 
         data = {
-            "model": "mixtral-8x7b-32768",
+            "model": "llama3-8b-8192",
             "messages": [{"role": "user", "content": prompt}]
         }
         # Send the request to the Groq API
@@ -73,9 +73,14 @@ class requestModel:
 
         # Extracting the message content
         response_json = response.json()
+        print(response_json)
         csv_data = response_json["choices"][0]["message"]["content"]
 
         # Convert the CSV data into a pandas DataFrame
         df = pd.read_csv(StringIO(csv_data))
         print("{} rows of data generated using groq".format(len(df)))
         return df
+if __name__ == "__main__":
+    rm  = requestModel()
+    prompt = "Generate 10 rows of data for the following columns: Customer ID, First Name, Last Name, Email, Phone Number, Address, City, State, Zip Code, Country, Product ID, Product Name, Quantity, Price, Order Date, Shipping Date, Delivery Date, Payment Method, Payment Status, Order Status, Tracking Number, Notes."
+    df = rm.send_request_groq(prompt)
