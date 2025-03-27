@@ -1,7 +1,7 @@
 # app/config/config.py
 
 # Server mode can be either "local" or "aws"
-SERVER_MODE = "cloud"
+SERVER_MODE = "local"
 
 # List of domain-specific filler phrases to remove
 FILLER_PHRASES = [
