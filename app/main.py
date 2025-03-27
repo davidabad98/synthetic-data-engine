@@ -5,6 +5,8 @@ import sys
 
 from pydantic import ValidationError
 
+from config.config import SERVER_FLOW
+
 # Configure logging
 logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO
@@ -12,7 +14,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def main():
+def main_template():
     try:
         # Get the current script's directory
         current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -56,7 +58,7 @@ def main():
 
 if __name__ == "__main__":
     try:
-        exit_code = main()
+        exit_code = main_template()
     except Exception as e:
         logger.exception("Critical error in main execution:")
         exit_code = 4

@@ -7,12 +7,13 @@ import boto3
 import pandas as pd
 import requests
 
+from app.services.csv_parser import CsvParser
 from config.config import (
+    AWS_PROFILE,
     GROQ_API_KEY,
     GROQ_MODEL_ID,
     GROQ_URL,
     LLM_BEDROCK_MODEL_ID,
-    PROFILE_NAME,
     REGION_NAME,
 )
 
@@ -21,26 +22,24 @@ logger = logging.getLogger(__name__)
 
 class RequestModel:
     def __init__(self):
-        self.profile_name = PROFILE_NAME
+        self.AWS_PROFILE = AWS_PROFILE
         self.region_name = REGION_NAME
         self.GROQ_API_KEY = GROQ_API_KEY
         self.groq_url = GROQ_URL
 
-    def send_request_titan(self, prompt):
+    def send_request_bedrock(self, prompt, max_tokens=4000, temperature=0.7, top_p=0.9):
         # Initialize AWS Session with IAM Identity Center (SSO) profile
-        session = boto3.Session(profile_name=self.profile_name)
+        session = boto3.Session(self.AWS_PROFILE)
 
         # Create Bedrock client
         bedrock_client = session.client("bedrock-runtime", region_name=self.region_name)
 
         # Define the request payload
         payload = {
-            "inputText": prompt,
-            "textGenerationConfig": {
-                "maxTokenCount": 4000,
-                "temperature": 0.7,
-                "topP": 0.9,
-            },
+            "prompt": prompt,
+            "max_tokens": max_tokens,
+            "temperature": temperature,
+            "top_p": top_p,
         }
 
         # Invoke the Titan model
@@ -55,13 +54,7 @@ class RequestModel:
         output_text = response_body["results"][0]["outputText"]
 
         # Extract the CSV data from the output text
-        csv_data_match = re.search(
-            r"```tabular-data-csv\s*(.*)\s*```", output_text, re.DOTALL
-        )
-        if csv_data_match:
-            csv_data = csv_data_match.group(1)
-        else:
-            raise ValueError("No CSV data found in the provided text.")
+        csv_data = CsvParser.parse_csv_response(output_text)
 
         # Load the CSV data into a Pandas DataFrame
         return self._parse_csv_response(csv_data, "titan")

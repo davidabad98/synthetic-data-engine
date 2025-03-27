@@ -24,6 +24,18 @@
             "args": []
         },
         {
+            "name": "Debug Lambda Application",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/app/lambda_function.py",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "args": []
+        },
+        {
             "name": "FastAPI Debug",
             "type": "python",
             "request": "launch",

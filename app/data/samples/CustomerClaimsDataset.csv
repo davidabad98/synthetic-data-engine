@@ -1,0 +1,101 @@
+Name,Address,City,Province,Postal Code,Policy Number,Type of Claim,Claim Code,Approval Status,Date of Service,Date of Claim Submission,Amount Billed,Amount Approved,Provider Name,Provider Address
+Wanda Walters,261 Bender Summit Apt. 098,Regina,SK,X7Y 1S6,SL326695,Dental,D003,Pending,2024-09-10,2025-02-17,239.82,0.0,"Gilbert, Andrade and Hoover",5586 Snow Turnpike Apt. 860
+Mr. Michael Jones,7185 Stephanie Inlet,Portage la Prairie,MB,C3T 8V4,SL359926,Dental,D003,Pending,2024-06-07,2024-11-02,386.11,0.0,"Franco, Manning and Martin",63400 Duncan Junction
+Kylie Mendez,706 Johnson Fort,Corner Brook,NL,K1K4E9,SL704507,Health,H001,Pending,2024-08-10,2024-12-27,279.82,0.0,Pruitt-Odonnell,3798 Brown Vista
+Aaron Ponce,2194 James Wall,Truro,NS,G1X 6E4,SL925532,Health,H003,Pending,2024-05-12,2025-02-12,237.3,0.0,Williams LLC,5364 Dominique Island
+Allen Neal,868 May Motorway,Toronto,ON,E9T2V9,SL461011,Health,H002,Pending,2024-09-27,2024-12-17,85.65,0.0,Gray-Johnson,41234 Meadows Dam
+Victor Smith,583 Robertson Club Suite 306,Gander,NL,B2L1A1,SL616227,Dental,D003,Denied,2025-01-14,2025-01-17,300.71,0.0,Allen-Perry,278 Rivera Passage
+Leslie Smith,3891 Hicks Circle,Grand Falls-Windsor,NL,M9K6K2,SL624650,Health,H003,Pending,2024-06-15,2024-07-04,124.2,0.0,"Cox, Smith and Taylor",599 Paul Square Suite 414
+Corey Harris,58997 Collins Radial Apt. 519,Laval,QC,S6N4X4,SL685693,Health,H003,Denied,2024-04-14,2024-10-18,73.71,0.0,Ortiz and Sons,614 Rachel Parkway
+Richard Woods,4315 Scott Summit,Labrador City,NL,H4K 9A3,SL676868,Health,H002,Pending,2024-07-02,2024-08-21,114.12,0.0,"Foster, Cook and Nelson",317 Matthew Mill
+Jason Grant,671 Lowery Mountain Apt. 320,Laval,QC,N8S 4E9,SL162035,Dental,D001,Approved,2024-09-14,2024-09-17,338.58,338.58,"Hayes, Phillips and Greer",65688 Gardner Loaf Apt. 246
+Christopher Little,820 Levi Mountain,Sherbrooke,QC,J7J 3R9,SL185373,Dental,D001,Denied,2024-03-05,2024-10-21,415.81,0.0,Lopez Ltd,72846 Martin Cape Apt. 055
+Kenneth Wood,94407 Gonzalez Freeway,Cornwall,PE,G8A9K7,SL588869,Health,H001,Pending,2024-10-13,2024-10-24,431.4,0.0,Hansen and Sons,762 Hancock Plaza Apt. 175
+Jack Singh,9712 Harper Bridge,Lethbridge,AB,S4T3S8,SL350257,Dental,D001,Denied,2024-08-15,2024-08-24,431.9,0.0,Friedman-White,1895 Mary Ranch Suite 104
+Brett Foster,794 Huynh Plain,Brandon,MB,L9L4Y7,SL865505,Health,H003,Pending,2024-10-21,2024-11-28,218.77,0.0,"Macias, Carter and Higgins",7073 Pam Locks Apt. 629
+Chloe Estes,66874 Matthew Ports,Medicine Hat,AB,L8K1S7,SL797749,Dental,D003,Approved,2024-03-16,2024-03-21,459.33,459.33,Baker-Mccall,623 Lewis Courts Apt. 591
+Tony Brown,8651 Patrick Glen Suite 222,Brandon,MB,M2C6X9,SL952562,Dental,D003,Approved,2024-05-08,2024-07-22,326.1,326.1,"Vargas, Brown and Hodges",000 Torres Lake Suite 597
+Jeffrey Houston,7757 Brown Harbors,Victoria,BC,A9S6J4,SL841512,Dental,D002,Pending,2024-08-16,2024-12-16,59.17,0.0,Price-Moore,811 Castillo Orchard
+Mark Johnson,69705 Crystal Vista Apt. 032,Mississauga,ON,C8S 3M9,SL128320,Health,H002,Denied,2025-01-08,2025-02-18,305.41,0.0,Webb Ltd,0529 Diana Keys Suite 149
+Matthew Brandt,3646 Jennifer Plain,Cornwall,PE,P1Y6X7,SL901666,Health,H001,Approved,2025-02-25,2025-03-03,485.89,485.89,Hendrix Ltd,635 Boyd Roads Apt. 361
+Louis Lewis,2405 Torres Garden Apt. 012,Toronto,ON,X7H 9N5,SL155111,Dental,D002,Approved,2024-04-10,2024-07-05,262.5,262.5,"Garcia, Cole and Nguyen",474 Derrick Walks
+Joseph Andersen,076 Richard Turnpike Suite 309,Saint John,NB,R6T 9M4,SL456675,Dental,D003,Approved,2024-12-01,2025-01-19,72.62,72.62,Bryant LLC,6717 Barbara Streets Apt. 728
+Jesse Mendoza,30953 Jane Viaduct,Saint John,NB,C6B4N6,SL168210,Health,H003,Denied,2024-11-27,2024-12-19,261.86,0.0,Harrell Inc,11253 Craig Ways Suite 898
+Sylvia Colon,17342 Erin Station Apt. 571,Stratford,PE,E9L7E3,SL928663,Health,H003,Pending,2024-10-18,2024-11-08,373.32,0.0,"Floyd, Robbins and Powell",84058 Jamie Wall
+Karen Martin,22494 Pruitt Village Suite 047,Corner Brook,NL,K1H 9K7,SL711828,Health,H002,Approved,2024-08-13,2025-01-20,251.39,251.39,Mitchell and Sons,22294 Castro Summit Apt. 564
+Michael Jones,828 Timothy Canyon Suite 643,Brandon,MB,B3V 2X4,SL392546,Dental,D003,Denied,2024-09-23,2025-01-08,56.99,0.0,Woods-Peterson,693 Melissa Groves Apt. 700
+Timothy Wright,8163 Kerr Haven,Cornwall,PE,L6V 8J3,SL116229,Health,H001,Approved,2024-04-16,2024-07-05,292.58,292.58,Barber Inc,39644 Moore Underpass Apt. 245
+Samantha Blevins,856 Kevin Street,Bathurst,NB,B4S6S4,SL416780,Dental,D001,Denied,2024-07-12,2024-11-01,88.37,0.0,"Hanson, Powell and Ross",099 Wood Shoals
+Donna Wood,1460 Taylor Camp,Yorkton,SK,S3V4J4,SL755354,Dental,D003,Approved,2024-06-20,2024-12-25,422.88,422.88,"Robinson, Lopez and Floyd",455 Walsh Vista
+Frank Barnes,6076 Willis Ports,Stratford,PE,Y7G4N6,SL841397,Dental,D002,Pending,2024-10-15,2024-12-08,484.06,0.0,Montgomery-Long,887 David Square Suite 400
+Adrian West,357 Garrison Ports,Calgary,AB,X1J4N8,SL634012,Health,H001,Approved,2024-11-05,2024-12-11,331.0,331.0,Ramsey PLC,630 Roman Mountains Apt. 334
+Stephanie Smith,3266 Michael Ranch Apt. 187,St. John's,NL,V2M 1G9,SL917631,Health,H003,Pending,2024-07-21,2024-10-24,83.47,0.0,Drake-Moore,6305 Fisher Centers
+Donald Kim,287 Stephanie Wells,Thompson,MB,A4E4E2,SL201400,Health,H001,Pending,2024-11-06,2025-01-18,375.03,0.0,"Dunlap, Edwards and Anderson",42531 Edwards Burg Suite 080
+Kelly Livingston,476 Malone Trail,Miramichi,NB,Y8A 1K5,SL405387,Health,H002,Approved,2024-03-22,2024-10-18,436.95,436.95,"Sanchez, Martin and Barton",096 Robert Vista Suite 289
+Charles Marquez,6062 Christopher Springs Apt. 570,Moncton,NB,J5K1J5,SL165308,Health,H001,Pending,2025-01-17,2025-01-29,401.3,0.0,Adams-Spence,69668 Mary Streets Apt. 053
+Stuart Ortiz,0610 Sheppard Junctions Suite 183,Stratford,PE,H5A9B9,SL920489,Dental,D002,Approved,2024-12-31,2025-01-10,360.18,360.18,Monroe Inc,5841 William Prairie
+Julie Wright,8597 Jones Avenue Apt. 804,Lethbridge,AB,K8K 4J8,SL568298,Dental,D001,Denied,2024-09-14,2024-12-06,103.77,0.0,Evans-Boyd,9702 Hill Manor
+Gabriel Smith,4353 Susan Bypass,Ottawa,ON,G6C 6L4,SL551523,Dental,D002,Pending,2024-09-10,2025-01-27,488.02,0.0,Rice Inc,1219 Evans Walks
+Andrew Whitaker,354 Koch Pass,Miramichi,NB,C9R 2R7,SL427273,Health,H003,Pending,2025-01-06,2025-02-17,488.65,0.0,"Mcguire, Stewart and Anderson",6163 James Road Apt. 792
+Dale Vega,19297 Reid Mission,Ottawa,ON,R6C 6E3,SL873732,Dental,D001,Approved,2024-03-14,2024-05-03,398.61,398.61,Odonnell-Garcia,2014 Freeman Viaduct
+Erica Russell,9216 Kimberly Falls,Summerside,PE,P3X5E8,SL147455,Dental,D003,Pending,2024-06-23,2025-01-15,64.76,0.0,Smith Group,5739 Mejia Fields Apt. 688
+Manuel Kline,732 Kenneth Spring Suite 608,Saint John,NB,J9A3K4,SL330968,Dental,D002,Denied,2024-04-17,2025-02-19,491.55,0.0,"Warner, Sanchez and Coleman",2401 Megan Green
+Jim Martinez,6366 Scott View Apt. 802,Charlottetown,PE,V7P1C2,SL958473,Dental,D002,Pending,2024-12-28,2025-03-03,497.12,0.0,"Campbell, Gonzales and Cole",2836 Charles Curve Suite 113
+Linda Green,823 James Extensions Apt. 172,Burnaby,BC,A6A 7H8,SL982892,Health,H003,Denied,2025-02-05,2025-02-20,133.13,0.0,Mcdonald PLC,8331 Beard Overpass
+John Watts,8759 Mccarty Summit,Summerside,PE,T3X3N7,SL983723,Dental,D001,Approved,2025-02-09,2025-02-18,171.52,171.52,"Alvarez, Brown and Roach",033 Williamson Drives
+Kenneth Greene,41605 Gilbert Villages,Saint John,NB,G6R 9G4,SL127675,Health,H001,Pending,2025-02-11,2025-02-18,301.75,0.0,Long-Christian,6087 Bell Stravenue Suite 885
+Jacob Beck,804 Tiffany Unions,Cornwall,PE,N7L2B6,SL345906,Dental,D003,Approved,2024-09-24,2024-10-14,210.92,210.92,Perez Ltd,7820 Janet Inlet Suite 401
+Christopher Adams,690 Paul Road Suite 500,Thompson,MB,T4X 2H8,SL131422,Dental,D003,Approved,2024-08-27,2024-09-09,194.7,194.7,Moss-Peterson,165 Mclaughlin Divide Suite 898
+Patricia Paul,634 Joseph Island Suite 867,Lethbridge,AB,E5R 4S7,SL813282,Health,H003,Denied,2024-06-10,2025-02-23,442.26,0.0,Thompson and Sons,888 Michael Glens Suite 040
+Alvin Guerra,36936 Williams Road,Thompson,MB,A4X6R8,SL743549,Dental,D002,Denied,2024-03-31,2024-09-30,155.81,0.0,"Young, Edwards and Steele",53095 Amy Trace Apt. 754
+Mark Smith,0563 Donna Expressway,Sherbrooke,QC,V6A7M3,SL396921,Health,H002,Approved,2024-08-17,2024-12-13,454.1,454.1,"Washington, Lewis and Weiss",186 Lopez Ridge Suite 671
+Matthew Miller,65926 Michelle Junctions,Moncton,NB,E8X 5L1,SL264981,Health,H002,Denied,2025-01-19,2025-01-25,389.3,0.0,Romero-Foster,500 Davis Island Apt. 440
+Benjamin Grant,141 Herbert Mills Apt. 052,Burnaby,BC,C6G 2J2,SL667357,Health,H003,Denied,2024-10-29,2025-02-19,221.61,0.0,Smith-Mcdaniel,02073 Natasha Mount Suite 671
+Benjamin Harris,2687 Dennis Street Apt. 936,Winnipeg,MB,X4C 3V3,SL356065,Dental,D003,Denied,2024-09-26,2024-12-04,458.11,0.0,Stewart LLC,49722 Christopher Roads
+Peter Wheeler,288 Harris Mills,Edmonton,AB,B9T3B7,SL577217,Dental,D003,Denied,2024-08-22,2024-11-24,160.83,0.0,"Newman, Huff and Cox",09783 Aaron Greens Apt. 505
+Kristen Cardenas,780 William Mountains Apt. 779,Cornwall,PE,R3X 1A7,SL871091,Health,H001,Denied,2025-01-28,2025-02-17,234.57,0.0,"Norris, Ellis and Davis",443 Griffith Mews Apt. 643
+Amy Page,08343 Perez Drives,Dartmouth,NS,M8R8X3,SL898642,Dental,D002,Approved,2025-02-18,2025-02-19,404.7,404.7,Phillips LLC,8666 Shelby Walk
+David Avila,1475 Tucker Shore Suite 389,Miramichi,NB,X5X 9S5,SL717173,Health,H002,Pending,2025-02-10,2025-02-24,153.52,0.0,Mcdonald Inc,37406 Chen Crest
+Christopher Reese,07644 King Keys Suite 432,Calgary,AB,L2S 6C7,SL811536,Health,H002,Denied,2024-11-08,2024-12-11,375.19,0.0,Anderson-Owens,65403 Walker Fields
+Vanessa Turner,4284 Williams View Suite 477,Victoria,BC,Y5A 2X2,SL682780,Dental,D001,Approved,2025-01-21,2025-02-06,126.69,126.69,"Fletcher, Dalton and Mcconnell",10987 Wong Isle Suite 017
+Rebecca Parker,11417 Hartman Crossroad Apt. 426,Miramichi,NB,R4J6C2,SL622798,Health,H002,Approved,2024-12-17,2025-02-21,381.03,381.03,Wood Ltd,392 Daniel Harbor
+Joel Myers,1853 Dyer Stravenue Apt. 977,Surrey,BC,E5B 3L6,SL679367,Health,H002,Denied,2024-05-09,2025-01-18,368.63,0.0,Rivas PLC,373 Melissa Isle Suite 550
+Amy Smith,0623 Peter Grove Suite 240,Toronto,ON,E5B7H6,SL525162,Health,H001,Pending,2024-11-19,2024-11-29,407.73,0.0,Kelley-Beck,3707 Tracy Causeway
+Misty Humphrey,1000 Donna Freeway Apt. 466,Toronto,ON,X9V 1S6,SL808304,Dental,D001,Pending,2024-06-24,2024-11-12,428.74,0.0,Jacobs Inc,13928 Cohen Cove Suite 690
+Dawn Lewis,6343 Perez Mountains Apt. 340,Sydney,NS,L7R7N9,SL724617,Dental,D002,Pending,2025-02-14,2025-03-01,98.25,0.0,Bernard LLC,323 Deborah Via
+Suzanne Long,78580 Boyd Mountains,Moose Jaw,SK,K8L 2M7,SL987335,Health,H003,Denied,2024-08-18,2024-09-11,343.96,0.0,"Thomas, Smith and Jones",05040 Martin Circles
+Jeffrey Johnson,907 Robert Plains Suite 581,Fredericton,NB,A7Y4R4,SL717590,Health,H003,Denied,2024-07-26,2024-09-09,429.69,0.0,Santos Inc,75330 Julia Forest
+Jesus Mendez,803 Vanessa Knolls,St. John's,NL,N5G 7A3,SL700775,Dental,D001,Denied,2024-08-11,2024-12-30,458.03,0.0,Weber-Hicks,130 Frank Place
+Lauren Ruiz,629 Valencia Radial Suite 304,Montague,PE,J2E1L7,SL548047,Dental,D001,Pending,2024-10-01,2025-02-15,222.34,0.0,Elliott Inc,1128 Mills Center Apt. 806
+Eugene Carlson,44476 Robert Crescent,Red Deer,AB,X4A9S2,SL597682,Dental,D001,Denied,2024-06-02,2024-08-23,340.5,0.0,Hansen-Parks,21612 Moore Island
+Lisa Smith,980 Scott Villages Apt. 241,Quebec City,QC,K5V1P3,SL534681,Health,H002,Approved,2024-10-17,2024-12-18,59.72,59.72,Terry-Aguilar,924 Michaela Forge
+Jasmine Stewart,01700 Howell Ville,Saint John,NB,V3B 9A1,SL414445,Health,H002,Approved,2024-09-12,2025-01-23,216.96,216.96,Jackson Inc,69662 Daniel Mountains
+Arthur Carr,99769 Reynolds Lane,Mississauga,ON,A4S 1S6,SL519613,Health,H001,Approved,2024-12-27,2025-02-12,105.54,105.54,Wilson PLC,67564 Powell Courts
+Rachel Rios,2000 Mendoza Turnpike Suite 591,St. John's,NL,G7P 9X4,SL127916,Dental,D001,Pending,2024-07-17,2024-12-19,73.96,0.0,Duncan-Mclaughlin,6149 Jones Union Suite 587
+Kathryn Montes,789 Pamela Lights,London,ON,S3V1G4,SL154554,Dental,D002,Denied,2024-03-18,2025-02-20,325.56,0.0,Aguilar-Smith,78522 Mccann Plains
+Michael Davis,8550 Margaret Summit,Moncton,NB,M3N 7J8,SL371157,Dental,D002,Approved,2024-07-28,2024-10-13,177.74,177.74,Rivera Ltd,95737 Brian Track Suite 793
+Erica Robinson,165 Antonio Via,Thompson,MB,E1A 2R8,SL594915,Dental,D003,Approved,2024-07-02,2025-01-06,340.86,340.86,Edwards-Crawford,88149 Nixon Cove
+Brianna Ramirez,567 Howard Tunnel,Medicine Hat,AB,H1C8L3,SL383179,Health,H002,Approved,2024-04-07,2024-04-28,426.4,426.4,"Calhoun, Jones and Rodriguez",62413 Gregory Crossing Suite 039
+Robert Anderson,862 Soto Flat,Vancouver,BC,M2S4G9,SL911174,Dental,D001,Approved,2024-11-28,2025-01-03,300.63,300.63,Maldonado Group,8135 Diana Burgs
+Brandon Grant,6701 Tyler Lights Apt. 293,Laval,QC,C8L3E7,SL281570,Health,H002,Pending,2024-10-11,2025-02-25,53.19,0.0,Calderon Ltd,358 Lopez Port Apt. 390
+David Reyes,04690 Robin Haven Apt. 555,Cornwall,PE,V1B9Y8,SL453464,Health,H002,Denied,2024-11-15,2024-11-16,113.02,0.0,Dixon-Miller,8807 Rodgers Course
+David Soto,0050 Yates Manor,Saskatoon,SK,Y7E4V8,SL630292,Dental,D002,Approved,2024-11-29,2025-02-07,440.28,440.28,Mckenzie-Bonilla,05479 Renee Knolls Apt. 659
+Kendra Allen,9014 Karen Centers,Moose Jaw,SK,Y9X1R2,SL500886,Health,H003,Pending,2024-09-02,2025-01-13,278.76,0.0,Davis-Strong,49088 Margaret Prairie Suite 582
+Michael Ball,4652 Dodson Bridge Apt. 060,Moose Jaw,SK,X3B 9T3,SL852550,Dental,D002,Denied,2024-11-21,2025-01-26,139.45,0.0,"Gonzalez, Foster and Price",08926 Donald Valleys Suite 373
+Courtney Hanson,15532 Colon Fields,St. John's,NL,G4C 2V2,SL620706,Health,H002,Denied,2025-01-23,2025-02-02,339.8,0.0,"Fitzgerald, Williamson and Lewis",981 Martinez Wells
+Dana Savage,8550 Sarah Junction,Saskatoon,SK,T1P4L8,SL693275,Dental,D001,Approved,2025-01-02,2025-01-20,148.16,148.16,Stanton-Garcia,462 Tonya Highway Suite 540
+Cindy Smith,60822 Hammond Course,Stratford,PE,T4K 6S8,SL893420,Dental,D003,Approved,2024-05-01,2024-05-16,254.41,254.41,"Scott, Mccoy and Williams",2299 Catherine Points Suite 312
+Kelsey Mcbride,44671 Zachary Views Suite 984,Moncton,NB,E4T 3S4,SL528638,Dental,D003,Pending,2024-04-05,2024-05-20,234.03,0.0,Bell Inc,2704 Mark Hollow
+Adam Bowman,8171 Stephanie Route,Sherbrooke,QC,R9N9X9,SL810182,Health,H001,Approved,2024-04-06,2024-08-23,74.6,74.6,"Martin, Hughes and Fuller",73651 Owen Spur Apt. 162
+Albert Maldonado,24154 Brian Loop Suite 373,Montague,PE,P2V 6R8,SL287641,Dental,D001,Approved,2024-03-10,2024-10-02,216.91,216.91,Woods-Morales,0291 Mills Brook Apt. 053
+Rebecca Jackson,5295 Matthew Route Apt. 621,Brandon,MB,G5Y 1N1,SL947912,Dental,D001,Approved,2024-09-18,2025-02-18,479.25,479.25,"Johnson, Fitzpatrick and Cook",826 Robin Crossroad
+Paula Johnson,064 Lopez Tunnel Suite 573,Saint John,NB,P4L 1V2,SL137634,Dental,D003,Pending,2024-05-13,2024-06-15,197.45,0.0,Mcdonald Group,555 Mccann Burgs
+Gary Schneider,2721 Evans Ferry Apt. 526,London,ON,C1E6S3,SL401177,Health,H001,Approved,2025-01-07,2025-02-11,145.43,145.43,"Rodriguez, Webb and Shepard",3226 James Throughway
+Barbara Lopez,787 Heather Shoal Apt. 046,Bathurst,NB,E7M 3N5,SL117833,Health,H002,Denied,2024-03-11,2024-07-16,417.08,0.0,Dickerson Group,827 Cruz Walks Suite 654
+Derek Carlson,3506 Kevin Fall,Vancouver,BC,N3H 9J8,SL426905,Dental,D003,Approved,2025-01-09,2025-02-23,221.63,221.63,Huang-Holland,28489 Fields Burg Suite 412
+James Christensen,276 Michael Walks Suite 772,Stratford,PE,H6G 1X9,SL827355,Health,H001,Approved,2024-09-01,2024-09-22,274.58,274.58,Mccoy PLC,064 Hamilton Fall Suite 020
+James Gill,0202 Russo Gateway,London,ON,L3Y 5A9,SL179454,Health,H002,Denied,2024-06-01,2024-07-20,89.8,0.0,Nelson-Mcguire,118 Hill Brooks
+Jennifer Bryant,98139 Cross Lane Apt. 468,Sherbrooke,QC,K5P5T4,SL660393,Dental,D002,Pending,2024-12-27,2025-01-14,294.94,0.0,Mcdaniel Group,844 Edward Locks Suite 186
+Alan Fisher,90222 Harris Mills,Steinbach,MB,T3B4R9,SL696961,Health,H001,Approved,2024-08-16,2024-11-17,426.56,426.56,Silva and Sons,4629 Andersen Avenue
+Karla Strickland,7389 Charles Villages Apt. 779,Bathurst,NB,X5S 8B2,SL447246,Health,H001,Denied,2024-06-10,2024-10-19,247.61,0.0,Tucker-Brooks,46583 Michael Lodge Suite 041
+Mercedes Williams,463 Richardson Rue,Victoria,BC,K4S 7P2,SL333989,Health,H002,Pending,2024-09-19,2024-10-12,351.36,0.0,Lee Ltd,018 Rebecca Crescent

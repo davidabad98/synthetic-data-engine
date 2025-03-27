@@ -3,6 +3,7 @@ import json
 
 import requests
 
+from app.services.request_model import RequestModel
 from config.config import LLM_BEDROCK_MODEL_ID, LLM_LOCAL_URL, SERVER_MODE
 
 
@@ -15,6 +16,8 @@ class LLMService:
         if SERVER_MODE == "local":
             return LLMService.call_local_llm(prompt, max_tokens, temperature, top_p)
         else:
+            # old call
+            # return LLMService.call_bedrock_llm(prompt, max_tokens, temperature, top_p)
             return LLMService.call_bedrock_llm(prompt, max_tokens, temperature, top_p)
 
     @staticmethod
@@ -68,3 +71,10 @@ class LLMService:
         except Exception as e:
             print("Error calling Bedrock LLM API:", e)
             return ""
+
+    @staticmethod
+    def call_bedrock_llm_new(prompt, max_tokens, temperature, top_p):
+        request_model = RequestModel()
+        return request_model.send_request_bedrock(
+            prompt, max_tokens, temperature, top_p
+        )
