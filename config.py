@@ -11,7 +11,7 @@ LLM_BEDROCK_MODEL_ID = "anthropic.claude-v2"
 LLM_BEDROCK_ENDPOINT = "https://bedrock.endpoint.url"
 
 # Titan configuration for local deployment
-TITAN_PROFILE_NAME_RIZVAN = 'rizvan'
+TITAN_PROFILE_NAME_RIZVAN = 'GenAI_Permission-688567268018'
 REGION_NAME = 'us-east-1'
 GROQ_API_KEY = "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"
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
