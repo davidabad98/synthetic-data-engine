@@ -86,10 +86,10 @@ class SentenceEmbeddingMatcher:
         Finds the best matching template based on the user request.
         Computes the embedding for the user input, queries the persisted index,
         and returns the filename if the similarity score meets the threshold;
-        otherwise, returns "NOT FOUND".
+        otherwise, returns "NOT_FOUND".
         """
         if not self.index or not self.templates:
-            return "NOT FOUND"
+            return "NOT_FOUND"
 
         # Encode user request
         user_embedding = self.model.encode([user_request])
@@ -102,7 +102,7 @@ class SentenceEmbeddingMatcher:
         similarity_score = 1 / (1 + best_distance)
 
         if similarity_score < threshold:
-            return "NOT FOUND"
+            return "NOT_FOUND"
 
         return self.filenames[best_match_idx]
 

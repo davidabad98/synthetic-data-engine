@@ -17,7 +17,7 @@ def preprocess_input(request: GenerateRequest) -> str:
 
     Workflow:
       1. Try rule-based template selection.
-      2. If not found, try sentence embedding based matching.
+      2. If NOT_FOUND, try sentence embedding based matching.
       3. If a template is found, load the JSON schema.
       4. Build the final prompt including:
          - User's original input.
@@ -28,35 +28,33 @@ def preprocess_input(request: GenerateRequest) -> str:
     user_input = request.prompt
     # Step 1: Rule-Based Template Selection
     template_name = select_template_rule_based(user_input)
-    if template_name != "NOT FOUND":
+    if template_name != "NOT_FOUND":
         selected_template_name = template_name
     else:
         # Step 2: Embedding-Based Template Selection
         matcher = SentenceEmbeddingMatcher()
         template_name_from_embeddings = matcher.match_template(user_input)
-        if template_name_from_embeddings != "NOT FOUND":
+        if template_name_from_embeddings != "NOT_FOUND":
             selected_template_name = template_name_from_embeddings
         else:
             # No template found by either method
-            selected_template_name = "NOT FOUND"
+            selected_template_name = "NOT_FOUND"
 
     # If no template was found, return early or handle accordingly.
-    if selected_template_name == "NOT FOUND":
+    if selected_template_name == "NOT_FOUND":
         print("No matching template found for the input.")
-        return "NOT FOUND"
+        return "NOT_FOUND"
 
     # Step 3: Load the selected JSON template (schema)
     selected_template = load_single_template(selected_template_name)
     if not selected_template:
         print("Template file could not be loaded.")
-        return "NOT FOUND"
+        return "NOT_FOUND"
 
     # Step 4: Build the final prompt with best practices in prompt engineering.
-    static_instruction = "You are a synthetic data generator. Respond to the user request ONLY with valid JSON matching the schema:\n\n"
+    static_instruction = f"You are a synthetic data generator. Respond to the user request ONLY with valid {request.output_format} matching the schema:\n\n"
 
     final_prompt = (
-        f"[INST]\n\n"
-        f"<<SYS>>\n\n"
         f"{static_instruction}\n\n"
         f"Schema:\n{json.dumps(selected_template, indent=2)}\n\n"
         f"User Request: {user_input}\n\n"
@@ -65,8 +63,7 @@ def preprocess_input(request: GenerateRequest) -> str:
         f"- No markdown formatting"
         f"- Never use markdown code blocks"
         f"Ensure that any specific field modifications (if mentioned by the user) are considered."
-        f"Generate 5 synthetic examples. Output pure JSON only:"
-        f"[/INST]\n\n"
+        f"Generate 5 synthetic examples. Output pure {request.output_format} only:"
     )
 
     # Step 5: Send the final prompt to the LLM API

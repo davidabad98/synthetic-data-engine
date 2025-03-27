@@ -1,7 +1,7 @@
 # app/config/config.py
 
 # Server mode can be either "local" or "aws"
-SERVER_MODE = "local"
+SERVER_MODE = "cloud"
 
 # List of domain-specific filler phrases to remove
 FILLER_PHRASES = [
@@ -55,7 +55,8 @@ S3_BUCKET_NAME = "synthetic-data-templates"
 S3_TEMPLATE_PATH = "schemas/"  # Folder in S3 bucket
 
 # Titan configuration for local deployment
-TITAN_PROFILE_NAME_RIZVAN = "rizvan"
+PROFILE_NAME = "rizvan"
 REGION_NAME = "us-east-1"
 GROQ_API_KEY = "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"
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
+GROQ_MODEL_ID = "mixtral-8x7b-32768"

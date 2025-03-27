@@ -1,15 +1,28 @@
 # app/utils/template_loader.py
 import json
+import logging
 import os
 
 import boto3
+from botocore.exceptions import ClientError
 
 from config.config import AWS_PROFILE, S3_BUCKET_NAME, S3_TEMPLATE_PATH, SERVER_MODE
 
+logger = logging.getLogger(__name__)
 TEMPLATES_DIR = os.path.join(os.path.dirname(__file__), "..", "templates")
 
 
-def load_single_template(template_name, templates_dir=TEMPLATES_DIR):
+def load_single_template(template_name):
+    """
+    Load single template from local files or an S3 bucket based on SERVER_MODE.
+    """
+    if SERVER_MODE == "local":
+        return _get_template_from_local(template_name)
+    else:
+        return _get_template_from_s3(template_name)
+
+
+def _get_template_from_local(template_name, templates_dir=TEMPLATES_DIR):
     """
     Loads a JSON template file given its name.
     Returns the JSON content as a Python dictionary or None if not found.
@@ -19,6 +32,54 @@ def load_single_template(template_name, templates_dir=TEMPLATES_DIR):
     if os.path.exists(template_path):
         with open(template_path, "r", encoding="utf-8") as f:
             return json.load(f)
+    return None
+
+
+def _get_template_from_s3(template_name: str):
+    """
+    Retrieves a specific JSON template from S3 by name.
+
+    Args:
+        template_name (str): Name of the template without extension
+
+    Returns:
+        dict: Parsed JSON template content or None if not found/invalid
+
+    Example:
+        >>> get_template_from_s3("tax_free_savings")
+        {'template_name': 'tax_free_savings', 'mappings': [...]}
+    """
+    # Explicitly set the AWS profile
+    session = boto3.Session(profile_name=AWS_PROFILE)
+    s3_client = session.client("s3")
+    object_key = f"{S3_TEMPLATE_PATH}{template_name}.json"
+
+    try:
+        # Get template object from S3
+        response = s3_client.get_object(Bucket=S3_BUCKET_NAME, Key=object_key)
+
+        # Read and parse content
+        file_content = response["Body"].read().decode("utf-8")
+        return json.loads(file_content)
+
+    except ClientError as e:
+        error_code = e.response["Error"]["Code"]
+        if error_code == "NoSuchKey":
+            logger.warning(f"Template '{template_name}' not found in S3")
+        else:
+            logger.error(f"S3 ClientError retrieving '{template_name}': {str(e)}")
+        return None
+    except json.JSONDecodeError:
+        logger.error(f"Invalid JSON format in template '{template_name}'")
+        return None
+    except UnicodeDecodeError:
+        logger.error(f"Encoding error in template '{template_name}'")
+        return None
+    except Exception as e:
+        logger.exception(
+            f"Unexpected error loading template '{template_name}': {str(e)}"
+        )
+
     return None
 
 

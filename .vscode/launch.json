@@ -12,6 +12,18 @@
             "console": "integratedTerminal"
         },
         {
+            "name": "Debug Main Application",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/app/main.py",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            },
+            "args": []
+        },
+        {
             "name": "FastAPI Debug",
             "type": "python",
             "request": "launch",

@@ -26,8 +26,9 @@ def main():
         from app.services.preprocess_input import preprocess_input
 
         user_input = "Generate synthetic data for a tax free saving account"
+        # user_input = "buy burgers and fries"
 
-        request = GenerateRequest(prompt="s", output_format="csv", volume=10)
+        request = GenerateRequest(prompt=user_input, output_format="csv", volume=10)
 
         result = preprocess_input(request)
         print("Generated Synthetic Data:", result)
