@@ -22,5 +22,7 @@ def save_dataframe_to_s3(df, bucket_name, prefix="output/"):
     session = boto3.Session(profile_name=AWS_PROFILE)
     s3 = session.client("s3")
     s3.put_object(Bucket=bucket_name, Key=s3_key, Body=csv_buffer.getvalue())
+    s3_path = f"s3://{bucket_name}/{s3_key}"
 
-    return f"s3://{bucket_name}/{s3_key}"
+    print(s3_path)
+    return s3_path

@@ -29,17 +29,26 @@ class RequestModel:
 
     def send_request_bedrock(self, prompt, max_tokens=4000, temperature=0.7, top_p=0.9):
         # Initialize AWS Session with IAM Identity Center (SSO) profile
-        session = boto3.Session(self.AWS_PROFILE)
+        session = boto3.Session(profile_name=self.AWS_PROFILE)
 
         # Create Bedrock client
         bedrock_client = session.client("bedrock-runtime", region_name=self.region_name)
 
         # Define the request payload
+        # payload = {
+        #     "prompt": prompt,
+        #     "max_tokens": max_tokens,
+        #     "temperature": temperature,
+        #     "top_p": top_p,
+        # }
+
         payload = {
-            "prompt": prompt,
-            "max_tokens": max_tokens,
-            "temperature": temperature,
-            "top_p": top_p,
+            "inputText": prompt,
+            "textGenerationConfig": {
+                "maxTokenCount": 4000,
+                "temperature": 0.7,
+                "topP": 0.9,
+            },
         }
 
         # Invoke the Titan model

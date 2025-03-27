@@ -6,8 +6,10 @@ import os
 from app.models.request import GenerateRequest
 from app.services.fuzzy_matching import select_template_rule_based
 from app.services.llm_service import LLMService
+from app.services.open_search import get_best_matching_schema
 from app.services.sentence_embeddings import SentenceEmbeddingMatcher
 from app.utils.template_loader import load_single_template
+from config.config import OPEN_SEARCH
 
 
 def preprocess_input(request: GenerateRequest) -> str:
@@ -26,30 +28,40 @@ def preprocess_input(request: GenerateRequest) -> str:
       5. Send the prompt to the LLM API and return the generated synthetic data.
     """
     user_input = request.prompt
-    # Step 1: Rule-Based Template Selection
-    template_name = select_template_rule_based(user_input)
-    if template_name != "NOT_FOUND":
-        selected_template_name = template_name
+
+    if OPEN_SEARCH:
+        # Use OpenSearch for template selection
+        schema, schema_name = get_best_matching_schema(user_input)
+
+        if not schema:
+            print("No matching schema found.")
+
+        selected_template = json.dumps(schema)
     else:
-        # Step 2: Embedding-Based Template Selection
-        matcher = SentenceEmbeddingMatcher()
-        template_name_from_embeddings = matcher.match_template(user_input)
-        if template_name_from_embeddings != "NOT_FOUND":
-            selected_template_name = template_name_from_embeddings
+        # Step 1: Rule-Based Template Selection
+        template_name = select_template_rule_based(user_input)
+        if template_name != "NOT_FOUND":
+            selected_template_name = template_name
         else:
-            # No template found by either method
-            selected_template_name = "NOT_FOUND"
+            # Step 2: Embedding-Based Template Selection
+            matcher = SentenceEmbeddingMatcher()
+            template_name_from_embeddings = matcher.match_template(user_input)
+            if template_name_from_embeddings != "NOT_FOUND":
+                selected_template_name = template_name_from_embeddings
+            else:
+                # No template found by either method
+                selected_template_name = "NOT_FOUND"
 
-    # If no template was found, return early or handle accordingly.
-    if selected_template_name == "NOT_FOUND":
-        print("No matching template found for the input.")
-        return "NOT_FOUND"
+        # If no template was found, return early or handle accordingly.
+        if selected_template_name == "NOT_FOUND":
+            print("No matching template found for the input.")
+            return "NOT_FOUND"
 
-    # Step 3: Load the selected JSON template (schema)
-    selected_template = load_single_template(selected_template_name)
-    if not selected_template:
-        print("Template file could not be loaded.")
-        return "NOT_FOUND"
+        # Step 3: Load the selected JSON template (schema)
+        selected_template = load_single_template(selected_template_name)
+        if not selected_template:
+            print("Template file could not be loaded.")
+            return "NOT_FOUND"
 
     # Step 4: Build the final prompt with best practices in prompt engineering.
     static_instruction = f"You are a synthetic data generator. Respond to the user request ONLY with valid {request.output_format} matching the schema:\n\n"
@@ -63,7 +75,7 @@ def preprocess_input(request: GenerateRequest) -> str:
         f"- No markdown formatting"
         f"- Never use markdown code blocks"
         f"Ensure that any specific field modifications (if mentioned by the user) are considered."
-        f"Generate 5 synthetic examples. Output pure {request.output_format} only:"
+        f"Generate {request.volume} synthetic examples. Output pure {request.output_format} only:"
     )
 
     # Step 5: Send the final prompt to the LLM API

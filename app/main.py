@@ -27,7 +27,7 @@ def main_template():
         from app.models.request import GenerateRequest
         from app.services.preprocess_input import preprocess_input
 
-        user_input = "Generate synthetic data for a tax free saving account"
+        user_input = "i want to generate syntheic data for a dental insurances and give me 10 rows"
         # user_input = "buy burgers and fries"
 
         request = GenerateRequest(prompt=user_input, output_format="csv", volume=10)

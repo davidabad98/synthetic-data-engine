@@ -14,7 +14,9 @@ class LLMService:
         Calls the appropriate LLM API based on SERVER_MODE.
         """
         if SERVER_MODE == "local":
-            return LLMService.call_local_llm(prompt, max_tokens, temperature, top_p)
+            # old call
+            # return LLMService.call_local_llm(prompt, max_tokens, temperature, top_p)
+            return LLMService.call_local_llm_new(prompt)
         else:
             # old call
             # return LLMService.call_bedrock_llm(prompt, max_tokens, temperature, top_p)
@@ -71,6 +73,11 @@ class LLMService:
         except Exception as e:
             print("Error calling Bedrock LLM API:", e)
             return ""
+
+    @staticmethod
+    def call_local_llm_new(prompt):
+        request_model = RequestModel()
+        return request_model.send_request_groq(prompt)
 
     @staticmethod
     def call_bedrock_llm_new(prompt, max_tokens, temperature, top_p):
