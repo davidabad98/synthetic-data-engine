@@ -35,17 +35,20 @@ def main_template(user_input):
         result = preprocess_input(request)
         print("Generated Synthetic Data:", result)
 
-        return 0  # Success exit code
+        return 0, result  # Success exit code
 
     except ValidationError as e:
+        error = f"Invalid user input: {e.errors()}"
         logger.error(f"Invalid user input: {e.errors()}")
-        return 1
+        return 1, error
     except KeyboardInterrupt:
-        logger.info("Process interrupted by user")
-        return 2
+        error = "Process interrupted by user"
+        logger.info(error)
+        return 2, error
     except Exception as e:
-        logger.exception(f"Unexpected error occurred: {str(e)}")
-        return 3
+        error = f"Unexpected error occurred: {str(e)}"
+        logger.exception(error)
+        return 3, error
 
 
 """
@@ -58,7 +61,8 @@ def main_template(user_input):
 
 if __name__ == "__main__":
     try:
-        exit_code = main_template()
+        user_input = "Data generation for retirement savings"
+        exit_code, _ = main_template(user_input)
     except Exception as e:
         logger.exception("Critical error in main execution:")
         exit_code = 4

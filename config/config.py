@@ -8,7 +8,7 @@ OPENSEARCH_PASS = "GenAI@2025"
 INDEX_NAME = "schema_search"
 
 # Server mode can be either "local" or "aws"
-SERVER_MODE = "local"
+SERVER_MODE = "cloud"
 
 # main_template (1) OR main (2)
 SERVER_FLOW = 2
@@ -56,7 +56,8 @@ FILLER_PHRASES = [
 LLM_LOCAL_URL = "http://10.111.30.94:1234/v1/completions"
 
 # LLM configuration for AWS Bedrock (example values)
-LLM_BEDROCK_MODEL_ID = "amazon.titan-text-express-v1"
+# LLM_BEDROCK_MODEL_ID = "amazon.titan-text-express-v1"
+LLM_BEDROCK_MODEL_ID = "anthropic.claude-v2:1"
 LLM_BEDROCK_ENDPOINT = "https://bedrock.endpoint.url"
 
 # AWS KEYS

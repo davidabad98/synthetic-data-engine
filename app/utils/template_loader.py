@@ -6,7 +6,13 @@ import os
 import boto3
 from botocore.exceptions import ClientError
 
-from config.config import AWS_PROFILE, S3_BUCKET_NAME, S3_TEMPLATE_PATH, SERVER_MODE
+from config.config import (
+    AWS_PROFILE,
+    OPEN_SEARCH,
+    S3_BUCKET_NAME,
+    S3_TEMPLATE_PATH,
+    SERVER_MODE,
+)
 
 logger = logging.getLogger(__name__)
 TEMPLATES_DIR = os.path.join(os.path.dirname(__file__), "..", "templates")
@@ -87,6 +93,8 @@ def load_template_mappings():
     """
     Load template mappings from local files or an S3 bucket based on SERVER_MODE.
     """
+    if OPEN_SEARCH:
+        return "NOT_FOUND"
     if SERVER_MODE == "local":
         return _load_template_mappings_from_local()
     else:

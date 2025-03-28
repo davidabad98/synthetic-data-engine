@@ -21,15 +21,22 @@ def lambda_handler(request, event="", context=""):
     """
     try:
         # Decide between flow 1 OR 2
-        if SERVER_FLOW == 1:
-            destination_uri = main_template(user_input=request.prompt)
+        # if SERVER_FLOW == 1:
+        if request.prompt != "epic-generation":
+            status_code, destination_uri = main_template(user_input=request.prompt)
         else:
-            destination_uri = main()
+            status_code, destination_uri = main()
+
+        result_message = (
+            f"Data successfully generated! You can access it here: {destination_uri}"
+            if status_code == 0
+            else destination_uri
+        )
 
         # Return a success response
         return {
             "statusCode": 200,
-            "body": json.dumps({"data": f"{destination_uri}"}),
+            "body": json.dumps({"data": f"{result_message}"}),
         }
 
     except Exception as e:

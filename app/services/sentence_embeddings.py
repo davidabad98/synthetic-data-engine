@@ -5,6 +5,8 @@ import faiss
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
+from config.config import OPEN_SEARCH
+
 TEMPLATES_DIR = os.path.join(os.path.dirname(__file__), "..", "templates")
 FAISS_PATH = os.path.join(os.path.dirname(__file__), "..", "data/faiss")
 INDEX_PATH = os.path.join(FAISS_PATH, "persisted_index.index")
@@ -29,7 +31,8 @@ class SentenceEmbeddingMatcher:
         self.filenames = []
 
         # Initialize by loading a persisted index if available; otherwise build it.
-        self._init_index()
+        if not OPEN_SEARCH:
+            self._init_index()
 
     def _init_index(self):
         """Checks for persisted index and metadata. Loads them if available; otherwise, build and save."""

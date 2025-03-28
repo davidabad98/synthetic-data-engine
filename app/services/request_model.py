@@ -79,7 +79,7 @@ class RequestModel:
         csv_data = CsvParser.parse_csv_response(output_text)
 
         # Load the CSV data into a Pandas DataFrame
-        df = self._parse_csv_response(csv_data, "titan")
+        df = self._parse_csv_response(csv_data, "bedrock")
 
         destination_uri = utility.save_dataframe_to_s3(
             df, bucket_name=S3_OUTPUT_BUCKET, prefix=S3_OUTPUT_FOLDER

@@ -23,16 +23,12 @@ class LLMService:
         if SERVER_MODE == "local":
             # old call
             # return LLMService.call_local_llm(prompt, max_tokens, temperature, top_p)
-            df = LLMService.call_local_llm_new(prompt)
-
-            destination_uri = "PENDING TO SAVE FILE TO DATA FOLDER IN LOCAL"
+            destination_uri = LLMService.call_local_llm_new(prompt)
         else:
             # old call
             # return LLMService.call_bedrock_llm(prompt, max_tokens, temperature, top_p)
-            df = LLMService.call_bedrock_llm_new(prompt, max_tokens, temperature, top_p)
-
-            destination_uri = utility.save_dataframe_to_s3(
-                df, bucket_name=S3_OUTPUT_BUCKET, prefix=S3_OUTPUT_FOLDER
+            destination_uri = LLMService.call_bedrock_llm_new(
+                prompt, max_tokens, temperature, top_p
             )
 
         return destination_uri

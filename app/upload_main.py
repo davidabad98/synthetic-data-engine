@@ -29,9 +29,9 @@ def main(prompt="", format="csv"):
     sm = RequestModel()
     # Sending a request to the model based on the model_used argument
     if SERVER_MODE != "local":
-        return sm.send_request_bedrock(epic_prompt)
+        return 0, sm.send_request_bedrock(epic_prompt)
     else:
-        return sm.send_request_groq(epic_prompt)
+        return 0, sm.send_request_groq(epic_prompt)
 
 
 if __name__ == "__main__":
