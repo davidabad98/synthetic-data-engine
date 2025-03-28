@@ -27,7 +27,9 @@ class RequestModel:
         self.GROQ_API_KEY = GROQ_API_KEY
         self.groq_url = GROQ_URL
 
-    def send_request_bedrock(self, prompt, max_tokens=4000, temperature=0.7, top_p=0.9):
+    def send_request_bedrock(
+        self, prompt, max_tokens=4000, temperature=0.7, top_p=0.9, top_k=250
+    ):
         # Initialize AWS Session with IAM Identity Center (SSO) profile
         session = boto3.Session(profile_name=self.AWS_PROFILE)
 
@@ -35,21 +37,26 @@ class RequestModel:
         bedrock_client = session.client("bedrock-runtime", region_name=self.region_name)
 
         # Define the request payload
-        # payload = {
-        #     "prompt": prompt,
-        #     "max_tokens": max_tokens,
-        #     "temperature": temperature,
-        #     "top_p": top_p,
-        # }
 
+        # Antrhopic
         payload = {
-            "inputText": prompt,
-            "textGenerationConfig": {
-                "maxTokenCount": 4000,
-                "temperature": 0.7,
-                "topP": 0.9,
-            },
+            "prompt": f"\n\nHuman: {prompt}\n\nAssistant:",
+            "max_tokens_to_sample": max_tokens,
+            "temperature": temperature,
+            "top_k": top_k,
+            "top_p": top_p,
+            "stop_sequences": ["\n\nHuman:"],
+            "anthropic_version": "bedrock-2023-05-31",
         }
+
+        # payload = {
+        #     "inputText": prompt,
+        #     "textGenerationConfig": {
+        #         "maxTokenCount": 4000,
+        #         "temperature": 0.7,
+        #         "topP": 0.9,
+        #     },
+        # }
 
         # Invoke the Titan model
         response = bedrock_client.invoke_model(
@@ -60,7 +67,10 @@ class RequestModel:
             response_body = json.loads(stream.read())
 
         # Extract the output text
-        output_text = response_body["results"][0]["outputText"]
+        # output_text = response_body["results"][0]["outputText"]
+
+        # Extract the generated response from Claude
+        output_text = response_body.get("completion", "").strip()
 
         # Extract the CSV data from the output text
         csv_data = CsvParser.parse_csv_response(output_text)
@@ -88,6 +98,9 @@ class RequestModel:
         # Extracting the message content
         response_json = response.json()
         csv_data = response_json["choices"][0]["message"]["content"]
+
+        # Extract the CSV data from the output text
+        csv_data = CsvParser.parse_csv_response(csv_data)
 
         # Convert the CSV data into a pandas DataFrame
         return self._parse_csv_response(csv_data, "groq")

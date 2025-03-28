@@ -70,6 +70,7 @@ def preprocess_input(request: GenerateRequest) -> str:
         f"{static_instruction}\n\n"
         f"Schema:\n{json.dumps(selected_template, indent=2)}\n\n"
         f"User Request: {user_input}\n\n"
+        f"- Enclose the data entirely within backticks for easy extraction.\n"
         f"- No explanations"
         f"- No additional text"
         f"- No markdown formatting"

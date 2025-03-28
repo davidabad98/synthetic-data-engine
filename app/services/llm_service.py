@@ -4,7 +4,14 @@ import json
 import requests
 
 from app.services.request_model import RequestModel
-from config.config import LLM_BEDROCK_MODEL_ID, LLM_LOCAL_URL, SERVER_MODE
+from app.utils import utility
+from config.config import (
+    LLM_BEDROCK_MODEL_ID,
+    LLM_LOCAL_URL,
+    S3_OUTPUT_BUCKET,
+    S3_OUTPUT_FOLDER,
+    SERVER_MODE,
+)
 
 
 class LLMService:
@@ -16,11 +23,19 @@ class LLMService:
         if SERVER_MODE == "local":
             # old call
             # return LLMService.call_local_llm(prompt, max_tokens, temperature, top_p)
-            return LLMService.call_local_llm_new(prompt)
+            df = LLMService.call_local_llm_new(prompt)
+
+            destination_uri = "PENDING TO SAVE FILE TO DATA FOLDER IN LOCAL"
         else:
             # old call
             # return LLMService.call_bedrock_llm(prompt, max_tokens, temperature, top_p)
-            return LLMService.call_bedrock_llm(prompt, max_tokens, temperature, top_p)
+            df = LLMService.call_bedrock_llm_new(prompt, max_tokens, temperature, top_p)
+
+            destination_uri = utility.save_dataframe_to_s3(
+                df, bucket_name=S3_OUTPUT_BUCKET, prefix=S3_OUTPUT_FOLDER
+            )
+
+        return destination_uri
 
     @staticmethod
     def call_local_llm(prompt, max_tokens, temperature, top_p):

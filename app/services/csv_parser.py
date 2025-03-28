@@ -22,9 +22,11 @@ class CsvParser:
         """
         try:
             # Extract the CSV data from the output text
-            csv_data_match = re.search(
-                r"```tabular-data-csv\s*(.*)\s*```", raw_response, re.DOTALL
-            )
+            # old code
+            # csv_data_match = re.search(
+            #     r"```tabular-data-csv\s*(.*)\s*```", raw_response, re.DOTALL
+            # )
+            csv_data_match = re.search(r"`([^`]+)`", raw_response, re.DOTALL)
             if csv_data_match:
                 csv_data = csv_data_match.group(1)
             else:

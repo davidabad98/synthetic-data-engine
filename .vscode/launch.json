@@ -41,7 +41,7 @@
             "request": "launch",
             "module": "uvicorn",
             "args": [
-                "app.main:app",
+                "app.main_fastapi:app",
                 "--host",
                 "127.0.0.1",
                 "--port",

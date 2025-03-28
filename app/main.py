@@ -14,7 +14,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def main_template():
+def main_template(user_input):
     try:
         # Get the current script's directory
         current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -27,7 +27,7 @@ def main_template():
         from app.models.request import GenerateRequest
         from app.services.preprocess_input import preprocess_input
 
-        user_input = "i want to generate syntheic data for a dental insurances and give me 10 rows"
+        # user_input = "i want to generate syntheic data for a dental insurances and give me 10 rows"
         # user_input = "buy burgers and fries"
 
         request = GenerateRequest(prompt=user_input, output_format="csv", volume=10)

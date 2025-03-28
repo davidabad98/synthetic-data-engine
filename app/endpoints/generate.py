@@ -2,8 +2,8 @@
 
 from fastapi import APIRouter, HTTPException, status
 
+from app.lambda_function import lambda_handler
 from app.models.request import GenerateRequest, GenerateResponse
-from app.services.preprocess_input import preprocess_input
 
 router = APIRouter()
 
@@ -17,8 +17,7 @@ async def generate_data(request: GenerateRequest):
     This endpoint simulates the API Gateway that triggers the processing.
     """
     try:
-        # Preprocess input to build a dynamic prompt based on the request.
-        final_prompt = preprocess_input(request)
+        final_prompt = lambda_handler(request)
         # For the prototype, we simulate an LLM response.
         synthetic_data = {
             "llm_response": final_prompt,

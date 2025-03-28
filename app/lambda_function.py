@@ -2,9 +2,8 @@ import json
 import logging
 import os
 
-from upload_main import main  # Import the main function from main.py
-
 from app.main import main_template
+from app.upload_main import main  # Import the main function from main.py
 from config.config import SERVER_FLOW
 
 # Configure logging
@@ -14,7 +13,8 @@ logging.basicConfig(
 logger = logging.getLogger()
 
 
-def lambda_handler(event="", context=""):
+# def lambda_handler(event, context):
+def lambda_handler(request, event="", context=""):
     """
     This function will be triggered by API Gateway.
     It reads the `model_used` query parameter from the event and passes it to the main function.
@@ -22,7 +22,7 @@ def lambda_handler(event="", context=""):
     try:
         # Decide between flow 1 OR 2
         if SERVER_FLOW == 1:
-            destination_uri = main_template()
+            destination_uri = main_template(user_input=request.prompt)
         else:
             destination_uri = main()
 
