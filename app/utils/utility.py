@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 from io import StringIO
 
@@ -26,3 +27,28 @@ def save_dataframe_to_s3(df, bucket_name, prefix="output/"):
 
     print(s3_path)
     return s3_path
+
+
+def save_dataframe_locally(df: pd.DataFrame, folder_path="app/data/generated"):
+    """
+    Saves the given DataFrame as a CSV file in the specified local folder.
+
+    Args:
+        df (pd.DataFrame): The DataFrame to save.
+        folder_path (str): The directory where the file will be saved.
+
+    Returns:
+        str: The local file path of the saved CSV.
+    """
+    # Ensure the directory exists
+    os.makedirs(folder_path, exist_ok=True)
+
+    # Generate a filename
+    file_name = generate_filename("synthetic_data")
+    file_path = os.path.join(folder_path, file_name)
+
+    # Save the CSV file
+    df.to_csv(file_path, index=False)
+
+    print(f"File saved locally: {file_path}")
+    return file_path

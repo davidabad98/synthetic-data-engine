@@ -174,3 +174,4 @@ cython_debug/
 TODO.txt
 config/config.py
 Dockerfile
+app/data/generated/

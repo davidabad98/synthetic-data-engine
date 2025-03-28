@@ -8,6 +8,7 @@ import pandas as pd
 import requests
 
 from app.services.csv_parser import CsvParser
+from app.utils import utility
 from config.config import (
     AWS_PROFILE,
     GROQ_API_KEY,
@@ -15,6 +16,8 @@ from config.config import (
     GROQ_URL,
     LLM_BEDROCK_MODEL_ID,
     REGION_NAME,
+    S3_OUTPUT_BUCKET,
+    S3_OUTPUT_FOLDER,
 )
 
 logger = logging.getLogger(__name__)
@@ -76,7 +79,13 @@ class RequestModel:
         csv_data = CsvParser.parse_csv_response(output_text)
 
         # Load the CSV data into a Pandas DataFrame
-        return self._parse_csv_response(csv_data, "titan")
+        df = self._parse_csv_response(csv_data, "titan")
+
+        destination_uri = utility.save_dataframe_to_s3(
+            df, bucket_name=S3_OUTPUT_BUCKET, prefix=S3_OUTPUT_FOLDER
+        )
+
+        return destination_uri
 
     def send_request_groq(self, prompt):
         # Define the API endpoint and headers
@@ -103,7 +112,11 @@ class RequestModel:
         csv_data = CsvParser.parse_csv_response(csv_data)
 
         # Convert the CSV data into a pandas DataFrame
-        return self._parse_csv_response(csv_data, "groq")
+        df = self._parse_csv_response(csv_data, "groq")
+
+        destination_uri = utility.save_dataframe_locally(df)
+
+        return destination_uri
 
     def _parse_csv_response(self, csv_data: str, source: str) -> pd.DataFrame:
         try:

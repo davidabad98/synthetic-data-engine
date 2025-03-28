@@ -29,7 +29,7 @@ def lambda_handler(request, event="", context=""):
         # Return a success response
         return {
             "statusCode": 200,
-            "body": json.dumps({"message": f"Output data {destination_uri}"}),
+            "body": json.dumps({"data": f"{destination_uri}"}),
         }
 
     except Exception as e:
@@ -47,4 +47,5 @@ def lambda_handler(request, event="", context=""):
 
 
 if __name__ == "__main__":
-    lambda_handler()
+    request = "Generate synthetic data for a tax free saving account"
+    lambda_handler(request)

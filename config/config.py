@@ -9,7 +9,9 @@ INDEX_NAME = "schema_search"
 
 # Server mode can be either "local" or "aws"
 SERVER_MODE = "local"
-SERVER_FLOW = 1
+
+# main_template (1) OR main (2)
+SERVER_FLOW = 2
 
 # List of domain-specific filler phrases to remove
 FILLER_PHRASES = [

@@ -17,14 +17,10 @@ async def generate_data(request: GenerateRequest):
     This endpoint simulates the API Gateway that triggers the processing.
     """
     try:
-        final_prompt = lambda_handler(request)
-        # For the prototype, we simulate an LLM response.
-        synthetic_data = {
-            "llm_response": final_prompt,
-        }
+        response = lambda_handler(request)
 
         return GenerateResponse(
-            message="Synthetic data generated successfully", data=synthetic_data
+            message="Synthetic data generated successfully", data=response
         )
 
     except Exception as e:

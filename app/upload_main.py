@@ -4,14 +4,7 @@ import sys
 from app.services.epic import EPICPromptGenerator
 from app.services.request_model import RequestModel
 from app.utils import utility
-from config.config import (
-    GENERATED_ROWS,
-    N_SAMPLES,
-    S3_INPUT_FILEPATH,
-    S3_OUTPUT_BUCKET,
-    S3_OUTPUT_FOLDER,
-    SERVER_MODE,
-)
+from config.config import GENERATED_ROWS, N_SAMPLES, S3_INPUT_FILEPATH, SERVER_MODE
 
 
 def main(prompt="", format="csv"):
@@ -36,15 +29,9 @@ def main(prompt="", format="csv"):
     sm = RequestModel()
     # Sending a request to the model based on the model_used argument
     if SERVER_MODE != "local":
-        df = sm.send_request_bedrock(epic_prompt)
+        return sm.send_request_bedrock(epic_prompt)
     else:
-        df = sm.send_request_groq(epic_prompt)
-
-    destination_uri = utility.save_dataframe_to_s3(
-        df, bucket_name=S3_OUTPUT_BUCKET, prefix=S3_OUTPUT_FOLDER
-    )
-
-    return destination_uri
+        return sm.send_request_groq(epic_prompt)
 
 
 if __name__ == "__main__":
