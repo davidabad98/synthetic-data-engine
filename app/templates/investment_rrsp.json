@@ -1,5 +1,5 @@
 {
-    "template_name": "investment_rsp",
+    "template_name": "investment_rrsp",
     "description": "Registered Retirement Savings Plan (RRSP) synthetic data template. An RRSP is a registered savings account in Canada that offers tax benefits and helps individuals save for retirement. This template includes fields for account holder details, contribution limits, tax benefits, borrowing options for home buying and education, and post-retirement options.",
     "mappings": [
         "registered retirement savings plan",
