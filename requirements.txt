@@ -5,3 +5,7 @@ spacy
 rapidfuzz
 faiss-gpu
 tf-keras --no-deps
+boto3
+pandas
+opensearch-py
+sentence-transformers

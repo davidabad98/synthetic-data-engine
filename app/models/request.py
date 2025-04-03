@@ -1,4 +1,5 @@
 # app/models/request.py
+import random
 from enum import Enum
 from typing import Dict, Optional
 
@@ -27,7 +28,13 @@ class GenerateRequest(BaseModel):
     def validate_prompt(cls, value):
         stripped = value.strip()
         if len(stripped) < 5:
-            raise ValueError("Prompt must be at least 5 characters long")
+            error_messages = [
+                "📝 Let's try that again! Your request needs to be at least 5 characters to work with. Could you please add a bit more detail?\nExample: '5 customer records for a dental insurance policy'",
+                "🤖 Almost there! Please give me a slightly longer description (at least 5 characters) so I can create the best data for you!",
+                "✨ Data generation needs fuel! Please provide a prompt of at least 5 characters to get started.",
+                "📦 Let's build something great! Could you expand your request to 5+ characters? Example: '10 entries for a fhsa investment.'",
+            ]
+            raise ValueError(random.choice(error_messages))
         return stripped
 
 

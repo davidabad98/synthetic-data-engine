@@ -17,8 +17,8 @@ async def generate_data(request: GenerateRequest):
     This endpoint simulates the API Gateway that triggers the processing.
     """
     try:
-        response = lambda_handler(request)
-
+        # response = lambda_handler(request)
+        response = "SUCCESS"
         return GenerateResponse(
             message="Synthetic data generated successfully", data=response
         )

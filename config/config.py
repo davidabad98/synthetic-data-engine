@@ -8,7 +8,7 @@ OPENSEARCH_PASS = "GenAI@2025"
 INDEX_NAME = "schema_search"
 
 # Server mode can be either "local" or "aws"
-SERVER_MODE = "cloud"
+SERVER_MODE = "local"
 
 # main_template (1) OR main (2)
 SERVER_FLOW = 2
