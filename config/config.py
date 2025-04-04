@@ -1,7 +1,7 @@
 # app/config/config.py
 
 # Turn on OpenSearch
-OPEN_SEARCH = True
+OPEN_SEARCH = False
 OPENSEARCH_ENDPOINT = "https://search-genai-schema-search-d63w6q24vjesd7sqzhzdxbt2ay.us-east-1.es.amazonaws.com"
 OPENSEARCH_USER = "GenAI"
 OPENSEARCH_PASS = "GenAI@2025"
@@ -75,6 +75,11 @@ S3_OUTPUT_FOLDER = "output/"
 GROQ_API_KEY = "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"
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_MODEL_ID = "llama3-8b-8192"
+
+# FLOW 1 FLAGS
+SUPPORTED_FORMATS = ["CSV", "XML", "JSON", "TEXT"]
+DEFAULT_FORMAT = "CSV"
+DEFAULT_RECORD_COUNT = 5
 
 # FLOW 2 FLAGS
 N_SAMPLES = 3

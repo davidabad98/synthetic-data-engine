@@ -1,15 +1,15 @@
 # app/services/preprocess_input.py
 
 import json
-import os
+import logging
 
 from app.models.request import GenerateRequest
-from app.services.fuzzy_matching import select_template_rule_based
 from app.services.llm_service import LLMService
-from app.services.open_search import get_best_matching_schema
+from app.services.prompt_processor import PromptProcessor
 from app.services.sentence_embeddings import SentenceEmbeddingMatcher
 from app.utils.template_loader import load_single_template
-from config.config import OPEN_SEARCH
+
+logger = logging.getLogger(__name__)
 
 
 def preprocess_input(request: GenerateRequest) -> str:
@@ -29,41 +29,21 @@ def preprocess_input(request: GenerateRequest) -> str:
     """
     user_input = request.prompt
 
-    if OPEN_SEARCH:
-        # Use OpenSearch for template selection
-        schema, schema_name = get_best_matching_schema(user_input)
+    processor = PromptProcessor(SentenceEmbeddingMatcher())
+    result = processor.process(user_input)
 
-        if not schema:
-            print("No matching schema found.")
-
-        selected_template = json.dumps(schema)
-    else:
-        # Step 1: Rule-Based Template Selection
-        template_name = select_template_rule_based(user_input)
-        if template_name != "NOT_FOUND":
-            selected_template_name = template_name
-        else:
-            # Step 2: Embedding-Based Template Selection
-            matcher = SentenceEmbeddingMatcher()
-            template_name_from_embeddings = matcher.match_template(user_input)
-            if template_name_from_embeddings != "NOT_FOUND":
-                selected_template_name = template_name_from_embeddings
-            else:
-                # No template found by either method
-                selected_template_name = "NOT_FOUND"
-
+    if result["template"] is None or result["template"] == "NOT_FOUND":
         # If no template was found, return early or handle accordingly.
-        if selected_template_name == "NOT_FOUND":
-            print("No matching template found for the input.")
-            return "NOT_FOUND"
+        logger.info("No matching template found for the input.")
+        return result["error"]
 
-        # Step 3: Load the selected JSON template (schema)
-        selected_template = load_single_template(selected_template_name)
-        if not selected_template:
-            print("Template file could not be loaded.")
-            return "NOT_FOUND"
+    # Load the selected JSON template (schema)
+    selected_template = load_single_template(result["template"])
+    if not selected_template:
+        logger.info("Template file could not be loaded.")
+        return "Template file could not be loaded."
 
-    # Step 4: Build the final prompt with best practices in prompt engineering.
+    # Build the final prompt with best practices in prompt engineering.
     static_instruction = f"You are a synthetic data generator. Respond to the user request ONLY with valid {request.output_format} matching the schema:\n\n"
 
     final_prompt = (
