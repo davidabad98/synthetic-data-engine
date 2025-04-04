@@ -6,13 +6,10 @@ from app.main import main_template
 from app.upload_main import main  # Import the main function from main.py
 from config.config import SERVER_FLOW
 
-# Configure logging
-logging.basicConfig(
-    format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO
-)
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 
 
+# Uncomment this for AWS cloud Lambda implementation:
 # def lambda_handler(event, context):
 def lambda_handler(request, event="", context=""):
     """
@@ -23,8 +20,10 @@ def lambda_handler(request, event="", context=""):
         # Decide between flow 1 OR 2
         # if SERVER_FLOW == 1:
         if request.prompt != "epic-generation":
+            logger.info(f"Started template-generation")
             status_code, destination_uri = main_template(user_input=request.prompt)
         else:
+            logger.info(f"Started epic-generation.")
             status_code, destination_uri = main()
 
         result_message = (
