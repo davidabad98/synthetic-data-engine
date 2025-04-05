@@ -12,7 +12,6 @@ from config.config import (
     S3_OUTPUT_BUCKET,
     S3_OUTPUT_FOLDER,
     SERVER_MODE,
-    DEFAULT_LLM,
 )
 
 logger = logging.getLogger(__name__)
@@ -31,14 +30,9 @@ class LLMService:
         else:
             # old call
             # return LLMService.call_bedrock_llm(prompt, max_tokens, temperature, top_p)
-            if(DEFAULT_LLM=='aws'):
-                destination_uri = LLMService.call_bedrock_llm_new(
+            destination_uri = LLMService.call_bedrock_llm_new(
                 prompt, max_tokens, temperature, top_p
             )
-            else:
-                destination_uri = LLMService.call_local_llm_new(prompt)
-
-            
 
         return destination_uri
 
