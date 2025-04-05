@@ -8,6 +8,7 @@ from app.services.llm_service import LLMService
 from app.services.prompt_processor import PromptProcessor
 from app.services.sentence_embeddings import SentenceEmbeddingMatcher
 from app.utils.template_loader import load_single_template
+from config.config import OPEN_SEARCH
 
 logger = logging.getLogger(__name__)
 
@@ -38,10 +39,13 @@ def preprocess_input(request: GenerateRequest) -> str:
         return result["error"]
 
     # Load the selected JSON template (schema)
-    selected_template = load_single_template(result["template"])
-    if not selected_template:
-        logger.info("Template file could not be loaded.")
-        return "Template file could not be loaded."
+    if OPEN_SEARCH:
+        selected_template = result["template"]
+    else:
+        selected_template = load_single_template(result["template"])
+        if not selected_template:
+            logger.info("Template file could not be loaded.")
+            return "Template file could not be loaded."
 
     # Build the final prompt with best practices in prompt engineering.
     static_instruction = f"You are a synthetic data generator. Respond to the user request ONLY with valid {request.output_format} matching the schema:\n\n"

@@ -1,13 +1,13 @@
 # app/config/config.py
 
 # Turn on OpenSearch
-OPEN_SEARCH = False
+OPEN_SEARCH = True
 OPENSEARCH_ENDPOINT = "https://search-genai-schema-search-d63w6q24vjesd7sqzhzdxbt2ay.us-east-1.es.amazonaws.com"
 OPENSEARCH_USER = "GenAI"
 OPENSEARCH_PASS = "GenAI@2025"
 INDEX_NAME = "schema_search"
 
-# Server mode can be either "local" or "aws"
+# Server mode can be either "local" or aws "cloud"
 SERVER_MODE = "local"
 
 # main_template (1) OR main (2)
