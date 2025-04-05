@@ -9,7 +9,7 @@ INDEX_NAME = "schema_search"
 
 # Server mode can be either "local" or aws "cloud"
 SERVER_MODE = "local"
-
+DEFAULT_LLM = "aws"
 # main_template (1) OR main (2)
 SERVER_FLOW = 2
 

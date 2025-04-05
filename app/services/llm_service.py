@@ -7,6 +7,7 @@ import requests
 from app.services.request_model import RequestModel
 from app.utils import utility
 from config.config import (
+    DEFAULT_LLM,
     LLM_BEDROCK_MODEL_ID,
     LLM_LOCAL_URL,
     S3_OUTPUT_BUCKET,
@@ -30,9 +31,13 @@ class LLMService:
         else:
             # old call
             # return LLMService.call_bedrock_llm(prompt, max_tokens, temperature, top_p)
-            destination_uri = LLMService.call_bedrock_llm_new(
-                prompt, max_tokens, temperature, top_p
-            )
+
+            if DEFAULT_LLM == "aws":
+                destination_uri = LLMService.call_bedrock_llm_new(
+                    prompt, max_tokens, temperature, top_p
+                )
+            else:
+                destination_uri = LLMService.call_local_llm_new(prompt)
 
         return destination_uri
 
