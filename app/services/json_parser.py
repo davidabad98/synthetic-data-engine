@@ -4,8 +4,6 @@ import re
 from pathlib import Path
 from typing import Dict, List, Optional
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
@@ -125,8 +123,8 @@ if __name__ == "__main__":
         parsed_data = parser.parse_response(sample_response)
         parser.save_to_file(Path("data.json"))
 
-        print(f"Successfully parsed {len(parsed_data)} records")
-        print("Sample record:", json.dumps(parsed_data[0], indent=2))
+        logger.info(f"Successfully parsed {len(parsed_data)} records")
+        logger.info("Sample record:", json.dumps(parsed_data[0], indent=2))
 
     except Exception as e:
         logger.error(f"Processing failed: {str(e)}")

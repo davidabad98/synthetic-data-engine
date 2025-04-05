@@ -1,4 +1,5 @@
 import json
+import logging
 
 from opensearchpy import OpenSearch
 
@@ -9,6 +10,8 @@ from config.config import (
     OPENSEARCH_PASS,
     OPENSEARCH_USER,
 )
+
+logger = logging.getLogger(__name__)
 
 
 def get_best_matching_schema(user_prompt):
@@ -36,6 +39,6 @@ def get_best_matching_schema(user_prompt):
     schema_json_str = top_hit["schema_data"]
     schema_json = json.loads(schema_json_str)
     schema_name = top_hit.get("template_name")
-    print(f"Best matching schema: {schema_name}")
+    logger.info(f"OpenSearch best matching schema: {schema_name}")
 
     return schema_json, schema_name

@@ -5,12 +5,9 @@ import sys
 
 from pydantic import ValidationError
 
+from app.models.request import OutputFormat
 from config.config import SERVER_FLOW
 
-# Configure logging
-logging.basicConfig(
-    format="%(asctime)s - %(levelname)s - %(message)s", level=logging.INFO
-)
 logger = logging.getLogger(__name__)
 
 
@@ -27,13 +24,15 @@ def main_template(user_input):
         from app.models.request import GenerateRequest
         from app.services.preprocess_input import preprocess_input
 
-        # user_input = "i want to generate syntheic data for a dental insurances and give me 10 rows"
-        # user_input = "buy burgers and fries"
-
-        request = GenerateRequest(prompt=user_input, output_format="csv", volume=10)
+        request = GenerateRequest(
+            prompt=user_input,
+            output_format=OutputFormat.CSV,
+            volume=10,
+            parameters=None,
+        )
 
         result = preprocess_input(request)
-        print("Generated Synthetic Data:", result)
+        logger.info("preprocess_input result:", result)
 
         return 0, result  # Success exit code
 

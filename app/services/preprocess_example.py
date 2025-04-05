@@ -3,12 +3,14 @@
 import csv
 import io
 import json
+import logging
 import os
 import xml.etree.ElementTree as ET
 from typing import Any, Tuple, Union
 
 from app.models.request import GenerateRequest
 
+logger = logging.getLogger(__name__)
 # Predefined field mapping for normalization
 FIELD_MAPPINGS = {
     "FullName": ["FirstName", "LastName", "Name", "FullName"],
@@ -200,4 +202,4 @@ if __name__ == "__main__":
     # Testing each scenario:
     for inp in [json_input, xml_input, csv_input, plain_text_input]:
         dummy_request = DummyRequest(prompt=inp, input_format="CSV", volume=1000)
-        print("Final Prompt:", preprocess_input(dummy_request))
+        logger.info("Final Prompt:", preprocess_input(dummy_request))

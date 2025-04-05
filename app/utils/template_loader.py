@@ -120,7 +120,7 @@ def _load_template_mappings_from_local():
                     if template_name and mappings:
                         templates[template_name] = mappings
             except json.JSONDecodeError:
-                print(f"Warning: Skipping invalid JSON file {filename}")
+                logger.error(f"Warning: Skipping invalid JSON file {filename}")
     return templates
 
 
@@ -143,7 +143,7 @@ def _load_template_mappings_from_s3():
         )
 
         if "Contents" not in response:
-            print("Warning: No templates found in S3 bucket.")
+            logger.info("Warning: No templates found in S3 bucket.")
             return templates
 
         # Iterate through all files in the schema folder
@@ -166,9 +166,9 @@ def _load_template_mappings_from_s3():
                 if template_name and mappings:
                     templates[template_name] = mappings
             except json.JSONDecodeError:
-                print(f"Warning: Skipping invalid JSON file {file_key}")
+                logger.error(f"Warning: Skipping invalid JSON file {file_key}")
 
     except Exception as e:
-        print(f"Error fetching templates from S3: {str(e)}")
+        logger.error(f"Error fetching templates from S3: {str(e)}")
 
     return templates

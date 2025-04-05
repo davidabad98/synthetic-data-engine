@@ -21,15 +21,15 @@ def lambda_handler(request, event="", context=""):
         # if SERVER_FLOW == 1:
         if request.prompt != "epic-generation":
             logger.info(f"Started template-generation")
-            status_code, destination_uri = main_template(user_input=request.prompt)
+            status_code, result = main_template(user_input=request.prompt)
         else:
             logger.info(f"Started epic-generation.")
-            status_code, destination_uri = main()
+            status_code, result = main()
 
         result_message = (
-            f"Data successfully generated! You can access it here: {destination_uri}"
+            f"Data successfully generated! You can access it here: {result}"
             if status_code == 0
-            else destination_uri
+            else result
         )
 
         # Return a success response
@@ -47,7 +47,7 @@ def lambda_handler(request, event="", context=""):
             "Event data: %s", json.dumps(event)
         )  # Log the event that triggered the error
 
-        print(f"Error occurred: {error_message}")
+        logger.error(f"Error occurred: {error_message}")
         # Handle errors gracefully
         return {"statusCode": 500, "body": json.dumps({"error": error_message})}
 

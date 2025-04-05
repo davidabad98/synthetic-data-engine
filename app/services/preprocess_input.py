@@ -60,8 +60,8 @@ def preprocess_input(request: GenerateRequest) -> str:
     )
 
     # Step 5: Send the final prompt to the LLM API
-    synthetic_data = LLMService.call_llm_api(final_prompt)
-    return synthetic_data
+    result = LLMService.call_llm_api(final_prompt)
+    return result
 
 
 # For debugging, you can test these functions independently.
@@ -105,13 +105,12 @@ if __name__ == "__main__":
         "Produce synthetic records for a tax-free investment account",
     ]
 
-    class DummyRequest:
-        def __init__(self, prompt, input_format, volume):
-            self.prompt = prompt
-            self.input_format = input_format
-            self.volume = volume
-
     # Testing each scenario:
+    from app.models.request import OutputFormat
+
     for req in test_requests:
-        dummy_request = DummyRequest(prompt=req, input_format="CSV", volume=1000)
-        print("Final Prompt:", preprocess_input(dummy_request))
+        dummy_request = GenerateRequest(
+            prompt=req, output_format=OutputFormat.CSV, volume=1000, parameters=None
+        )
+        result = preprocess_input(dummy_request)
+        logger.info("Final Prompt:", result)

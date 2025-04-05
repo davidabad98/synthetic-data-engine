@@ -1,4 +1,8 @@
+import logging
+
 import requests
+
+logger = logging.getLogger(__name__)
 
 
 def test_call_local_llm(prompt, max_tokens=50, temperature=0.7, top_p=0.9):
@@ -16,10 +20,10 @@ def test_call_local_llm(prompt, max_tokens=50, temperature=0.7, top_p=0.9):
         response.raise_for_status()
         return response.json()["choices"][0]["text"]
     except Exception as e:
-        print(f"API Error: {str(e)}")
+        logger.info(f"API Error: {str(e)}")
         return ""
 
 
 if __name__ == "__main__":
     resp = test_call_local_llm("Test")
-    print(resp)
+    logger.info(resp)

@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 
 import faiss
@@ -7,6 +8,7 @@ from sentence_transformers import SentenceTransformer
 
 from config.config import OPEN_SEARCH
 
+logger = logging.getLogger(__name__)
 TEMPLATES_DIR = os.path.join(os.path.dirname(__file__), "..", "templates")
 FAISS_PATH = os.path.join(os.path.dirname(__file__), "..", "data/faiss")
 INDEX_PATH = os.path.join(FAISS_PATH, "persisted_index.index")
@@ -72,7 +74,7 @@ class SentenceEmbeddingMatcher:
                 template = json.load(f)
                 if "description" in template:
                     self.templates.append(template)
-                    self.filenames.append(filename)
+                    self.filenames.append(filename.split(".")[0])
                     descriptions.append(template["description"])
 
         if descriptions:
@@ -159,4 +161,4 @@ if __name__ == "__main__":
     for req in test_requests:
         # Get the matched template filename
         matched_template = matcher.match_template(req)
-        print(f"User Request: '{req}' => Selected Template: {matched_template}")
+        logger.info(f"User Request: '{req}' => Selected Template: {matched_template}")

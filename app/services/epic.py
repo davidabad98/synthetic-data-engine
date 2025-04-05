@@ -1,3 +1,4 @@
+import logging
 import os
 import random
 import re
@@ -10,6 +11,7 @@ import pandas as pd
 
 from config.config import AWS_PROFILE, SAMPLE_DATA_FILE, SERVER_MODE
 
+logger = logging.getLogger(__name__)
 SAMPLES_DIR = os.path.join(os.path.dirname(__file__))
 # FAISS_PATH = os.path.join(os.path.dirname(__file__), "..", "data/faiss")
 
@@ -192,4 +194,4 @@ if __name__ == "__main__":
     epic_generator = EPICPromptGenerator(file_path, n_samples=5)
     epic_prompt = epic_generator.generate_prompt()
 
-    print(epic_prompt)  # Output the structured prompt
+    logger.info(epic_prompt)  # Output the structured prompt

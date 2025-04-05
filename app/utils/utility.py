@@ -1,3 +1,4 @@
+import logging
 import os
 from datetime import datetime
 from io import StringIO
@@ -6,6 +7,8 @@ import boto3
 import pandas as pd
 
 from config.config import AWS_PROFILE
+
+logger = logging.getLogger(__name__)
 
 
 def generate_filename(base_name):
@@ -25,7 +28,7 @@ def save_dataframe_to_s3(df, bucket_name, prefix="output/"):
     s3.put_object(Bucket=bucket_name, Key=s3_key, Body=csv_buffer.getvalue())
     s3_path = f"s3://{bucket_name}/{s3_key}"
 
-    print(s3_path)
+    logger.info(s3_path)
     return s3_path
 
 
@@ -50,5 +53,5 @@ def save_dataframe_locally(df: pd.DataFrame, folder_path="app/data/generated"):
     # Save the CSV file
     df.to_csv(file_path, index=False)
 
-    print(f"File saved locally: {file_path}")
+    logger.info(f"File saved locally: {file_path}")
     return file_path

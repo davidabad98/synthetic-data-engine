@@ -1,5 +1,6 @@
 # app/services/llm_service.py
 import json
+import logging
 
 import requests
 
@@ -12,6 +13,8 @@ from config.config import (
     S3_OUTPUT_FOLDER,
     SERVER_MODE,
 )
+
+logger = logging.getLogger(__name__)
 
 
 class LLMService:
@@ -53,7 +56,7 @@ class LLMService:
             data = response.json()
             return data["choices"][0]["text"]
         except requests.exceptions.RequestException as e:
-            print("Error calling local LLM API:", e)
+            logger.error("Error calling local LLM API:", e)
             return "ERROR"
 
     @staticmethod
@@ -82,7 +85,7 @@ class LLMService:
             generated_text = response["body"].read().decode("utf-8")
             return generated_text
         except Exception as e:
-            print("Error calling Bedrock LLM API:", e)
+            logger.error("Error calling Bedrock LLM API:", e)
             return ""
 
     @staticmethod
