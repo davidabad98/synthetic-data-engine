@@ -15,6 +15,11 @@ SERVER_FLOW = 2
 
 # List of domain-specific filler phrases to remove
 FILLER_PHRASES = [
+    # Multi-word phrases first (longest to shortest)
+    "data for testing",
+    "data for simulation",
+    "data for mockup",
+    "data for example",
     "synthetic data",
     "synth data",
     "mock data",
@@ -35,10 +40,6 @@ FILLER_PHRASES = [
     "generated records",
     "fake data",
     "fake records",
-    "data for testing",
-    "data for simulation",
-    "data for mockup",
-    "data for example",
     "synthetic information",
     "mock information",
     "test information",
@@ -47,9 +48,11 @@ FILLER_PHRASES = [
     "fabricated information",
     "artificial information",
     "generated information",
+    # Single words last
     "policy",
-    "data",
     "records",
+    "data",
+    "generate",
 ]
 
 # LLM configuration for local deployment

@@ -42,6 +42,8 @@ async def generate_data(request: GenerateRequest):
                 status_code=lambda_response["statusCode"],
                 detail=error_body.get("error", "Unknown error from lambda handler"),
             )
+        else:
+            lambda_response = json.loads(lambda_response.get("body", "{}"))
 
         # If successful, return formatted response
         return GenerateResponse(

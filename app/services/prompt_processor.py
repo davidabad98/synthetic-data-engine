@@ -216,8 +216,20 @@ class PromptProcessor:
         """
         Remove common filler phrases from the text.
         """
+        # First define a regex pattern that matches whole words or phrases
         for phrase in FILLER_PHRASES:
-            text = text.replace(phrase, "")
+            # Escape any regex special characters in the phrase
+            escaped_phrase = re.escape(phrase)
+            # Create pattern that ensures we match at word boundaries
+            pattern = r"\b" + escaped_phrase + r"\b"
+            # Replace the phrase with empty string
+            text = re.sub(pattern, "", text)
+
+        # Clean up any double spaces that might result from removals
+        text = re.sub(r"\s+", " ", text)
+        # Trim leading/trailing whitespace
+        text = text.strip()
+
         return text
 
     def _extract_key_phrase(self, text: str) -> str:

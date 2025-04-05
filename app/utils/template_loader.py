@@ -31,13 +31,19 @@ def load_single_template(template_name):
 def _get_template_from_local(template_name, templates_dir=TEMPLATES_DIR):
     """
     Loads a JSON template file given its name.
-    Returns the JSON content as a Python dictionary or None if not found.
+    Returns a dictionary with 'description' and 'fields' properties,
+    or None if template not found.
     """
     template_name += ".json"
     template_path = os.path.join(templates_dir, template_name)
+
     if os.path.exists(template_path):
         with open(template_path, "r", encoding="utf-8") as f:
-            return json.load(f)
+            full_template = json.load(f)
+            return {
+                "description": full_template.get("description"),
+                "fields": full_template.get("fields"),
+            }
     return None
 
 
@@ -66,7 +72,12 @@ def _get_template_from_s3(template_name: str):
 
         # Read and parse content
         file_content = response["Body"].read().decode("utf-8")
-        return json.loads(file_content)
+        full_template = json.loads(file_content)
+
+        return {
+            "description": full_template.get("description"),
+            "fields": full_template.get("fields"),
+        }
 
     except ClientError as e:
         error_code = e.response["Error"]["Code"]
