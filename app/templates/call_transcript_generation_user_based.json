@@ -1,0 +1,49 @@
+{
+    "template_name": "call_transcript_generation_user_based",
+    "description": "This template is designed for generating mock call center transcripts when the user provides a detailed description of the scenario, including specific roles, topics, and potentially even names. It prioritizes leveraging the user's detailed instructions directly in the prompt.",
+    "mappings": [
+      "specific product related query",
+      "Angry user interaction transcript",
+      "User defined reason for call, feedback, complaint, query, technical report",
+      "generate call based on description",
+      "caller sentiment is defined, agent persona is defined",
+      "Agent experience defined as fresher, professional, Advanced"
+    ],
+    "fields": {
+      "user_query": {
+        "datatype": "string",
+        "description": "The detailed query provided by the user describing the call scenario."
+      },
+      "generated_transcript": {
+        "datatype": "string",
+        "description": "The call transcript generated based on the user's query.",
+        "llm_action": "generate_transcript"
+      }
+    },
+    "prompt_template": "Generate a realistic call center transcript based on the following detailed scenario provided by the user: \"{{user_query}}\". Ensure the dialogue reflects the roles and situation described.",
+    "output_format": {
+      "speaker_label": "[Speaker Name]:",
+      "turn_separator": "\n"
+    },
+    "dialogue_instructions": {
+      "greeting": "The call should begin with a standard professional greeting from the agent, including their name and the company name. Unless otherwise specified in prompt template",
+      "identification": "The agent should politely ask for the caller's name and may need to verify their identity using an account number or other relevant information. Unless otherwise specified in prompt template",
+      "problem_description": "The caller should clearly articulate their reason for calling, aligning with the selected. Unless otherwise specified in prompt template",
+      "agent_response": "The agent's immediate response should acknowledge the caller's reason for calling, Unless otherwise specified in prompt template",
+      "information_gathering": "The agent should ask relevant clarifying questions to fully understand the 'ReasonForCall' and 'CallObjective', tailoring their questions to the specific 'Product' involved. Unless otherwise specified in prompt template",
+      "solution_attempt_or_guidance": "Based on the 'ReasonForCall' and the information gathered, the agent should attempt to provide a solution, Unless otherwise specified in prompt template",
+      "handling_sentiment": "The agent should actively manage the caller's 'Sentiment'. Unless otherwise specified in prompt template",
+      "handling_complications": "If 'PotentialComplications' are specified, the dialogue should realistically incorporate these challenges and demonstrate how the agent attempts to handle them (e.g., placing the caller on hold to consult a resource, explaining a system issue).",
+      "closing": "The call should conclude with a summary of the outcome and polite closing remarks from both the caller and the agent. Unless otherwise specified in prompt template",
+      "tone_guidance": "Maintain a professional tone throughout the call, Unless otherwise specified in prompt template"
+    },
+    "action": {
+      "type": "generate_call_transcript_from_query",
+      "input_fields": [
+        "user_query"
+      ],
+      "output_field": "generated_transcript",
+      "prompt_field": "prompt_template",
+      "format_field": "output_format"
+    }
+  }

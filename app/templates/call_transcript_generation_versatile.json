@@ -1,0 +1,206 @@
+{
+    "template_name": "call_transcript_generation_versatile",
+    "description": "This template provides comprehensive instructions for an LLM to generate realistic and logically consistent customer service call transcripts covering various scenarios, customer sentiments, agent personas, and products.",
+    "mappings": [
+      "generate diverse call transcript",
+      "create realistic call recording scenario",
+      "simulate varied customer service interactions"
+    ],
+    "fields": {
+      "CallID": {
+        "datatype": "string",
+        "pattern": "CALL-[0-9]{6}",
+        "description": "Unique identifier for the call record."
+      },
+      "CallerName": {
+        "datatype": "string",
+        "description": "Full name of the customer."
+      },
+      "CallerPersona": {
+        "datatype": "string",
+        "enum": [
+          "Busy Professional",
+          "Elderly Customer (less tech-savvy)",
+          "Impatient Individual",
+          "Calm and Patient Customer",
+          "Inquisitive Customer"
+        ],
+        "description": "Brief description of the caller's personality or demeanor."
+      },
+      "AgentName": {
+        "datatype": "string",
+        "description": "Full name of the agent."
+      },
+      "AgentPersona": {
+        "datatype": "string",
+        "enum": [
+          "Professional",
+          "Friendly",
+          "Empathetic",
+          "Direct and Efficient",
+          "Fresher"
+        ],
+        "description": "The personality or experience level of the call center agent."
+      },
+      "ReasonForCall": {
+        "datatype": "string",
+        "enum": [
+          "Feedback - Positive",
+          "Feedback - Negative",
+          "Complaint - Service Issue",
+          "Complaint - Product Defect",
+          "Complaint - Billing Error",
+          "Query - Product Information",
+          "Query - Account Status",
+          "Query - Policy Details",
+          "Technical Issue - Login",
+          "Technical Issue - Feature Malfunction",
+          "Technical Issue - Connectivity",
+          "Other"
+        ],
+        "description": "Primary reason why the customer contacted the call center."
+      },
+      "CallObjective": {
+        "datatype": "string",
+        "description": "Specific goal the customer wants to achieve during the call (e.g., understand a charge, resolve a technical problem, provide appreciation)."
+      },
+      "Product": {
+        "datatype": "string",
+        "enum": [
+          "Dental Insurance",
+          "Medical Insurance",
+          "Investment Account",
+          "Life Insurance Policy",
+          "Software Subscription",
+          "Hardware Device"
+        ],
+        "description": "Product or service related to the call."
+      },
+      "Sentiment": {
+        "datatype": "string",
+        "enum": [
+          "Angry",
+          "Frustrated",
+          "Neutral",
+          "Happy",
+          "Sad",
+          "Anxious"
+        ],
+        "description": "Initial sentiment of the customer."
+      },
+      "DesiredCallLength": {
+        "datatype": "string",
+        "enum": [
+          "Short and to the point",
+          "Allow for detailed explanation",
+          "Unspecified"
+        ],
+        "description": "General expectation for the call duration."
+      },
+      "PotentialComplications": {
+        "datatype": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "Possible issues or challenges that might arise during the call (e.g., system outage, missing information, need for escalation)."
+      },
+      "AgentUpsellAttempt": {
+        "datatype": "boolean",
+        "description": "Should the agent attempt to upsell?"
+      },
+      "Outcome": {
+        "datatype": "string",
+        "enum": [
+          "Resolved",
+          "Partially Resolved",
+          "Unresolved",
+          "Escalated",
+          "Customer Satisfied",
+          "Customer Dissatisfied",
+          "Information Provided"
+        ],
+        "description": "Overall outcome of the call from the perspective of resolution and customer satisfaction."
+      },
+      "CallTranscript": {
+        "datatype": "string",
+        "description": "The generated transcript of the call.",
+        "llm_action": "generate_transcript"
+      }
+    },
+    "dialogue_instructions": {
+      "greeting": "The call should begin with a standard professional greeting from the agent, including their name and the company name.",
+      "identification": "The agent should politely ask for the caller's name and may need to verify their identity using an account number or other relevant information.",
+      "problem_description": "The caller should clearly articulate their reason for calling, aligning with the selected 'ReasonForCall'. Their initial tone and language should reflect their 'Sentiment' and 'CallerPersona'.",
+      "agent_response": "The agent's immediate response should acknowledge the caller's reason for calling and their expressed 'Sentiment'. The agent's tone and approach should be consistent with their 'AgentPersona' (e.g., an 'Empathetic' agent will express understanding, a 'Direct and Efficient' agent will focus on getting to the solution quickly).",
+      "information_gathering": "The agent should ask relevant clarifying questions to fully understand the 'ReasonForCall' and 'CallObjective', tailoring their questions to the specific 'Product' involved.",
+      "solution_attempt_or_guidance": "Based on the 'ReasonForCall' and the information gathered, the agent should attempt to provide a solution, offer guidance, or explain the next steps. For 'Technical Issue' calls, this might involve troubleshooting steps. For 'Query' calls, it involves providing accurate information. For 'Complaint' calls, it involves acknowledging the issue and outlining the resolution process.",
+      "handling_sentiment": "The agent should actively manage the caller's 'Sentiment'. For negative sentiments, the agent should use empathetic language and focus on de-escalation. For positive sentiments, the agent should express gratitude.",
+      "upsell_opportunity": "If 'AgentUpsellAttempt' is set to true and it's a natural point in the conversation after addressing the primary concern, the agent should briefly introduce a relevant additional product or service related to the 'Product' discussed.",
+      "handling_complications": "If 'PotentialComplications' are specified, the dialogue should realistically incorporate these challenges and demonstrate how the agent attempts to handle them (e.g., placing the caller on hold to consult a resource, explaining a system issue). A 'Fresher' agent might explicitly state they need to seek assistance.",
+      "closing": "The call should conclude with a summary of the outcome and polite closing remarks from both the caller and the agent. The final 'Outcome' should logically align with the 'ReasonForCall', initial 'Sentiment', and the effectiveness of the agent's handling of the call.",
+      "tone_guidance": "Maintain a professional tone throughout the call, with variations based on the 'AgentPersona' and the caller's 'Sentiment'. Ensure the language used is appropriate for the 'Product' and the 'ReasonForCall'."
+    },
+    "constraints": [
+      {
+        "if": {"field": "ReasonForCall", "contains": "Complaint"},
+        "then": {"field": "Sentiment", "not_in": ["Happy"]}
+      },
+      {
+        "if": {"field": "ReasonForCall", "contains": "Feedback - Positive"},
+        "then": {"field": "Sentiment", "in": ["Happy", "Neutral"]}
+      },
+      {
+        "if": {"field": "ReasonForCall", "contains": "Technical Issue"},
+        "then": {"field": "Sentiment", "not_in": ["Happy"]}
+      },
+      {
+        "if": {"field": "AgentPersona", "equals": "Fresher"},
+        "then": {"instruction": "The agent's dialogue may include phrases indicating they are new or need to consult with a colleague (e.g., 'Let me quickly check on that for you.', 'Could you please hold for a moment while I look into this?')."}
+      },
+      {
+        "if": {"field": "AgentPersona", "equals": "Professional"},
+        "then": {"instruction": "The agent's language should be formal, efficient, and focused on resolving the issue or providing information."}
+      },
+      {
+        "if": {"field": "AgentPersona", "equals": "Friendly"},
+        "then": {"instruction": "The agent should use a warm, approachable, and conversational tone while maintaining professionalism."}
+      },
+      {
+        "if": {"field": "AgentPersona", "equals": "Empathetic"},
+        "then": {"instruction": "The agent should actively demonstrate understanding and concern for the caller's situation through their language."}
+      },
+      {
+        "if": {"field": "AgentPersona", "equals": "Direct and Efficient"},
+        "then": {"instruction": "The agent should focus on quickly identifying the issue and providing a solution without unnecessary small talk."}
+      },
+      {
+        "if": {"field": "Sentiment", "in": ["Angry", "Frustrated"]},
+        "then": {"instruction": "The agent should prioritize de-escalation techniques and express empathy."}
+      }
+    ],
+    "output_format": {
+      "speaker_label": "[Speaker Name]:",
+      "turn_separator": "\n"
+    },
+    "action": {
+      "type": "generate_call_transcript",
+      "input_fields": [
+        "CallerName",
+        "CallerPersona",
+        "AgentName",
+        "AgentPersona",
+        "ReasonForCall",
+        "CallObjective",
+        "Product",
+        "Sentiment",
+        "DesiredCallLength",
+        "PotentialComplications",
+        "AgentUpsellAttempt"
+      ],
+      "output_field": "CallTranscript",
+      "instructions_field": "dialogue_instructions",
+      "constraints_field": "constraints",
+      "format_field": "output_format"
+    }
+  }
+  
