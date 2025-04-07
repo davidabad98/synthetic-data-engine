@@ -23,17 +23,18 @@ def lambda_handler(request, content, event=""):
             logger.info(f"Started epic-generation.")
             status_code, result = main(content)
 
-        result_message = (
-            f"Data successfully generated! You can access it here: {result}"
-            if status_code == 0
-            else result
-        )
-
-        # Return a success response
-        return {
-            "statusCode": 200,
-            "body": json.dumps({"data": f"{result_message}"}),
-        }
+        if status_code == 200:
+            # Return a success response
+            return {
+                "statusCode": 200,
+                "body": json.dumps(
+                    {
+                        "data": f"Data successfully generated! You can access it here: {result}"
+                    }
+                ),
+            }
+        else:
+            return {"statusCode": status_code, "body": json.dumps({"error": result})}
 
     except Exception as e:
         error_message = str(e)

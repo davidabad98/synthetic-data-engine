@@ -4,16 +4,10 @@ import logging
 
 import requests
 
+from app.context.request_context import get_current_model
 from app.services.request_model import RequestModel
 from app.utils import utility
-from config.config import (
-    DEFAULT_LLM,
-    LLM_BEDROCK_MODEL_ID,
-    LLM_LOCAL_URL,
-    S3_OUTPUT_BUCKET,
-    S3_OUTPUT_FOLDER,
-    SERVER_MODE,
-)
+from config.config import DEFAULT_LLM, LLM_BEDROCK_MODEL_ID, LLM_LOCAL_URL, SERVER_MODE
 
 logger = logging.getLogger(__name__)
 
@@ -31,8 +25,8 @@ class LLMService:
         else:
             # old call
             # return LLMService.call_bedrock_llm(prompt, max_tokens, temperature, top_p)
-
-            if DEFAULT_LLM == "aws":
+            model = get_current_model()
+            if model == DEFAULT_LLM:
                 destination_uri = LLMService.call_bedrock_llm_new(
                     prompt, max_tokens, temperature, top_p
                 )

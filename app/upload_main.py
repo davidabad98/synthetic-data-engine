@@ -2,6 +2,7 @@ import os
 import sys
 
 from app.services.epic import EPICPromptGenerator
+from app.services.llm_service import LLMService
 from app.services.request_model import RequestModel
 from app.utils import utility
 from config.config import (
@@ -31,13 +32,10 @@ def main(content, format=DEFAULT_FORMAT):
 
     # Generating an epic prompt
     epic_prompt = epic_generator.generate_prompt()
-    # Creating an instance of the requestModel class
-    sm = RequestModel()
+
     # Sending a request to the model based on the model_used argument
-    if SERVER_MODE != "local":
-        return 0, sm.send_request_bedrock(epic_prompt)
-    else:
-        return 0, sm.send_request_groq(epic_prompt)
+    llm_response = LLMService.call_llm_api(epic_prompt)
+    return 200, llm_response
 
 
 if __name__ == "__main__":

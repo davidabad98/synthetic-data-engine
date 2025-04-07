@@ -33,28 +33,28 @@ def main_template(user_input):
         result = preprocess_input(request)
         logger.info("preprocess_input result:", result)
 
-        return 0, result  # Success exit code
+        return 200, result  # Success exit code
 
     except ValidationError as e:
         error = f"Invalid user input: {e.errors()}"
         logger.error(f"Invalid user input: {e.errors()}")
-        return 1, error
+        return 403, error
     except KeyboardInterrupt:
         error = "Process interrupted by user"
         logger.info(error)
-        return 2, error
+        return 503, error
     except Exception as e:
         error = f"Unexpected error occurred: {str(e)}"
         logger.exception(error)
-        return 3, error
+        return 500, error
 
 
 """
-0: Success
-1: Validation error
-2: User interrupt
-3: General error
-4: Critical unhandled error
+200: Success
+403: Validation error
+503: User interrupt
+500: General error
+500: Critical unhandled error
 """
 
 if __name__ == "__main__":
@@ -63,7 +63,7 @@ if __name__ == "__main__":
         exit_code, _ = main_template(user_input)
     except Exception as e:
         logger.exception("Critical error in main execution:")
-        exit_code = 4
+        exit_code = 500
     finally:
         # Add any cleanup operations here
         pass

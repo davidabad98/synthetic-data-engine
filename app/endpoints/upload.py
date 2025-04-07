@@ -5,8 +5,9 @@ import logging
 import os
 
 import pandas as pd
-from fastapi import APIRouter, File, HTTPException, UploadFile, status
+from fastapi import APIRouter, File, Form, HTTPException, UploadFile, status
 
+from app.context.request_context import selected_model_ctx
 from app.lambda_function import lambda_handler
 from app.models.request import GenerateResponse
 from app.upload_main import main
@@ -18,8 +19,14 @@ router = APIRouter()
 
 
 @router.post("/upload")
-async def upload_file(file: UploadFile = File(...)):
+async def upload_file(
+    file: UploadFile = File(...), selected_model: str = Form(..., alias="selectedModel")
+):
     try:
+
+        # Set context for this request chain
+        token = selected_model_ctx.set(selected_model)
+
         # --- Validation 1: Check file extension ---
         file_extension = (
             os.path.splitext(file.filename)[1].lower() if file.filename else ""
@@ -68,3 +75,6 @@ async def upload_file(file: UploadFile = File(...)):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"File upload failed: {str(e)}",
         )
+    finally:
+        # Clean up context to prevent leaks
+        selected_model_ctx.reset(token)

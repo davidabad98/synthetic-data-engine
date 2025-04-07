@@ -11,7 +11,7 @@ INDEX_NAME = "schema_search"
 SERVER_MODE = "local"
 
 # When SERVER_MODE = "cloud" decide if we want to use LLM from AWS or not
-DEFAULT_LLM = "aws"
+DEFAULT_LLM = "claude-2.1"
 
 # List of domain-specific filler phrases to remove
 FILLER_PHRASES = [
