@@ -4,10 +4,16 @@ import sys
 from app.services.epic import EPICPromptGenerator
 from app.services.request_model import RequestModel
 from app.utils import utility
-from config.config import GENERATED_ROWS, N_SAMPLES, S3_INPUT_FILEPATH, SERVER_MODE
+from config.config import (
+    DEFAULT_FORMAT,
+    DEFAULT_RECORD_COUNT,
+    N_SAMPLES,
+    S3_INPUT_BUCKET,
+    SERVER_MODE,
+)
 
 
-def main(prompt="", format="csv"):
+def main(content, format=DEFAULT_FORMAT):
 
     # test
     # Get the current script's directory
@@ -20,7 +26,7 @@ def main(prompt="", format="csv"):
 
     # Calling the EPICPromptGenerator class
     epic_generator = EPICPromptGenerator(
-        S3_INPUT_FILEPATH, N_SAMPLES, GENERATED_ROWS, format
+        content, N_SAMPLES, DEFAULT_RECORD_COUNT, format
     )
 
     # Generating an epic prompt
@@ -35,4 +41,4 @@ def main(prompt="", format="csv"):
 
 
 if __name__ == "__main__":
-    main()
+    main("test_file_name")

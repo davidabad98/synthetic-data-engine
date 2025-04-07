@@ -1,30 +1,27 @@
 import json
 import logging
-import os
 
 from app.main import main_template
 from app.upload_main import main  # Import the main function from main.py
-from config.config import SERVER_FLOW
 
 logger = logging.getLogger(__name__)
 
 
 # Uncomment this for AWS cloud Lambda implementation:
 # def lambda_handler(event, context):
-def lambda_handler(request, event="", context=""):
+def lambda_handler(request, content, event=""):
     """
     This function will be triggered by API Gateway.
     It reads the `model_used` query parameter from the event and passes it to the main function.
     """
     try:
         # Decide between flow 1 OR 2
-        # if SERVER_FLOW == 1:
-        if request.prompt != "epic-generation":
+        if content == None:
             logger.info(f"Started template-generation")
             status_code, result = main_template(user_input=request.prompt)
         else:
             logger.info(f"Started epic-generation.")
-            status_code, result = main()
+            status_code, result = main(content)
 
         result_message = (
             f"Data successfully generated! You can access it here: {result}"
@@ -54,4 +51,4 @@ def lambda_handler(request, event="", context=""):
 
 if __name__ == "__main__":
     request = "Generate synthetic data for a tax free saving account"
-    lambda_handler(request)
+    lambda_handler(request, None)

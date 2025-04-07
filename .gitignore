@@ -176,3 +176,4 @@ config/config.py
 Dockerfile
 app/data/generated/
 .DS_Store
+app/data/uploaded/

@@ -26,11 +26,7 @@ async def generate_data(request: GenerateRequest):
         logger.info(f"Processing request: {request.model_dump_json()}")
 
         # Call lambda handler and get raw response
-        lambda_response = lambda_handler(request)
-        # lambda_response = {
-        #     "statusCode": 500,
-        #     "body": json.dumps({"error": "Custom Error Message"}),
-        # }
+        lambda_response = lambda_handler(request, None)
 
         # Check if lambda returned an error response
         if (
@@ -49,7 +45,8 @@ async def generate_data(request: GenerateRequest):
         return GenerateResponse(
             message="Synthetic data generated successfully", data=lambda_response
         )
-
+    except HTTPException:
+        raise  # Re-raise our custom HTTP exceptions
     except Exception as e:
         logger.exception(f"Failed to process request: {str(e)}")
         raise HTTPException(

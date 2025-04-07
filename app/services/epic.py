@@ -8,38 +8,60 @@ from io import StringIO
 
 import boto3
 import pandas as pd
+from fastapi import HTTPException
 
-from config.config import AWS_PROFILE, SAMPLE_DATA_FILE, SERVER_MODE
+from config.config import AWS_PROFILE, DEFAULT_FORMAT, SERVER_MODE, UPLOADED_DATA_DIR
 
 logger = logging.getLogger(__name__)
-SAMPLES_DIR = os.path.join(os.path.dirname(__file__))
-# FAISS_PATH = os.path.join(os.path.dirname(__file__), "..", "data/faiss")
 
 
 class EPICPromptGenerator:
-    def __init__(self, file_path, n_samples=5, generated_rows=5, file_type="csv"):
+    def __init__(
+        self,
+        content,
+        n_samples=5,
+        generated_rows=5,
+        file_type=DEFAULT_FORMAT,
+        file_path="",
+    ):
         self.file_path = file_path
         self.n_samples = n_samples
-        self.df = self.load_dataset()
         self.categorical_mappings = {}
         self.continuous_stats = {}
         self.file_type = file_type
         self.generated_rows = generated_rows
 
+        self._load_content(content)
         self.df, self.categorical_mappings, self.continuous_stats = self.process_data()
 
-    def load_dataset(self):
+    def _load_content(self, content):
+        try:
+            # Convert bytes to string and create DataFrame
+            self.df = pd.read_csv(StringIO(content.decode("utf-8")))
+            if self.df.empty:
+                logger.error("Uploaded CSV file is empty.")
+                raise HTTPException(
+                    status_code=400, detail="Uploaded CSV file is empty"
+                )
+        except HTTPException:
+            raise
+        except Exception as e:
+            logger.error("Invalid CSV format for uploaded CSV file.")
+            raise HTTPException(status_code=400, detail=f"Invalid CSV format: {str(e)}")
+
+    def load_dataset(self, file_name):
         """Load dataset either from local file or S3"""
+        # OLD FUNCTION, NO LONGER USED
         if SERVER_MODE != "local":
             # Reading from S3
             return self.load_from_s3()
         else:
             # Reading from local file
-            return self.load_from_local()
+            return self.load_from_local(file_name)
 
-    def load_from_local(self):
+    def load_from_local(self, file_name):
         try:
-            file_path = os.path.join(SAMPLES_DIR, SAMPLE_DATA_FILE)
+            file_path = os.path.join(UPLOADED_DATA_DIR, file_name)
             df = pd.read_csv(file_path, parse_dates=True)
         except FileNotFoundError:
             raise FileNotFoundError(

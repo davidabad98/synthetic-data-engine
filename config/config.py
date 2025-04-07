@@ -9,9 +9,9 @@ INDEX_NAME = "schema_search"
 
 # Server mode can be either "local" or aws "cloud"
 SERVER_MODE = "local"
+
+# When SERVER_MODE = "cloud" decide if we want to use LLM from AWS or not
 DEFAULT_LLM = "aws"
-# main_template (1) OR main (2)
-SERVER_FLOW = 2
 
 # List of domain-specific filler phrases to remove
 FILLER_PHRASES = [
@@ -70,7 +70,8 @@ S3_BUCKET_NAME = "synthetic-data-templates"
 S3_TEMPLATE_PATH = "schemas/"  # Folder in S3 bucket
 
 # S3 buckets info
-S3_INPUT_FILEPATH = "s3://genaiinput-dataset/CustomerClaimsDataset.csv"
+S3_INPUT_BUCKET = "genaiinput-dataset"
+S3_INPUT_BUCKET_FOLDER = "uploads/"
 S3_OUTPUT_BUCKET = "genaioutput-dataset"
 S3_OUTPUT_FOLDER = "output/"
 
@@ -79,12 +80,14 @@ GROQ_API_KEY = "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"
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
 GROQ_MODEL_ID = "llama3-8b-8192"
 
-# FLOW 1 FLAGS
+# TEMPLATE FLAGS
 SUPPORTED_FORMATS = ["CSV", "XML", "JSON", "TEXT"]
 DEFAULT_FORMAT = "CSV"
 DEFAULT_RECORD_COUNT = 5
 
-# FLOW 2 FLAGS
+# EPIC FLOW FLAGS
 N_SAMPLES = 3
-GENERATED_ROWS = 10
-SAMPLE_DATA_FILE = "CustomerClaimsDataset.csv"
+UPLOADED_DATA_DIR = "app/data/uploaded/"
+GENERATED_DATA_DIR = "app/data/generated/"
+ALLOWED_UPLOAD_EXTENSIONS = {".csv"}
+SAVE_UPLOADED_FILE = True

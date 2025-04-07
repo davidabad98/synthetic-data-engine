@@ -2,6 +2,7 @@
 
 import json
 import logging
+import os
 
 from app.models.request import GenerateRequest
 from app.services.llm_service import LLMService

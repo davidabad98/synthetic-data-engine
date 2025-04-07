@@ -6,7 +6,6 @@ import sys
 from pydantic import ValidationError
 
 from app.models.request import OutputFormat
-from config.config import SERVER_FLOW
 
 logger = logging.getLogger(__name__)
 

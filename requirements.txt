@@ -9,3 +9,5 @@ boto3
 pandas
 opensearch-py
 sentence-transformers
+transformers
+python-multipart

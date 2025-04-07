@@ -1,30 +1,35 @@
 import logging
 import os
+import uuid
 from datetime import datetime
 from io import StringIO
 
 import boto3
 import pandas as pd
 
-from config.config import AWS_PROFILE
+from config.config import (
+    AWS_PROFILE,
+    GENERATED_DATA_DIR,
+    S3_INPUT_BUCKET,
+    S3_INPUT_BUCKET_FOLDER,
+    UPLOADED_DATA_DIR,
+)
 
 logger = logging.getLogger(__name__)
+session = boto3.Session(profile_name=AWS_PROFILE)
+s3 = session.client("s3")
 
 
-def generate_filename(base_name):
-    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-    return f"{base_name}_{timestamp}.csv"
+def generate_filename(file_extension=".csv"):
+    return f"{uuid.uuid4()}{file_extension}"
 
 
 def save_dataframe_to_s3(df, bucket_name, prefix="output/"):
     csv_buffer = StringIO()
     df.to_csv(csv_buffer, index=False)
 
-    file_name = generate_filename("synthetic_data")
-    s3_key = f"{prefix}{file_name}"
+    s3_key = f"{prefix}{generate_filename()}"
 
-    session = boto3.Session(profile_name=AWS_PROFILE)
-    s3 = session.client("s3")
     s3.put_object(Bucket=bucket_name, Key=s3_key, Body=csv_buffer.getvalue())
     s3_path = f"s3://{bucket_name}/{s3_key}"
 
@@ -32,7 +37,7 @@ def save_dataframe_to_s3(df, bucket_name, prefix="output/"):
     return s3_path
 
 
-def save_dataframe_locally(df: pd.DataFrame, folder_path="app/data/generated"):
+def save_dataframe_locally(df: pd.DataFrame, folder_path=GENERATED_DATA_DIR):
     """
     Saves the given DataFrame as a CSV file in the specified local folder.
 
@@ -47,7 +52,7 @@ def save_dataframe_locally(df: pd.DataFrame, folder_path="app/data/generated"):
     os.makedirs(folder_path, exist_ok=True)
 
     # Generate a filename
-    file_name = generate_filename("synthetic_data")
+    file_name = generate_filename()
     file_path = os.path.join(folder_path, file_name)
 
     # Save the CSV file
@@ -55,3 +60,56 @@ def save_dataframe_locally(df: pd.DataFrame, folder_path="app/data/generated"):
 
     logger.info(f"File saved locally: {file_path}")
     return file_path
+
+
+async def save_uploaded_data_locally(file, content, folder_path=UPLOADED_DATA_DIR):
+    """
+    Saves the given data file in the specified local folder.
+
+    Args:
+        file: The data file to save.
+        folder_path (str): The directory where the file will be saved.
+
+    Returns:
+        str: The local file path of the saved CSV.
+    """
+    # Ensure the directory exists
+    os.makedirs(folder_path, exist_ok=True)
+
+    # Generate a filename
+    file_name = generate_filename()
+
+    # Save file locally
+    local_path = os.path.join(folder_path, file_name)
+    with open(local_path, "wb") as local_file:
+        local_file.write(content)
+
+    logger.info(f"Uploaded data saved locally: {local_path}")
+
+    return {"filename": file.filename, "fileKey": file_name, "fileUrl": local_path}
+
+
+async def save_uploaded_data_to_s3(
+    file,
+    content,
+    bucket_name=S3_INPUT_BUCKET,
+    prefix=S3_INPUT_BUCKET_FOLDER,
+):
+    # Generate a unique file key
+    file_extension = os.path.splitext(file.filename)[1] if file.filename else ""
+    file_key = f"{prefix}/{generate_filename(file_extension)}"
+
+    # Upload directly to S3
+    s3.put_object(
+        Bucket=bucket_name, Key=file_key, Body=content, ContentType=file.content_type
+    )
+
+    # Create a pre-signed URL for temporary access
+    file_url = s3.generate_presigned_url(
+        "get_object",
+        Params={"Bucket": bucket_name, "Key": file_key},
+        ExpiresIn=180,  # URL valid for 3 minutes
+    )
+    logger.info(f"Uploaded data saved to: {file_url}")
+
+    return {"filename": file.filename, "fileKey": file_key, "fileUrl": file_url}
