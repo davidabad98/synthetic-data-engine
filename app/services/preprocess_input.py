@@ -2,13 +2,15 @@
 
 import json
 import logging
+import os
 
+from app.context.request_context import get_current_model
 from app.models.request import GenerateRequest
 from app.services.llm_service import LLMService
 from app.services.prompt_processor import PromptProcessor
 from app.services.sentence_embeddings import SentenceEmbeddingMatcher
 from app.utils.template_loader import load_single_template
-from config.config import OPEN_SEARCH,TRANSCRIPT_LLM
+from config.config import OPEN_SEARCH,DEFAULT_LLM
 
 logger = logging.getLogger(__name__)
 
@@ -79,7 +81,8 @@ def transcript_prompt(selected_template, user_input):
     # This instruction is common to all requests
     static_instruction = f"You are a synthetic data generator. Respond to the user request ONLY with valid text format:\n\n"
     # If the transcript LLM is AWS 
-    if TRANSCRIPT_LLM == "aws":
+    model = get_current_model()
+    if model == DEFAULT_LLM:
         final_prompt = (
             f"{static_instruction}\n\n"
             f"User Request: {user_input}\n\n"

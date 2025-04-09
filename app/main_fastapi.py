@@ -8,7 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from app.core.logging import setup_logging
-from app.endpoints import generate
+from app.endpoints import generate, upload
 
 
 # Initialize logging before the app starts@asynccontextmanager
@@ -37,6 +37,7 @@ app.add_middleware(
 
 # Include the generate endpoint router under a common prefix (e.g., /api)
 app.include_router(generate.router, prefix="/api")
+app.include_router(upload.router, prefix="/api")
 
 if __name__ == "__main__":
     import uvicorn

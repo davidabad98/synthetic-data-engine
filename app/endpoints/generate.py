@@ -7,8 +7,10 @@ from pathlib import Path
 
 from fastapi import APIRouter, HTTPException, status
 
+from app.context.request_context import selected_model_ctx
 from app.lambda_function import lambda_handler
 from app.models.request import GenerateRequest, GenerateResponse
+from config.config import DEFAULT_LLM
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -25,12 +27,13 @@ async def generate_data(request: GenerateRequest):
     try:
         logger.info(f"Processing request: {request.model_dump_json()}")
 
+        # Set context for this request chain
+        token = selected_model_ctx.set(
+            request.parameters.get("selectedModel", DEFAULT_LLM)
+        )
+
         # Call lambda handler and get raw response
-        lambda_response = lambda_handler(request)
-        # lambda_response = {
-        #     "statusCode": 500,
-        #     "body": json.dumps({"error": "Custom Error Message"}),
-        # }
+        lambda_response = lambda_handler(request, None)
 
         # Check if lambda returned an error response
         if (
@@ -49,10 +52,14 @@ async def generate_data(request: GenerateRequest):
         return GenerateResponse(
             message="Synthetic data generated successfully", data=lambda_response
         )
-
+    except HTTPException:
+        raise  # Re-raise our custom HTTP exceptions
     except Exception as e:
         logger.exception(f"Failed to process request: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Error during synthetic data generation: {str(e)}",
         )
+    finally:
+        # Clean up context to prevent leaks
+        selected_model_ctx.reset(token)
