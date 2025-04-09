@@ -133,7 +133,7 @@ def save_text_locally(transcript, folder_path="app/data/generated"):
  
 def save_text_to_s3(text, bucket_name, prefix="output/"):
     # Generate a filename
-    file_name = generate_filename("synthetic_transcript")
+    file_name = generate_filename("_transcript.txt")
     s3_key = f"{prefix}{file_name}"
  
     # Create an S3 client
