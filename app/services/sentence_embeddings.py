@@ -27,7 +27,8 @@ class SentenceEmbeddingMatcher:
         self.metadata_path = metadata_path
 
         # Load embedding model
-        self.model = SentenceTransformer("all-MiniLM-L6-v2")
+        if not OPEN_SEARCH:
+            self.model = SentenceTransformer("all-MiniLM-L6-v2")
         self.index = None
         self.templates = []
         self.filenames = []

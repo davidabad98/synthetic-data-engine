@@ -1,6 +1,6 @@
 {
     "template_name": "call_transcript_generation_user_based",
-    "description": "This template is designed for generating mock call center transcripts when the user provides a detailed description of the scenario, including specific roles, topics, and potentially even names. It prioritizes leveraging the user's detailed instructions directly in the prompt.",
+    "description": "This template generates customer service call transcripts based on various customer personas, moods (like angry, happy, impatient), and scenarios, including billing errors, policy lapses, and positive feedback.",
     "mappings": [
       "specific product related query",
       "Angry user interaction transcript",

@@ -1,8 +1,8 @@
 {
     "template_name": "call_transcript_generation_versatile",
-    "description": "This template provides comprehensive instructions for an LLM to generate realistic and logically consistent customer service call transcripts covering various scenarios, customer sentiments, agent personas, and products.",
+    "description": "Create or generate call center transcripts",
     "mappings": [
-      "generate diverse call transcript",
+      "generate call transcript",
       "create realistic call recording scenario",
       "simulate varied customer service interactions"
     ],

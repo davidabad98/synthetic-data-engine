@@ -13,6 +13,7 @@ from config.config import (
     S3_OUTPUT_BUCKET,
     S3_OUTPUT_FOLDER,
     SERVER_MODE,
+    TRANSCRIPT_LLM
 )
 
 logger = logging.getLogger(__name__)
@@ -104,3 +105,24 @@ class LLMService:
         return request_model.send_request_bedrock(
             prompt, max_tokens, temperature, top_p
         )
+    
+    @staticmethod
+    def call_llm_for_transcript(prompt):
+        rm = RequestModel()
+        # what happens when server mode is local?
+        if SERVER_MODE == "local":
+            # send request to local LLM
+            destination_uri = rm.send_transcript_request_groq(prompt)
+
+        else:
+            if TRANSCRIPT_LLM == "aws":
+                # send request to bedrock LLM
+                destination_uri = rm.send_transcript_request_bedrock(prompt)
+            else:
+                destination_uri = rm.send_transcript_request_groq(prompt)
+
+        return destination_uri
+        # send request to local LLM
+        # what happens when server mode is aws?
+        # if default llm is local, so send request to local LLM
+        # else send request to bedrock LLM

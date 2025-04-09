@@ -10,6 +10,7 @@ INDEX_NAME = "schema_search"
 # Server mode can be either "local" or aws "cloud"
 SERVER_MODE = "local"
 DEFAULT_LLM = "aws"
+TRANSCRIPT_LLM = "local"
 # main_template (1) OR main (2)
 SERVER_FLOW = 2
 
@@ -65,7 +66,7 @@ LLM_BEDROCK_ENDPOINT = "https://bedrock.endpoint.url"
 
 # AWS KEYS
 REGION_NAME = "us-east-1"
-AWS_PROFILE = "DavidAbad"
+AWS_PROFILE = "rizvan"
 S3_BUCKET_NAME = "synthetic-data-templates"
 S3_TEMPLATE_PATH = "schemas/"  # Folder in S3 bucket
 

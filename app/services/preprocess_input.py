@@ -8,7 +8,7 @@ from app.services.llm_service import LLMService
 from app.services.prompt_processor import PromptProcessor
 from app.services.sentence_embeddings import SentenceEmbeddingMatcher
 from app.utils.template_loader import load_single_template
-from config.config import OPEN_SEARCH
+from config.config import OPEN_SEARCH,TRANSCRIPT_LLM
 
 logger = logging.getLogger(__name__)
 
@@ -46,28 +46,72 @@ def preprocess_input(request: GenerateRequest) -> str:
         if not selected_template:
             logger.info("Template file could not be loaded.")
             return "Template file could not be loaded."
+    find_template = json.loads(selected_template)
+    # print("Check selected template")
+    # print(selected_template)
+    # print(type(selected_template))
+    if find_template["template_name"] in ("call_transcript_generation_user_based", "call_transcript_generation_versatile"):
+        # Handle special case for call transcript generation
+        final_prompt = transcript_prompt(selected_template, user_input)
+        result = LLMService.call_llm_for_transcript(final_prompt)
+    else:
+        # Build the final prompt with best practices in prompt engineering.
+        static_instruction = f"You are a synthetic data generator. Respond to the user request ONLY with valid {request.output_format} matching the schema:\n\n"
 
-    # Build the final prompt with best practices in prompt engineering.
-    static_instruction = f"You are a synthetic data generator. Respond to the user request ONLY with valid {request.output_format} matching the schema:\n\n"
-
-    final_prompt = (
-        f"{static_instruction}\n\n"
-        f"Schema:\n{json.dumps(selected_template, indent=2)}\n\n"
-        f"User Request: {user_input}\n\n"
-        f"- Enclose the data entirely within backticks for easy extraction.\n"
-        f"- No explanations"
-        f"- No additional text"
-        f"- No markdown formatting"
-        f"- Never use markdown code blocks"
-        f"Ensure that any specific field modifications (if mentioned by the user) are considered."
-        f"Generate {request.volume} synthetic examples. Output pure {request.output_format} only:"
-    )
+        final_prompt = (
+            f"{static_instruction}\n\n"
+            f"Schema:\n{json.dumps(selected_template, indent=2)}\n\n"
+            f"User Request: {user_input}\n\n"
+            f"- Enclose the data entirely within backticks for easy extraction.\n"
+            f"- No explanations"
+            f"- No additional text"
+            f"- No markdown formatting"
+            f"- Never use markdown code blocks"
+            f"Ensure that any specific field modifications (if mentioned by the user) are considered."
+            f"Generate {request.volume} synthetic examples. Output pure {request.output_format} only:"
+        )
 
     # Step 5: Send the final prompt to the LLM API
-    result = LLMService.call_llm_api(final_prompt)
+        result = LLMService.call_llm_api(final_prompt)
     return result
 
+def transcript_prompt(selected_template, user_input):
+    # This instruction is common to all requests
+    static_instruction = f"You are a synthetic data generator. Respond to the user request ONLY with valid text format:\n\n"
+    # If the transcript LLM is AWS 
+    if TRANSCRIPT_LLM == "aws":
+        final_prompt = (
+            f"{static_instruction}\n\n"
+            f"User Request: {user_input}\n\n"
+            f"Generate a realistic call transcript according to the User Request"
+        )
+    else:
 
+        if selected_template == "call_transcript_generation_user_based":
+            final_prompt = (
+                f"{static_instruction}\n\n"
+                f"Schema:\n{json.dumps(selected_template, indent=2)}\n\n"
+                f"User Request: {user_input}\n\n"
+                f"Generate a realistic call transcript according to the above schema and User Request.\n"
+                f"Enclose the data entirely within backticks for easy extraction.\n"
+                f"Do not return any part of the schema in the response.\n"
+                f"Do not return any part of the user request in the response.\n"
+                f"Do not return any part of the prompt in the response.\n"
+                f"Do not return any part of the instruction in the response.\n"
+                f"Separate turns between user and agent with a newline\n"
+            )
+        else:
+            final_prompt = (
+                f"{static_instruction}\n\n"
+                f"Schema:\n{json.dumps(selected_template, indent=2)}\n\n"
+                f"Generate a realistic call transcript according to the above schema.\n"
+                f"Enclose the data entirely within backticks for easy extraction.\n"
+                f"Do not return any part of the schema in the response.\n"
+                f"Do not return any part of the prompt in the response.\n"
+                f"Do not return any part of the instruction in the response.\n"
+                f"Separate turns between user and agent with a newline\n"
+            )
+    return final_prompt
 # For debugging, you can test these functions independently.
 if __name__ == "__main__":
     # Example inputs:

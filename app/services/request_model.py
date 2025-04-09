@@ -18,6 +18,7 @@ from config.config import (
     REGION_NAME,
     S3_OUTPUT_BUCKET,
     S3_OUTPUT_FOLDER,
+    
 )
 
 logger = logging.getLogger(__name__)
@@ -126,3 +127,92 @@ class RequestModel:
         except pd.errors.ParserError as e:
             logger.error(f"CSV parsing failed: {str(e)}")
             raise
+    
+    def send_transcript_request_groq(self, prompt):
+        # Define the API endpoint and headers
+        API_KEY = self.GROQ_API_KEY
+        url = self.groq_url
+        # print("############## PROMPT #####################")
+        # print(prompt)
+        headers = {
+            "Authorization": f"Bearer {API_KEY}",
+            "Content-Type": "application/json",
+        }
+
+        data = {
+            "model": GROQ_MODEL_ID,
+            "messages": [{"role": "user", "content": prompt}],
+        }
+        # Send the request to the Groq API
+        response = requests.post(url, json=data, headers=headers)
+
+        # Extracting the message content
+        response_json = response.json()
+        # print("############## RESPONSE #####################")
+        # print(response_json)
+        # Access the content containing the transcript directly from the dictionary
+        transcript_content = response_json['choices'][0]['message']['content']
+
+        # Find the start and end of the actual transcript using the backticks
+        start_index = transcript_content.find("```")
+        end_index = transcript_content.rfind("```")
+
+        if start_index != -1 and end_index != -1 and start_index < end_index:
+            transcript = transcript_content[start_index + 3:end_index].strip()
+        else:
+            # Fallback: Assume the entire content is the transcript
+            transcript = transcript_content.strip()
+
+        if transcript:
+            destination_uri = utility.save_text_to_s3(
+                transcript, bucket_name=S3_OUTPUT_BUCKET, prefix=S3_OUTPUT_FOLDER
+            )
+            print(f"Successfully extracted and saved the call transcript to {destination_uri}")
+        else:
+            print("Could not find or extract the call transcript from the 'content' field.")
+
+
+        return destination_uri
+    
+    # We will send to this function for transcript from bedrock
+    def send_transcript_request_bedrock(
+        self, prompt, max_tokens=4000, temperature=0.7, top_p=0.9, top_k=250
+    ):
+        # Initialize AWS Session with IAM Identity Center (SSO) profile
+        session = boto3.Session(profile_name=self.AWS_PROFILE)
+
+        # Create Bedrock client
+        bedrock_client = session.client("bedrock-runtime", region_name=self.region_name)
+
+        # Define the request payload
+
+        # Antrhopic
+        payload = {
+            "prompt": f"\n\nHuman: {prompt}\n\nAssistant:",
+            "max_tokens_to_sample": max_tokens,
+            "temperature": temperature,
+            "top_k": top_k,
+            "top_p": top_p,
+            "stop_sequences": ["\n\nHuman:"],
+            "anthropic_version": "bedrock-2023-05-31",
+        }
+
+
+        response = bedrock_client.invoke_model(
+            modelId=LLM_BEDROCK_MODEL_ID, body=json.dumps(payload)
+        )
+
+        with response["body"] as stream:
+            response_body = json.loads(stream.read())
+
+        # Extract the output text
+        # output_text = response_body["results"][0]["outputText"]
+
+        # Extract the generated response from Claude
+        output_text = response_body.get("completion", "").strip()
+
+        destination_uri = utility.save_text_to_s3(
+            output_text, bucket_name=S3_OUTPUT_BUCKET, prefix=S3_OUTPUT_FOLDER
+        )
+
+        return destination_uri
