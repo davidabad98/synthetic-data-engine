@@ -12,7 +12,12 @@ from app.lambda_function import lambda_handler
 from app.models.request import GenerateResponse
 from app.upload_main import main
 from app.utils.utility import save_uploaded_data_locally, save_uploaded_data_to_s3
-from config.config import ALLOWED_UPLOAD_EXTENSIONS, SAVE_UPLOADED_FILE, SERVER_MODE
+from config.config import (
+    ALLOWED_UPLOAD_EXTENSIONS,
+    ENABLE_PII,
+    SAVE_UPLOADED_FILE,
+    SERVER_MODE,
+)
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -45,7 +50,8 @@ async def upload_file(
                 upload_result = await save_uploaded_data_locally(file, content)
             else:
                 upload_result = await save_uploaded_data_to_s3(file, content)
-                content = upload_result["originalFileName"]
+                if ENABLE_PII:
+                    content = upload_result["originalFileName"]
 
         # Call lambda handler and get raw response
         lambda_response = lambda_handler(None, content)

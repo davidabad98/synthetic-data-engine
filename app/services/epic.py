@@ -72,12 +72,12 @@ class EPICPromptGenerator:
     def _load_from_local(self, file_name):
         try:
             file_path = os.path.join(UPLOADED_DATA_DIR, file_name)
-            df = pd.read_csv(file_path, parse_dates=True)
+            self.df = pd.read_csv(file_path, parse_dates=True)
         except FileNotFoundError:
             raise FileNotFoundError(
                 f"Dataset file '{file_path}' not found. Please check the path."
             )
-        return df
+        return self.df
 
     def _load_from_s3(self, file_name):
         """Load data from S3 using configured bucket and folder
@@ -101,7 +101,7 @@ class EPICPromptGenerator:
             # Get the object from S3
             response = s3.get_object(Bucket=S3_INPUT_BUCKET, Key=object_key)
             # Read the CSV file from the S3 response
-            df = pd.read_csv(
+            self.df = pd.read_csv(
                 StringIO(response["Body"].read().decode("utf-8")), parse_dates=True
             )
         except Exception as e:
@@ -109,7 +109,7 @@ class EPICPromptGenerator:
                 f"Failed to load file {file_name} from S3. Error: {e}"
             )
 
-        return df
+        return self.df
 
     def clean_text(self, text):
         """Remove special characters like commas and semicolons from text"""
