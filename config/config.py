@@ -8,7 +8,7 @@ OPENSEARCH_PASS = "GenAI@2025"
 INDEX_NAME = "schema_search"
 
 # Server mode can be either "local" or aws "cloud"
-SERVER_MODE = "local"
+SERVER_MODE = "cloud"
 
 # When SERVER_MODE = "cloud" decide if we want to use LLM from AWS or not
 DEFAULT_LLM = "claude-2.1"
@@ -71,7 +71,8 @@ S3_TEMPLATE_PATH = "schemas/"  # Folder in S3 bucket
 
 # S3 buckets info
 S3_INPUT_BUCKET = "genaiinput-dataset"
-S3_INPUT_BUCKET_FOLDER = "uploads/"
+S3_INPUT_BUCKET_FOLDER = "Raw_Data/"
+S3_PII_BUCKET_FOLDER = "Masked_Data/"
 S3_OUTPUT_BUCKET = "genaioutput-dataset"
 S3_OUTPUT_FOLDER = "output/"
 
@@ -91,3 +92,4 @@ UPLOADED_DATA_DIR = "app/data/uploaded/"
 GENERATED_DATA_DIR = "app/data/generated/"
 ALLOWED_UPLOAD_EXTENSIONS = {".csv"}
 SAVE_UPLOADED_FILE = True
+ENABLE_PII = True

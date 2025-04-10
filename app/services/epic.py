@@ -10,7 +10,15 @@ import boto3
 import pandas as pd
 from fastapi import HTTPException
 
-from config.config import AWS_PROFILE, DEFAULT_FORMAT, SERVER_MODE, UPLOADED_DATA_DIR
+from config.config import (
+    AWS_PROFILE,
+    DEFAULT_FORMAT,
+    ENABLE_PII,
+    S3_INPUT_BUCKET,
+    S3_PII_BUCKET_FOLDER,
+    SERVER_MODE,
+    UPLOADED_DATA_DIR,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -30,8 +38,11 @@ class EPICPromptGenerator:
         self.continuous_stats = {}
         self.file_type = file_type
         self.generated_rows = generated_rows
+        if ENABLE_PII:
+            self._load_dataset(content)
+        else:
+            self._load_content(content)
 
-        self._load_content(content)
         self.df, self.categorical_mappings, self.continuous_stats = self.process_data()
 
     def _load_content(self, content):
@@ -49,17 +60,16 @@ class EPICPromptGenerator:
             logger.error("Invalid CSV format for uploaded CSV file.")
             raise HTTPException(status_code=400, detail=f"Invalid CSV format: {str(e)}")
 
-    def load_dataset(self, file_name):
-        """Load dataset either from local file or S3"""
-        # OLD FUNCTION, NO LONGER USED
+    def _load_dataset(self, file_name):
+        """Load dataset either from local file or S3 for PII masking flow"""
         if SERVER_MODE != "local":
             # Reading from S3
-            return self.load_from_s3()
-        else:
-            # Reading from local file
-            return self.load_from_local(file_name)
+            return self._load_from_s3(file_name)
 
-    def load_from_local(self, file_name):
+        # Reading from local file
+        return self._load_from_local(file_name)
+
+    def _load_from_local(self, file_name):
         try:
             file_path = os.path.join(UPLOADED_DATA_DIR, file_name)
             df = pd.read_csv(file_path, parse_dates=True)
@@ -69,30 +79,37 @@ class EPICPromptGenerator:
             )
         return df
 
-    def load_from_s3(self):
-        """Load data from S3"""
-        # Extract bucket and object path from the s3 file path
+    def _load_from_s3(self, file_name):
+        """Load data from S3 using configured bucket and folder
+
+        Args:
+            file_name (str): The name of the file to load from the Masked_Data folder (e.g., '1c205215-70ef-493b-9369-371039ead7ea.csv')
+
+        Returns:
+            pd.DataFrame: The loaded data
+
+        Raises:
+            FileNotFoundError: If the file cannot be found or accessed
+        """
         session = boto3.Session(profile_name=AWS_PROFILE)
         s3 = session.client("s3")
-        bucket_name, object_key = self.extract_bucket_and_key(self.file_path)
+
+        # Construct the full object key using the configured folder
+        object_key = f"{S3_PII_BUCKET_FOLDER}{file_name}"
 
         try:
             # Get the object from S3
-            response = s3.get_object(Bucket=bucket_name, Key=object_key)
+            response = s3.get_object(Bucket=S3_INPUT_BUCKET, Key=object_key)
             # Read the CSV file from the S3 response
             df = pd.read_csv(
                 StringIO(response["Body"].read().decode("utf-8")), parse_dates=True
             )
         except Exception as e:
-            raise FileNotFoundError(f"Failed to load file from S3. Error: {e}")
+            raise FileNotFoundError(
+                f"Failed to load file {file_name} from S3. Error: {e}"
+            )
 
         return df
-
-    def extract_bucket_and_key(self, s3_uri):
-        """Extract bucket name and file key from s3 URI"""
-        s3_uri = s3_uri.replace("s3://", "")
-        bucket_name, object_key = s3_uri.split("/", 1)
-        return bucket_name, object_key
 
     def clean_text(self, text):
         """Remove special characters like commas and semicolons from text"""

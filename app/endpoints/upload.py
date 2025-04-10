@@ -45,6 +45,7 @@ async def upload_file(
                 upload_result = await save_uploaded_data_locally(file, content)
             else:
                 upload_result = await save_uploaded_data_to_s3(file, content)
+                content = upload_result["originalFileName"]
 
         # Call lambda handler and get raw response
         lambda_response = lambda_handler(None, content)
