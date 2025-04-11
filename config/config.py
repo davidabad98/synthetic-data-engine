@@ -1,7 +1,7 @@
 # app/config/config.py
 
 # Turn on OpenSearch
-OPEN_SEARCH = True
+OPEN_SEARCH = False
 OPENSEARCH_ENDPOINT = "https://search-genai-schema-search-d63w6q24vjesd7sqzhzdxbt2ay.us-east-1.es.amazonaws.com"
 OPENSEARCH_USER = "GenAI"
 OPENSEARCH_PASS = "GenAI@2025"

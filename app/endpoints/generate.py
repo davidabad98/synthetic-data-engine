@@ -50,7 +50,7 @@ async def generate_data(request: GenerateRequest):
 
         # If successful, return formatted response
         return GenerateResponse(
-            message="Data successfully generated! You can access it here:",
+            message="Success",
             data=lambda_response,
         )
     except HTTPException:
