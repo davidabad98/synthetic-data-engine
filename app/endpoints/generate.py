@@ -50,7 +50,8 @@ async def generate_data(request: GenerateRequest):
 
         # If successful, return formatted response
         return GenerateResponse(
-            message="Synthetic data generated successfully", data=lambda_response
+            message="Data successfully generated! You can access it here:",
+            data=lambda_response,
         )
     except HTTPException:
         raise  # Re-raise our custom HTTP exceptions

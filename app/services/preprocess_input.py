@@ -10,7 +10,7 @@ from app.services.llm_service import LLMService
 from app.services.prompt_processor import PromptProcessor
 from app.services.sentence_embeddings import SentenceEmbeddingMatcher
 from app.utils.template_loader import load_single_template
-from config.config import OPEN_SEARCH,DEFAULT_LLM
+from config.config import DEFAULT_LLM, OPEN_SEARCH
 
 logger = logging.getLogger(__name__)
 
@@ -52,7 +52,10 @@ def preprocess_input(request: GenerateRequest) -> str:
     # print("Check selected template")
     # print(selected_template)
     # print(type(selected_template))
-    if find_template["template_name"] in ("call_transcript_generation_user_based", "call_transcript_generation_versatile"):
+    if find_template["template_name"] in (
+        "call_transcript_generation_user_based",
+        "call_transcript_generation_versatile",
+    ):
         # Handle special case for call transcript generation
         final_prompt = transcript_prompt(selected_template, user_input)
         result = LLMService.call_llm_for_transcript(final_prompt)
@@ -73,14 +76,15 @@ def preprocess_input(request: GenerateRequest) -> str:
             f"Generate {request.volume} synthetic examples. Output pure {request.output_format} only:"
         )
 
-    # Step 5: Send the final prompt to the LLM API
+        # Step 5: Send the final prompt to the LLM API
         result = LLMService.call_llm_api(final_prompt)
     return result
+
 
 def transcript_prompt(selected_template, user_input):
     # This instruction is common to all requests
     static_instruction = f"You are a synthetic data generator. Respond to the user request ONLY with valid text format:\n\n"
-    # If the transcript LLM is AWS 
+    # If the transcript LLM is AWS
     model = get_current_model()
     if model == DEFAULT_LLM:
         final_prompt = (
@@ -115,6 +119,8 @@ def transcript_prompt(selected_template, user_input):
                 f"Separate turns between user and agent with a newline\n"
             )
     return final_prompt
+
+
 # For debugging, you can test these functions independently.
 if __name__ == "__main__":
     # Example inputs:

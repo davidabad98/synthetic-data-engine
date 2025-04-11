@@ -71,7 +71,8 @@ async def upload_file(
 
         # If successful, return formatted response
         return GenerateResponse(
-            message="Synthetic data generated successfully", data=lambda_response
+            message="Success",
+            data=lambda_response,
         )
 
     except HTTPException:

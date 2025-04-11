@@ -12,6 +12,7 @@ from config.config import (
     GENERATED_DATA_DIR,
     S3_INPUT_BUCKET,
     S3_INPUT_BUCKET_FOLDER,
+    S3_OUTPUT_PRESIGNED_URL_EXPIRATION,
     UPLOADED_DATA_DIR,
 )
 
@@ -24,13 +25,24 @@ def generate_filename(file_extension=".csv"):
     return f"{uuid.uuid4()}{file_extension}"
 
 
-def save_dataframe_to_s3(df, bucket_name, prefix="output/"):
+def save_dataframe_to_s3(df, bucket_name, prefix="output/", generate_url=True):
     csv_buffer = StringIO()
     df.to_csv(csv_buffer, index=False)
 
     s3_key = f"{prefix}{generate_filename()}"
 
     s3.put_object(Bucket=bucket_name, Key=s3_key, Body=csv_buffer.getvalue())
+
+    if generate_url:
+        # Create a pre-signed URL for temporary access
+        file_url = s3.generate_presigned_url(
+            "get_object",
+            Params={"Bucket": bucket_name, "Key": s3_key},
+            ExpiresIn=S3_OUTPUT_PRESIGNED_URL_EXPIRATION,
+        )
+        logger.info(f"Uploaded data saved to: {file_url}")
+        return file_url
+
     s3_path = f"s3://{bucket_name}/{s3_key}"
 
     logger.info(s3_path)

@@ -29,7 +29,8 @@ def lambda_handler(request, content, event=""):
                 "statusCode": 200,
                 "body": json.dumps(
                     {
-                        "data": f"Data successfully generated! You can access it here: {result}"
+                        "message": "Data successfully generated! You can access it here:",
+                        "url": result,
                     }
                 ),
             }

@@ -65,7 +65,7 @@ LLM_BEDROCK_ENDPOINT = "https://bedrock.endpoint.url"
 
 # AWS KEYS
 REGION_NAME = "us-east-1"
-AWS_PROFILE = "rizvan"
+AWS_PROFILE = "DavidAbad"
 S3_BUCKET_NAME = "synthetic-data-templates"
 S3_TEMPLATE_PATH = "schemas/"  # Folder in S3 bucket
 
@@ -75,6 +75,7 @@ S3_INPUT_BUCKET_FOLDER = "Raw_Data/"
 S3_PII_BUCKET_FOLDER = "Masked_Data/"
 S3_OUTPUT_BUCKET = "genaioutput-dataset"
 S3_OUTPUT_FOLDER = "output/"
+S3_OUTPUT_PRESIGNED_URL_EXPIRATION = 300  # 5 MINUTES
 
 # GROQ configuration for local deployment
 GROQ_API_KEY = "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"
